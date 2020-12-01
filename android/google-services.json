@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "146974593356",
+    "firebase_url": "https://mgeps-nextenders.firebaseio.com",
+    "project_id": "mgeps-nextenders",
+    "storage_bucket": "mgeps-nextenders.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146974593356:android:9a8fb624355dd330ee7fe9",
+        "android_client_info": {
+          "package_name": "com.mgepsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146974593356-ksfp9kejgdv9jaisss9cr687ii2vci3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBi5MJgmlP_5iwoHPz25XOb7zkmY9ilH2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146974593356-ksfp9kejgdv9jaisss9cr687ii2vci3n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146974593356-ok0dd92jtkvmhkd78f097qjnba02ngfl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mgepsapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

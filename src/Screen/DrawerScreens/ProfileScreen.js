@@ -82,9 +82,8 @@ const ProfileScreen = (props) => {
       
       <CustomToolbar title={"Profile"} userType ={"Merchant"} backgroundColor="#3775f0"/>
 
-      <Card style={{ padding: 10, margin: 10, height: "40%" }}>
+      <Card style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}>
         <View style={{ flexDirection: "row" }}>
-         
             <View style={[gStyles.userAvatarStyle]}>
               <Text>
                 {profileData.fname.charAt(0) + profileData.lname.charAt(0)}
@@ -126,12 +125,12 @@ const ProfileScreen = (props) => {
             }}
           >
             <View style={{ flex: 1, flexDirection: "column", marginStart: 15 }}>
-              <Text>Username</Text>
+              <Text style={styles.nameLabel}>Username</Text>
               <Text>{profileData.username}</Text>
             </View>
 
             <View style={{ flex: 1, flexDirection: "column" }}>
-              <Text>Salutation</Text>
+            <Text style={styles.nameLabel}>Salutation</Text>
               <Text>{profileData.salutation}</Text>
             </View>
           </View>

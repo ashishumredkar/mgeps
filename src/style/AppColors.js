@@ -20,4 +20,6 @@ export const AppColors = {
   whiteop00: '#ffffff00',
   whiteop01: '#ffffff55',
   blue: '#0000FF',
+  lightBlue50: '#E1F5FE',
+  colorPrimary: '#1976D2'
 };

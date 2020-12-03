@@ -138,10 +138,21 @@ export const gStyles = StyleSheet.create({
     borderWidth: 0.2,
     marginHorizontal: 16,
   },
-  contactStyle: {fontSize: 16,color:AppColors.blue,fontStyle:'italic'},
+  contactStyle: {
+    fontSize: 18,
+    color: AppColors.colorPrimary,
+    fontWeight: 'bold'
+  },
+  nameLabel: {
+    color: AppColors.AppBlack02,
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
   userAvatarStyle: {
     width: 50,
-    height:50,
+    height: 50,
+    color: AppColors.AppGrey002,
+    fontWeight: 'bold',
     borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',

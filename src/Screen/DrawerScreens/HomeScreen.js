@@ -19,6 +19,8 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 const STORAGE_KEY = "@user_data";
 import Loader from "../Components/Loader";
+import { AppColors } from "../../style/AppColors";
+import { homeStyles } from "../../style/homeStyles";
 
 const colors = [
   "#29B6F6",
@@ -161,7 +163,7 @@ class HomeScreen extends React.Component {
           renderItem={({ item, index }) => {
             return (
               <Pressable
-                style={[styles.card, { backgroundColor: colors[index] }]}
+                style={[homeStyles.card, { backgroundColor: colors[index] }]}
                 onPress={() => {
                   if (item.sub.length > 0) {
                     this.props.navigation.navigate("SubMenues", {
@@ -176,22 +178,23 @@ class HomeScreen extends React.Component {
                   }
                 }}
               >
-                <View style={styles.cardHeader}>
-                  <Text style={styles.title}>{item.name}</Text>
+                <View style={homeStyles.cardHeader}>
+                  <Text style={homeStyles.title}>{item.name}</Text>
                   {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
                 </View>
 
-                <View style={styles.cardFooter}>
+                <View style={homeStyles.cardFooter}>
                   <Image
-                    style={styles.cardImage}
+                    style={homeStyles.cardImage}
                     source={imagesArray[index]}
                     //source={{ uri: imagesArray[index] }}
                   />
 
-                  <Text style={styles.subTitle}>
+                  <Text style={homeStyles.subTitle}>
                     {item.unRead} Unread Notices
                   </Text>
                 </View>
+                <View style={homeStyles.cardHeader}></View>
               </Pressable>
             );
           }}
@@ -213,7 +216,7 @@ class HomeScreen extends React.Component {
             />
             <View style={{ width: 20 }} />
           </View>
-          <View style={{ width: 50}} />
+          <View style={{ width: 40}} />
           <View  style={{flexDirection:'row',flex:0.5}}>
 
           <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
@@ -223,8 +226,10 @@ class HomeScreen extends React.Component {
             <Image
               source={require("../../Image/nextenders_logo.png")}
               style={{
-                width: 51,
-                height: 51,
+                width: 90,
+                height: 30,
+                position: "relative",
+                top: 8,
                 resizeMode: 'contain'
               }}
             />
@@ -282,48 +287,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   /******** card **************/
-  card: {
-    marginHorizontal: 2,
-    marginVertical: 2,
-    flexBasis: "48%",
-    margin: 5,
-  },
-  cardHeader: {
-    paddingVertical: 17,
-    paddingHorizontal: 16,
-    borderTopLeftRadius: 1,
-    borderTopRightRadius: 1,
-    flexDirection: "row",
-    // alignItems: "center",
-    // justifyContent: "center",
-  },
-  cardContent: {
-    paddingVertical: 12.5,
-    paddingHorizontal: 16,
-  },
-  cardFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: 12.5,
-    paddingBottom: 25,
-    paddingHorizontal: 16,
-    borderBottomLeftRadius: 1,
-    borderBottomRightRadius: 1,
-  },
-  cardImage: {
-    // height: 40,
-    // width: 40,
-    // borderRadius:70/2,
-
-    // alignSelf: "center",
-    // flexWrap:'wrap'
-    width: 50,
-    height: 50,
-    borderRadius: 50 / 2,
-    overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "white",
-  },
   cardImage2: {
     flex: 1,
     marginTop: "46%",
@@ -346,18 +309,6 @@ const styles = StyleSheet.create({
     margin: 10,
     fontWeight: "bold",
   },
-  title: {
-    fontSize: 16,
-    flex: 1,
-    color: "#FFFFFF",
-    fontWeight: "bold",
-  },
-  subTitle: {
-    fontSize: 12,
-    flex: 1,
-    color: "#FFFFFF",
-    alignSelf: "center",
-  },
   icon: {
     height: 20,
     width: 20,
@@ -365,13 +316,12 @@ const styles = StyleSheet.create({
   bottomView: {
     flexDirection: "row",
     width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
+    height: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
     flexDirection: "row",
-    margin: 10,
-    paddingBottom: Platform.OS === "ios" ? 25 : 25,
+    backgroundColor: AppColors.lightBlue50,
+    paddingBottom: Platform.OS === "ios" ? 25 : 0,
   },
 });

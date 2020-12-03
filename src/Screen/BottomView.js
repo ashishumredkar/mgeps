@@ -1,41 +1,69 @@
 import React, { Component } from "react";
-import { StyleSheet, Platform, Image } from "react-native";
+import { StyleSheet, Platform, Image, View, Text } from "react-native";
 
-import { Container, Footer, Title, Button } from "native-base";
-
-export default class App extends Component {
+export default class BottomView extends Component {
   render() {
     return (
-      <Container>
-        <Footer>
-          <Button transparent></Button>
+      <View style={styles.container}>
+        <View style={styles.bottomView}>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 0.5,
+            }}
+          >
+            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+              Copyright {"\u00A9"}By.philGEPS{" "}
+            </Text>
+            <Image
+              source={require("../Image/menu_logo.png")}
+              style={styles.image}
+            />
+            <View style={{ width: 20 }} />
+          </View>
+          <View style={{ width: 40 }} />
+          <View style={{ flexDirection: "row", flex: 0.5 }}>
+            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+              Powered Byt:
+            </Text>
 
-          <Title>Copyright {"\u00A9"}By.philGEPS</Title>
-
-          <Image
-            source={require("../Image/success.png")}
-            style={styles.image}
-          />
-
-          <Title>powered {"\u00A9"}By</Title>
-
-          <Image
-            source={require("../Image/success.png")}
-            style={styles.image}
-          />
-
-          <Button transparent></Button>
-        </Footer>
-      </Container>
-     
+            <Image
+              source={require("../Image/nextenders_logo.png")}
+              style={{
+                width: 80,
+                height: 51,
+                marginBottom: 8,
+                resizeMode: "contain",
+              }}
+            />
+          </View>
+        </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 100,
+    marginBottom: 10,
+    marginTop: 20,
+    paddingBottom: 80,
+    height: 50,
     flex: 1,
+    backgroundColor: "#D62223",
+  },
+  bottomView: {
+    flexDirection: "row",
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+    flexDirection: "row",
+    margin: 5,
+    paddingBottom: Platform.OS === "ios" ? 10 : 10,
+    backgroundColor: "#D62223",
   },
 
   MainContainer: {
@@ -59,8 +87,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 40,
-    height: 40,
+    width: 35,
+    height: 35,
     resizeMode: "cover",
     justifyContent: "center",
   },

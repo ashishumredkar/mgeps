@@ -180,12 +180,14 @@ class HomeScreen extends React.Component {
                   <Text style={styles.title}>{item.name}</Text>
                   {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
                 </View>
-                <Image
-                  style={styles.cardImage}
-                  source={imagesArray[index]}
-                  //source={{ uri: imagesArray[index] }}
-                />
+
                 <View style={styles.cardFooter}>
+                  <Image
+                    style={styles.cardImage}
+                    source={imagesArray[index]}
+                    //source={{ uri: imagesArray[index] }}
+                  />
+
                   <Text style={styles.subTitle}>
                     {item.unRead} Unread Notices
                   </Text>
@@ -196,12 +198,45 @@ class HomeScreen extends React.Component {
         />
 
         <View style={styles.bottomView}>
-          <View style={{ flexDirection: "row", marginTop: 20,marginBottom:10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 0.5,
+            }}
+          >
             <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
               Copyright {"\u00A9"}By.philGEPS{" "}
             </Text>
             <Image
-              source={require("../../Image/success.png")}
+              source={require("../../Image/menu_logo.png")}
+              style={styles.image}
+            />
+            <View style={{ width: 20 }} />
+          </View>
+          <View style={{ width: 50}} />
+          <View  style={{flexDirection:'row',flex:0.5}}>
+
+          <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+              Powered By:
+            </Text>
+
+            <Image
+              source={require("../../Image/nextenders_logo.png")}
+              style={{
+                width: 51,
+                height: 51,
+                resizeMode: 'contain'
+              }}
+            />
+          </View>
+          {/* <View
+            style={{ flexDirection: "row", marginTop: 20, marginBottom: 10 }}
+          >
+            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+              Copyright {"\u00A9"}By.philGEPS{" "}
+            </Text>
+            <Image
+              source={require("../../Image/menu_logo.png")}
               style={styles.image}
             />
 
@@ -210,10 +245,14 @@ class HomeScreen extends React.Component {
             </Text>
 
             <Image
-              source={require("../../Image/success.png")}
-              style={styles.image}
+              source={require("../../Image/nextenders_logo.png")}
+              style={{
+                width: 51,
+                height: 51,
+                resizeMode: "contain",
+              }}
             />
-          </View>
+          </View> */}
         </View>
       </View>
     );
@@ -247,6 +286,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginVertical: 2,
     flexBasis: "48%",
+    margin: 5,
   },
   cardHeader: {
     paddingVertical: 17,
@@ -254,8 +294,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 1,
     borderTopRightRadius: 1,
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   cardContent: {
     paddingVertical: 12.5,
@@ -271,9 +311,18 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 1,
   },
   cardImage: {
-    height: 70,
-    width: 70,
-    alignSelf: "center",
+    // height: 40,
+    // width: 40,
+    // borderRadius:70/2,
+
+    // alignSelf: "center",
+    // flexWrap:'wrap'
+    width: 50,
+    height: 50,
+    borderRadius: 50 / 2,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "white",
   },
   cardImage2: {
     flex: 1,
@@ -287,6 +336,7 @@ const styles = StyleSheet.create({
   image: {
     width: 35,
     height: 35,
+    resizeMode: "cover",
     resizeMode: "cover",
     justifyContent: "center",
   },
@@ -306,6 +356,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     flex: 1,
     color: "#FFFFFF",
+    alignSelf: "center",
   },
   icon: {
     height: 20,

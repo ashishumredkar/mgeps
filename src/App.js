@@ -19,8 +19,9 @@ import ProfileScreen from './Screen/DrawerScreens/ProfileScreen'
 import Details from './Screen/Details';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 Icon.loadFont();
+Ionicons.loadFont()
 MaterialCommunityIcons.loadFont();
 
 const Stack = createStackNavigator();

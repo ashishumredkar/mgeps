@@ -13,6 +13,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
+import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
+import CustomToolbar from "./Components/CustomToolbar";
 const STORAGE_KEY = "@user_data";
 
 const colors = [
@@ -121,7 +123,15 @@ class SubMenues extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <View
+
+<GeneralStatusBarColor
+          backgroundColor="#44444f"
+          barStyle="light-content"
+        />
+      
+      <CustomToolbar navigation={this.props.navigation} title={this.state.title} userType ={"Merchant"} backgroundColor="#3775f0"/>
+
+        {/* <View
           style={{
             flexDirection: "row",
             alignContent: "center",
@@ -146,7 +156,7 @@ class SubMenues extends React.Component {
           >
             {this.state.title}
           </Text>
-        </View>
+        </View> */}
         <FlatList
           data={this.state.menuList}
           renderItem={({ item, index }) => {

@@ -8,8 +8,11 @@ import { gStyles } from "../../../src/style/appStyles";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { Card } from "react-native-elements";
+import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
+import CustomToolbar from "../Components/CustomToolbar";
 
 const ProfileScreen = (props) => {
+  
   const [profileData, setProfileData] = useState({
     id: 23,
     user_type: 11,
@@ -71,6 +74,14 @@ const ProfileScreen = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+
+<GeneralStatusBarColor
+          backgroundColor="#44444f"
+          barStyle="light-content"
+        />
+      
+      <CustomToolbar title={"Profile"} userType ={"Merchant"} backgroundColor="#3775f0"/>
+
       <Card style={{ padding: 10, margin: 10, height: "40%" }}>
         <View style={{ flexDirection: "row" }}>
          

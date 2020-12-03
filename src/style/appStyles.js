@@ -140,9 +140,9 @@ export const gStyles = StyleSheet.create({
   },
   contactStyle: {fontSize: 16,color:AppColors.blue,fontStyle:'italic'},
   userAvatarStyle: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 50,
+    height:50,
+    borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: AppColors.AppGrey002,

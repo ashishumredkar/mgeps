@@ -31,6 +31,9 @@ import { Avatar, Badge, Divider, Modal, Portal } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RippleButton } from "./Components/RippleButton";
 
+import { gStyles } from "../../src/style/appStyles";
+
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -45,6 +48,12 @@ const homeScreenStack = ({ navigation }) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
+          headerRight: (props) => <NotificationView />,
+          headerTitle: (props) => <LogoTitle {...props} />,
+          // options={{
+          //   headerTitle: (props) => <LogoTitle {...props} />,
+          //   headerRight: (props) => <NotificationView />,
+          // }}
           headerStyle: {
             backgroundColor: "#307ecc", //Set Header color
           },
@@ -57,23 +66,23 @@ const homeScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="SubMenues"
         component={SubMenues}
-        options={{
-          title: "Sub Menues", //Set Header Title
-        }}
+        // options={{
+        //   title: "Sub Menues", //Set Header Title
+        // }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Details"
         component={Details}
-        options={{
-          title: "Details", //Set Header Title
-        }}
+        // options={{
+        //   title: "Details", //Set Header Title
+        // }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="FinalDetailsPage"
         component={FinalDetailsPage}
-        options={{
-          title: null, //Set Header Title
-        }}
+        options={{headerShown: false}}
       />
       {/* <Stack.Screen
         name="ProfileScreen"
@@ -87,16 +96,41 @@ const homeScreenStack = ({ navigation }) => {
 };
 export function LogoTitle(props) {
   return (
-    <View
-      style={[,{
-        marginLeft: -40,marginTop:17,marginLeft:8,flexDirection:'row'
-      }]}
-    >
+    <View style={{ flexDirection: "row",marginLeft: -20,marginTop:5 }}>
+         
+            <View style={[gStyles.userAvatarStyle]}>
+            <Image
+        style={{ width: 35,
+          height: 35,backgroundColor:'white'}}
+        source={{
+          uri: 'https://reactnative.dev/img/tiny_logo.png',
+        }}
+      />
+            </View>
+          
 
-       <Text style={[{fontFamily:'bold', size:'38', color:'white',height: 40, marginTop: 5,marginLeft:4 ,alignSelf:'flex-start',alignContent:'center',alignItems:"center"}]}>
-      Profile Overview
+          <View style={{ width: 10 }}></View>
+
+          {/* CONTACT DETAILS  */}
+          <View style={{ paddingTop: 8 }}>
+            <Text style={[gStyles.contactStyle,{color:'white',fontSize:18}]}>
+              Dashboard
             </Text>
-    </View>
+            <Text style={[{color:'white',fontSize:14}]}>
+             UserType: merchant
+            </Text>
+          </View>
+        </View>
+    // <View
+    //   style={[,{
+    //     marginLeft: -40,marginTop:17,marginLeft:8,flexDirection:'row'
+    //   }]}>
+
+
+    //     <Text style={[{fontFamily:'bold', size:'38', color:'white',height: 40, marginTop: 5,marginLeft:4 ,alignSelf:'flex-start',alignContent:'center',alignItems:"center"}]}>
+    //       Profile Overview
+    //     </Text>
+    // </View>
   );
 }
 
@@ -163,10 +197,7 @@ const profileScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{
-          headerTitle: (props) => <LogoTitle {...props} />,
-          headerRight: (props) => <NotificationView />,
-        }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

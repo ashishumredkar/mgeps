@@ -124,15 +124,18 @@ class SubMenues extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-
-<GeneralStatusBarColor
+        <GeneralStatusBarColor
           backgroundColor="#44444f"
           barStyle="light-content"
         />
-      
-      <CustomToolbar navigation={this.props.navigation} title={this.state.title} userType ={"Merchant"} backgroundColor="#3775f0"/>
 
-       
+        <CustomToolbar
+          navigation={this.props.navigation}
+          title={this.state.title}
+          userType={"Merchant"}
+          backgroundColor="#3775f0"
+        />
+
         <FlatList
           data={this.state.menuList}
           renderItem={({ item, index }) => {
@@ -169,12 +172,10 @@ class SubMenues extends React.Component {
           numColumns={2}
           keyExtractor={(item, index) => "" + item.id}
         />
-       
-       
-        <View style={{flex:0.2,alignSelf:'auto'}}>
-        <BottomView/>
+
+        <View>
+          <BottomView />
         </View>
-       
       </SafeAreaView>
     );
   }

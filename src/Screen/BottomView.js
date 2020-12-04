@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { StyleSheet, Platform, Image, View, Text } from "react-native";
+import { AppColors } from "../style/AppColors";
 
 export default class BottomView extends Component {
   render() {
     return (
-      <View style={styles.container}>
         <View style={styles.bottomView}>
           <View
             style={{
               flexDirection: "row",
               flex: 0.5,
-            }}>
+            }}
+          >
              <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
               Copyright {"\u00A9"}By.philGEPS{" "}
             </Text>
@@ -37,63 +38,32 @@ export default class BottomView extends Component {
             />
           </View>
         </View>
-      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 10,
-    marginTop: 20,
-    paddingBottom: 80,
-    height: 50,
-    flex: 1,
-    backgroundColor: "#D62223",
+  cardContent: {
+    paddingVertical: 12.5,
+    paddingHorizontal: 16
   },
   bottomView: {
     flexDirection: "row",
     width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
+    height: 60,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
     flexDirection: "row",
-    margin: 5,
-    paddingBottom: Platform.OS === "ios" ? 10 : 10,
-    backgroundColor: "#D62223",
+    backgroundColor: AppColors.lightBlue50,
+    paddingBottom: Platform.OS === "ios" ? 25 : 0,
   },
-
   MainContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingTop: Platform.OS === "ios" ? 20 : 10,
   },
-
-  bottomView: {
-       marginLeft:5,
-      position: 'absolute',
-      bottom: 0,
-      width: '100%',
-      paddingBottom: 16,
-      paddingTop: 50,
-      alignSelf: 'center',
-      flexDirection: "row",
-    
-    // flexDirection: "row",
-    // width: "100%",
-    // height: 50,
-    // justifyContent: "center",
-    // alignItems: "center",
-    // position: "absolute",
-    // bottom: 0,
-    // flexDirection: "row",
-    // margin: 10,
-    // paddingBottom: Platform.OS === "ios" ? 20 : 25,
-  },
-
   image: {
     width: 35,
     height: 35,
@@ -106,5 +76,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     flex: 1,
-  },
+  }
 });

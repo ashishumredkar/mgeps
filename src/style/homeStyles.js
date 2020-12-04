@@ -49,13 +49,12 @@ export const homeStyles = StyleSheet.create({
     card: {
         marginHorizontal: 2,
         marginVertical: 2,
-        flexBasis: "48%",
-        margin: 5,
+        flexBasis: "45%",
         margin: 40,
         borderRadius: 10
     },
     cardContent: {
         paddingVertical: 12.5,
         paddingHorizontal: 16,
-    }
+    },
 });

@@ -21,6 +21,7 @@ const STORAGE_KEY = "@user_data";
 import Loader from "../Components/Loader";
 import { AppColors } from "../../style/AppColors";
 import { homeStyles } from "../../style/homeStyles";
+import BottomView from "../BottomView";
 
 const colors = [
   "#29B6F6",
@@ -150,7 +151,6 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.listContainer}
@@ -195,48 +195,14 @@ class HomeScreen extends React.Component {
                     {item.unRead} Unread Notices
                   </Text>
                 </View>
-                <View style={homeStyles.cardHeader}></View>
               </Pressable>
             );
           }}
         />
-<BottomView/>
-        {/* <View style={styles.bottomView}>
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 0.5,
-            }}
-          >
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <Image
-              source={require("../../Image/menu_logo.png")}
-              style={styles.image}
-            />
-            <View style={{ width: 20 }} />
-          </View>
-          <View style={{ width: 40}} />
-          <View  style={{flexDirection:'row',flex:0.5}}>
 
-          <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Powered By:
-            </Text>
-
-            <Image
-              source={require("../../Image/nextenders_logo.png")}
-              style={{
-                width: 90,
-                height: 30,
-                position: "relative",
-                top: 8,
-                resizeMode: 'contain'
-              }}
-            />
-          </View>
-          
-        </View> */}
+        <View>
+          <BottomView />
+        </View>
       </View>
     );
   }
@@ -290,16 +256,5 @@ const styles = StyleSheet.create({
   icon: {
     height: 20,
     width: 20,
-  },
-  bottomView: {
-    flexDirection: "row",
-    width: "100%",
-    height: 60,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 10,
-    flexDirection: "row",
-    backgroundColor: AppColors.lightBlue50,
-    paddingBottom: Platform.OS === "ios" ? 25 : 0,
   },
 });

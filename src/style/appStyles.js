@@ -48,6 +48,10 @@ export const DarkStatus = () => {
 
 // GLOBAL STYLES
 export const gStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Platform.OS === "ios" ? 20 : 0,
+  },
   radiocontainer: {
     marginBottom: 35,
     alignItems: 'center',

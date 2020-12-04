@@ -15,6 +15,7 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import CustomToolbar from "./Components/CustomToolbar";
+import BottomView from "./BottomView";
 const STORAGE_KEY = "@user_data";
 
 const colors = [
@@ -131,32 +132,7 @@ class SubMenues extends React.Component {
       
       <CustomToolbar navigation={this.props.navigation} title={this.state.title} userType ={"Merchant"} backgroundColor="#3775f0"/>
 
-        {/* <View
-          style={{
-            flexDirection: "row",
-            alignContent: "center",
-            alignItems: "center",
-            backgroundColor: "white",
-            width: "100%",
-            height: 100,
-          }}
-        >
-          <Image
-            source={{ uri: "http://loremflickr.com/g/50/50/paris" }}
-            style={{ width: 60, height: 60, borderRadius: 60 / 2, margin: 10 }}
-          />
-          <Text
-            style={{
-              color: "darkgrey",
-              height: 50,
-              marginTop: 22,
-              marginLeft: 10,
-              fontSize: 18,
-            }}
-          >
-            {this.state.title}
-          </Text>
-        </View> */}
+       
         <FlatList
           data={this.state.menuList}
           renderItem={({ item, index }) => {
@@ -193,46 +169,12 @@ class SubMenues extends React.Component {
           numColumns={2}
           keyExtractor={(item, index) => "" + item.id}
         />
-        <View style={styles.bottomView}>
-        <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <Image
-              source={require("../Image/success.png")}
-              style={styles.image}
-            />
-
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Powered By:
-            </Text>
-
-            <Image
-              source={require("../Image/success.png")}
-              style={styles.image}
-            />
+       
+       
+        <View style={{flex:0.2,alignSelf:'auto'}}>
+        <BottomView/>
         </View>
-        {/* <View style={styles.bottomView}>
-          <View
-            style={{ flexDirection: "row", marginTop: 20, marginBottom: 10 }}
-          >
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <Image
-              source={require("../Image/success.png")}
-              style={styles.image}
-            />
-
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Powered By:
-            </Text>
-
-            <Image
-              source={require("../Image/success.png")}
-              style={styles.image}
-            />
-          </View>
-        </View> */}
+       
       </SafeAreaView>
     );
   }

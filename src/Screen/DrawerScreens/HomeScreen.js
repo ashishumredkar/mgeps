@@ -150,6 +150,7 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.listContainer}
@@ -199,8 +200,8 @@ class HomeScreen extends React.Component {
             );
           }}
         />
-
-        <View style={styles.bottomView}>
+<BottomView/>
+        {/* <View style={styles.bottomView}>
           <View
             style={{
               flexDirection: "row",
@@ -234,31 +235,8 @@ class HomeScreen extends React.Component {
               }}
             />
           </View>
-          {/* <View
-            style={{ flexDirection: "row", marginTop: 20, marginBottom: 10 }}
-          >
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <Image
-              source={require("../../Image/menu_logo.png")}
-              style={styles.image}
-            />
-
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Powered By:
-            </Text>
-
-            <Image
-              source={require("../../Image/nextenders_logo.png")}
-              style={{
-                width: 51,
-                height: 51,
-                resizeMode: "contain",
-              }}
-            />
-          </View> */}
-        </View>
+          
+        </View> */}
       </View>
     );
   }

@@ -102,9 +102,7 @@ export function LogoTitle(props) {
             <Image
         style={{ width: 35,
           height: 35,backgroundColor:'white'}}
-        source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
-        }}
+          source={require('../Image/menu_logo.png')}
       />
             </View>
           
@@ -121,18 +119,9 @@ export function LogoTitle(props) {
             </Text>
           </View>
         </View>
-    // <View
-    //   style={[,{
-    //     marginLeft: -40,marginTop:17,marginLeft:8,flexDirection:'row'
-    //   }]}>
-
-
-    //     <Text style={[{fontFamily:'bold', size:'38', color:'white',height: 40, marginTop: 5,marginLeft:4 ,alignSelf:'flex-start',alignContent:'center',alignItems:"center"}]}>
-    //       Profile Overview
-    //     </Text>
-    // </View>
   );
 }
+
 
 export function NotificationView() {
   const navigation = useNavigation();
@@ -146,10 +135,8 @@ export function NotificationView() {
          {/* <Badge size={10} style={{width:40,height:40}} /> */}
          <Image
         style={{ width: 40,
-          height: 40,backgroundColor:'white'}}
-        source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
-        }}
+          height: 40,backgroundColor:'#307ecc'}}
+          source={require('../Image/notification.png')}
       />
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
         {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */} 
@@ -262,7 +249,7 @@ const DrawerNavigatorRoutes = (props) => {
 
       <Image
         style={{ width: 25, height: 25 }}
-        source={require('../Image/registration.png')}
+        source={require('../Image/dashboard.png')}
       />
       <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
       Dashboard
@@ -276,7 +263,7 @@ const DrawerNavigatorRoutes = (props) => {
 
       <Image
         style={{ width: 25, height: 25 }}
-        source={require('../Image/registration.png')}
+        source={require('../Image/settings.png')}
       />
       <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
       Settings
@@ -290,7 +277,7 @@ const DrawerNavigatorRoutes = (props) => {
 
       <Image
         style={{ width: 25, height: 25 }}
-        source={require('../Image/registration.png')}
+        source={require('../Image/profile.png')}
       />
       <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
       Profile Overview

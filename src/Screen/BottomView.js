@@ -10,9 +10,8 @@ export default class BottomView extends Component {
             style={{
               flexDirection: "row",
               flex: 0.5,
-            }}
-          >
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+            }}>
+             <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
               Copyright {"\u00A9"}By.philGEPS{" "}
             </Text>
             <Image
@@ -74,16 +73,25 @@ const styles = StyleSheet.create({
   },
 
   bottomView: {
-    flexDirection: "row",
-    width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
-    flexDirection: "row",
-    margin: 10,
-    paddingBottom: Platform.OS === "ios" ? 20 : 25,
+       marginLeft:5,
+      position: 'absolute',
+      bottom: 0,
+      width: '100%',
+      paddingBottom: 16,
+      paddingTop: 50,
+      alignSelf: 'center',
+      flexDirection: "row",
+    
+    // flexDirection: "row",
+    // width: "100%",
+    // height: 50,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // position: "absolute",
+    // bottom: 0,
+    // flexDirection: "row",
+    // margin: 10,
+    // paddingBottom: Platform.OS === "ios" ? 20 : 25,
   },
 
   image: {

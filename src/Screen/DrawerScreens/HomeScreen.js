@@ -259,15 +259,4 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
-  bottomView: {
-    flexDirection: "row",
-    width: "100%",
-    height: 60,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 10,
-    flexDirection: "row",
-    backgroundColor: AppColors.lightBlue50,
-    paddingBottom: Platform.OS === "ios" ? 25 : 0,
-  },
 });

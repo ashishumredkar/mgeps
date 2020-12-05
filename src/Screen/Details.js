@@ -22,6 +22,8 @@ import BackButton from "./Components/BackButton";
 // import {withNavigation} from '@react-navigation/native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomToolbar from "./Components/CustomToolbar";
+import { homeStyles } from "../style/appStyles";
+
 export const Loader = () => (
   <View style={{ minHeight: 230, padding: 20 }}>
     <ActivityIndicator
@@ -197,7 +199,7 @@ export default class Details extends Component {
   };
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <GeneralStatusBarColor
           backgroundColor="#44444f"
           barStyle="light-content"
@@ -321,14 +323,10 @@ export default class Details extends Component {
             </View>
           </View>
         )}
-        <View style={{ flex: 0.1 }}>
+        <View>
           <BottomView />
         </View>
       </View>
-      // <View style={styles.container}>
-
-      //   <BottomView/>
-      // </View>
     );
   }
 }

@@ -323,7 +323,7 @@ export default class Details extends Component {
             </View>
           </View>
         )}
-        <View>
+        <View style={{flex:0.1}}>
           <BottomView />
         </View>
       </View>

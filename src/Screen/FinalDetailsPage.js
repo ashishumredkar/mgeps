@@ -11,17 +11,22 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-export const  Divider = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          width: "100%",
-          backgroundColor: "#000",
-        }}
-      />
-    );
-  }
+import BottomView from "./BottomView";
+import CustomToolbar from "./Components/CustomToolbar";
+import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
+import AsyncStorage from "@react-native-community/async-storage";
+
+export const Divider = () => {
+  return (
+    <View
+      style={{
+        height: 0.5,
+        width: "100%",
+        backgroundColor: "grey",
+      }}
+    />
+  );
+};
 
 export default class FinalDetailsPage extends Component {
   constructor(props) {
@@ -29,102 +34,109 @@ export default class FinalDetailsPage extends Component {
     this.state = {
       modalVisible: false,
       userSelected: [],
-      data: [
-        {
-          id: 1,
-          name: "Mark Doe",
-          position: "CEO",
-          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 2,
-          name: "John Doe",
-          position: "CTO",
-          image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 3,
-          name: "Clark Man",
-          position: "Creative designer",
-          image: "https://bootdey.com/img/Content/avatar/avatar6.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 4,
-          name: "Jaden Boor",
-          position: "Front-end dev",
-          image: "https://bootdey.com/img/Content/avatar/avatar5.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 5,
-          name: "Srick Tree",
-          position: "Backend-end dev",
-          image: "https://bootdey.com/img/Content/avatar/avatar4.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 6,
-          name: "John Doe",
-          position: "Creative designer",
-          image: "https://bootdey.com/img/Content/avatar/avatar3.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 7,
-          name: "John Doe",
-          position: "Manager",
-          image: "https://bootdey.com/img/Content/avatar/avatar2.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 8,
-          name: "John Doe",
-          position: "IOS dev",
-          image: "https://bootdey.com/img/Content/avatar/avatar1.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 9,
-          name: "John Doe",
-          position: "Web dev",
-          image: "https://bootdey.com/img/Content/avatar/avatar4.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-        {
-          id: 10,
-          name: "John Doe",
-          position: "Analyst",
-          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
-          about:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.",
-        },
-      ],
+      pageTitle: "",
+      loading: false,
+      userType: "Merchant",
+      apiUrl: "",
+      urlParameter: {},
+      authToken: "",
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
+    const mData = this.props.route.params.data;
+    const token = await AsyncStorage.getItem("auth_token");
 
+    const userType = await AsyncStorage.getItem("userType");
 
-    const mData=this.props.route.params.data;
+    console.log("urlParameter ", mData);
 
-    this.setState({userSelected:mData})
+    this.setState({
+      authToken: token,
+      userSelected: mData,
+      pageTitle: mData.activityType,
+      userType: userType,
+      urlParameter: mData.urlParameter,
+      apiUrl: mData.detailsUrl,
+    });
 
-    console.log("faltusala ",mData.urlParameter)
-
-
+    this.getDetails(token, mData.urlParameter, mData.detailsUrl);
   }
+
+  getDetails = async (token, urlParams, url) => {
+    this.setState({ loading: true });
+    console.log("urlParams ", urlParams);
+    const data = urlParams;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+
+        if (responseJson) {
+          this.setState({ loading: false, userSelected: responseJson });
+          this.sendAckForRead(
+            this.state.authToken,
+            responseJson.notificationId,
+            responseJson.moduleName
+          );
+        }
+
+        console.log("getDetails ", responseJson);
+      })
+      .catch((error) => {
+        //Hide Loader
+        //setLoading(false);
+        console.log("getDetails ", error);
+        this.setState({ loading: false });
+
+        console.error("qwerty  ", error);
+      })
+      .finally(() => this.setState({ loading: false }));
+  };
+
+  sendAckForRead = async (token, notificationId, moduleName) => {
+    const data = {
+      moduleName: moduleName,
+      notificationId: notificationId,
+    };
+    this.setState({ loading: true });
+    fetch(
+      "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+        this.setState({ loading: false });
+
+        console.log("sendAckForRead ", responseJson);
+      })
+      .catch((error) => {
+        //Hide Loader
+        //setLoading(false);
+        this.setState({ loading: false });
+
+        console.error("qwerty  ", error);
+      })
+      .finally(() => this.setState({ loading: false }));
+  };
+
   clickEventListener = (item) => {
     this.setState({ userSelected: item }, () => {
       this.setModalVisible(true);
@@ -136,76 +148,143 @@ export default class FinalDetailsPage extends Component {
   }
 
   render() {
+    const { userSelected, userType, urlParameter } = this.state;
 
-    const {userSelected}=this.state;
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <GeneralStatusBarColor
+          backgroundColor="#D62223"
+          barStyle="light-content"
+        />
 
-<View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Details</Text>
-            </View>
-            <View style={styles.cardContent}>
-              {/* {this.__renderColors()} */}
-            </View>
-          </View>
-        <View style={styles.card}>
+        <CustomToolbar
+          navigation={this.props.navigation}
+          title={this.state.pageTitle}
+          userType={userType}
+          backgroundColor="#3775f0"
+        />
+        <View style={{ flex: 0.9, margin: 8 }}>
           <View
             style={{
-                width:'100%',
-                height:'80%',
-              flexDirection: "column",
-              alignItems: "flex-start",
-              alignContent: "flex-start",
+              height: 40,
+              width: "100%",
+              backgroundColor: "blue",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              borderBottomLeftRadius: 2,
             }}
           >
-            <Text style={styles.name}>Tender Id {}</Text>
-            <Divider/>
-            <Text style={styles.name}>Notice Reference Number {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Control Number {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Projct Title {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Notice Title{}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Mode of proc {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Business Category {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Applicable Proc Rule{}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Source Funds {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Mode of bid Submission {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Delivery Location {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Classification{}</Text>
-            <Divider/>
-
-
-            <Text style={styles.name}>Lot Type {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Created By {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Created By UserName {}</Text>
-            <Divider/>
-
-            <Text style={styles.name}>Created By email {}</Text>
+            <Text style={styles.cardTitle}>Details</Text>
           </View>
+          <View style={styles.card}>
+            <View style={styles.cardContent} />
+
+            <View
+              style={{
+                width: "100%",
+                // height: "70%",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                alignContent: "flex-start",
+              }}
+            >
+              <Text style={styles.name}>Tender Id {urlParameter.tenderId}</Text>
+              <Divider />
+              <Text style={styles.name}>
+                Notice Reference Number {userSelected.noticeReferenceNumber}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Control Number {userSelected.controlNumber}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Projct Title {userSelected.projectTitle}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Notice Title {userSelected.noticeTitle}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Mode of proc {userSelected.modeOfProcurement}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Business Category {userSelected.businessCategory}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Applicable Proc Rule {userSelected.applicableProcRule}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Source Funds {userSelected.sourceFunds}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Mode of bid Submission {userSelected.modeOfBidSubmission}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Delivery Location {userSelected.deliveryLocation}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Classification {userSelected.classification}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>Lot Type {userSelected.lotType}</Text>
+              <Divider />
+
+              {/* <Text style={styles.name}>Created By {userSelected.createdBy}</Text> */}
+
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Created By</Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.createdBy}
+                </Text>
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Created By UserName {userSelected.createdByUsername}
+              </Text>
+              <Divider />
+
+              <Text style={styles.name}>
+                Created By email {userSelected.createdByEmail}
+              </Text>
+            </View>
+          </View>
+        </View>
+        {this.state.isLoading && (
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <ActivityIndicator size="large" color="#ff6a00" />
+          </View>
+        )}
+        <View style={{ flex: 0.1 }}>
+          <BottomView />
         </View>
       </View>
     );
@@ -215,8 +294,8 @@ export default class FinalDetailsPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === "ios" ? 20 :0,
-    backgroundColor:"#ebf0f7",
+    paddingTop: Platform.OS === "ios" ? 20 : 0,
+    backgroundColor: "#ebf0f7",
   },
   header: {
     backgroundColor: "#00CED1",
@@ -248,9 +327,21 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 45,
   },
+  BorderClass: {
+    // Setting up image width.
+    width: 160,
 
+    // Setting up image height.
+    height: 160,
+
+    // Set border width.
+    borderWidth: 1,
+
+    // Set border color.
+    borderColor: "#F44336",
+  },
   card: {
-    shadowColor: '#00000021',
+    shadowColor: "#00000021",
     shadowOffset: {
       width: 0,
       height: 6,
@@ -259,21 +350,31 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     elevation: 12,
 
-    marginVertical: 5,
-    backgroundColor:"white",
-    marginHorizontal: 5,
+    // marginVertical: 5,
+    backgroundColor: "white",
+    // marginHorizontal: 5,
     flexDirection: "column",
+    marginBottom: 16,
+
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 8,
+
+    // Set border color.
+    borderColor: "blue",
   },
-  cardTitle:{
-    color:"#00BFFF",
+  cardTitle: {
+    color: "white",
     fontSize: 18,
     alignSelf: "flex-start",
+    alignContent: "center",
+    alignItems: "center",
     fontWeight: "bold",
-    marginStart:5
+    margin: 5,
   },
 
   name: {
-    fontSize: 18,
+    fontSize: 14,
     alignSelf: "flex-start",
     color: "black",
     fontWeight: "bold",

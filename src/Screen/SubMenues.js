@@ -11,11 +11,14 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import CustomToolbar from "./Components/CustomToolbar";
 import BottomView from "./BottomView";
+import { homeStyles } from "../style/homeStyles";
+
 const STORAGE_KEY = "@user_data";
 
 const colors = [
@@ -32,15 +35,27 @@ const colors = [
 ];
 //['#0088FE', 'skyblue', '#FFBB28', 'purple','red','blue','darkblue','orange'];
 
+// const imagesArray = [
+//   "https://img.icons8.com/color/70/000000/name.png",
+//   "https://img.icons8.com/office/70/000000/home-page.png",
+//   "https://img.icons8.com/color/70/000000/two-hearts.png",
+//   "https://img.icons8.com/color/70/000000/family.png",
+//   "https://img.icons8.com/color/70/000000/groups.png",
+//   "https://img.icons8.com/color/70/000000/classroom.png",
+//   "https://img.icons8.com/dusk/70/000000/checklist.png",
+//   "https://img.icons8.com/dusk/70/000000/globe-earth.png",
+//   "https://img.icons8.com/color/70/000000/to-do.png",
+//   "https://img.icons8.com/color/70/000000/basketball.png",
+// ];
 const imagesArray = [
-  "https://img.icons8.com/color/70/000000/name.png",
-  "https://img.icons8.com/office/70/000000/home-page.png",
-  "https://img.icons8.com/color/70/000000/two-hearts.png",
-  "https://img.icons8.com/color/70/000000/family.png",
-  "https://img.icons8.com/color/70/000000/groups.png",
-  "https://img.icons8.com/color/70/000000/classroom.png",
-  "https://img.icons8.com/dusk/70/000000/checklist.png",
-  "https://img.icons8.com/dusk/70/000000/globe-earth.png",
+  require("../Image/registration.png"),
+  require("../Image/membership.png"),
+  require("../Image/notice.png"),
+  require("../Image/trophy.png"),
+  require("../Image/cart.png"),
+  require("../Image/kpms.png"),
+  require("../Image/kpms.png"),
+  require("../Image/auction.png"),
   "https://img.icons8.com/color/70/000000/to-do.png",
   "https://img.icons8.com/color/70/000000/basketball.png",
 ];
@@ -123,58 +138,67 @@ class SubMenues extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-
-<GeneralStatusBarColor
+      <SafeAreaView style={{ flex: 1 }}>
+        <GeneralStatusBarColor
           backgroundColor="#44444f"
           barStyle="light-content"
         />
-      
-      <CustomToolbar navigation={this.props.navigation} title={this.state.title} userType ={"Merchant"} backgroundColor="#3775f0"/>
 
-       
-        <FlatList
-          data={this.state.menuList}
-          renderItem={({ item, index }) => {
-            console.log("item ", item);
-
-            return (
-              <TouchableOpacity
-                style={[styles.card, { backgroundColor: colors[index] }]}
-                onPress={() => {
-                  console.log("item ", item);
-                  this.props.navigation.navigate("Details", {
-                    link: item.link,
-                    title: this.state.title + "/" + item.name,
-                  });
-                }}
-              >
-                <View style={styles.cardHeader}>
-                  <Text style={styles.title}>{item.name}</Text>
-                  {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
-                </View>
-                <Image
-                  style={styles.cardImage}
-                  source={{ uri: imagesArray[index] }}
-                />
-                <View style={styles.cardFooter}>
-                  <Text style={styles.subTitle}>
-                    {item.unRead} Unread Notices
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-          //Setting the number of column
-          numColumns={2}
-          keyExtractor={(item, index) => "" + item.id}
+        <CustomToolbar
+          navigation={this.props.navigation}
+          title={this.state.title}
+          userType={"Merchant"}
+          backgroundColor="#3775f0"
         />
-       
-       
-        <View style={{flex:0.2,alignSelf:'auto'}}>
-        <BottomView/>
+        {/* this.props.navigation.navigate("Details", {
+                      link: item.link,
+                      title: this.state.title + "/" + item.name,
+                    }); */}
+        <View style={{ flex: 0.9,margin:5 }}>
+          <FlatList
+            data={this.state.menuList}
+            renderItem={({ item, index }) => {
+              console.log("item ", item);
+
+              return (
+                <Pressable
+                  style={[homeStyles.card, { backgroundColor: colors[index] }]}
+                  onPress={() => {
+                    this.props.navigation.navigate("Details", {
+                      link: item.link,
+                      title: this.state.title + "/" + item.name,
+                    });
+                  }}
+                >
+                  <View style={homeStyles.cardHeader}>
+                    <Text style={homeStyles.title}>{item.name}</Text>
+                    {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
+                  </View>
+
+                  <View style={homeStyles.cardFooter}>
+                    <Image
+                      style={homeStyles.cardImage}
+                      source={imagesArray[index]}
+                      //source={{ uri: imagesArray[index] }}
+                    />
+
+                    <Text style={homeStyles.subTitle}>
+                      {item.unRead} Unread Notices
+                    </Text>
+                  </View>
+                  <View style={homeStyles.cardHeader}></View>
+                </Pressable>
+              );
+            }}
+            //Setting the number of column
+            numColumns={2}
+            keyExtractor={(item, index) => "" + index}
+          />
         </View>
-       
+
+        <View style={{ flex: 0.1, alignSelf: "auto" }}>
+          <BottomView />
+        </View>
       </SafeAreaView>
     );
   }

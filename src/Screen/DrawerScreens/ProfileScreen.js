@@ -54,23 +54,29 @@ const ProfileScreen = (props) => {
     modified: "2019-04-27T19:08:35+08:00",
     created: "2019-04-27T19:08:35+08:00",
   });
+  const [username, setUserName] = useState("");
 
-  const [animating, setAnimating] = useState(true);
 
   useEffect(() => {
-      setAnimating(false);
-      //Check if user_id is set or not
-      //If not then send for Authentication
-      //else send to Home Screen
-      AsyncStorage.getItem('@user_data').then((value) =>{
-       const abc=JSON.parse(value)
-        setProfileData(abc)
-      }
-    
-      );
+    readData();
    
-  }, [profileData,animating]);
+  }, [username]);
   
+  const readData = async () => {
+    try {
+     // const userData = await AsyncStorage.getItem("@user_data");
+
+      const userType=await AsyncStorage.getItem("userType");
+
+      //const value = JSON.parse(userData);
+      console.log("setAnimatingabc ", userType);
+
+      setUserName(userType)
+      //setProfileData(value);
+    } catch (e) {
+      console.log("catch ", e);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -80,7 +86,7 @@ const ProfileScreen = (props) => {
           barStyle="light-content"
         />
       
-      <CustomToolbar title={"Profile"} userType ={"Merchant"} backgroundColor="#3775f0"/>
+      <CustomToolbar title={"Profile"} userType ={username} backgroundColor="#3775f0"/>
 
       <Card style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}>
         <View style={{ flexDirection: "row" }}>

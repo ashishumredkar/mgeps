@@ -7,7 +7,7 @@ import {
   Text,
   View,
   Image,
-  
+  useWindowDimensions
 } from "react-native";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
@@ -95,6 +95,32 @@ const homeScreenStack = ({ navigation }) => {
   );
 };
 export function LogoTitle(props) {
+
+  const [username, setUserName] = useState("");
+ 
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    readData();
+  }, []);
+
+  const readData = async () => {
+    try {
+     // const userData = await AsyncStorage.getItem("@user_data");
+
+      const userType=await AsyncStorage.getItem("userType");
+
+      //const value = JSON.parse(userData);
+      console.log("setAnimatingabc ", userType);
+
+      setUserName(userType)
+      //setProfileData(value);
+    } catch (e) {
+      console.log("catch ", e);
+    }
+  };
+
+
   return (
     <View style={{ flexDirection: "row",marginLeft: -20,marginTop:5 }}>
          
@@ -115,7 +141,7 @@ export function LogoTitle(props) {
               Dashboard
             </Text>
             <Text style={[{color:'white',fontSize:14}]}>
-             UserType: merchant
+             UserType: {username}
             </Text>
           </View>
         </View>
@@ -233,6 +259,8 @@ const DrawerNavigatorRoutes = (props) => {
       const userData = await AsyncStorage.getItem("@user_data");
       const value = JSON.parse(userData);
       console.log("setAnimatingabc ", value);
+
+      setUserName(value.username)
       setProfileData(value);
     } catch (e) {
       console.log("catch ", e);
@@ -272,6 +300,7 @@ const DrawerNavigatorRoutes = (props) => {
     );
   }
   function ProfileMenu(props) {
+
     return (
       <View style={{ flexDirection: "row", marginTop: 2,marginBottom:2,height:35 }}>
 
@@ -285,7 +314,9 @@ const DrawerNavigatorRoutes = (props) => {
       </View>
     );
   }
-  
+  const dimensions = useWindowDimensions();
+
+  const isLargeScreen = dimensions.width >= 768;
   return (
     <Drawer.Navigator
       drawerContentOptions={{
@@ -296,9 +327,15 @@ const DrawerNavigatorRoutes = (props) => {
           color: "#d8d8d8",
         },
       }}
-     
+      // openByDefault
+      // drawerType={isLargeScreen ? 'permanent' : 'back'}
+      // drawerStyle={isLargeScreen ? null : { width: '50%' }}
+      // overlayColor="transparent"
+
+
       screenOptions={{ headerShown: false }}
-      drawerContent={CustomSidebarMenu}
+      drawerContent={(props) => <CustomSidebarMenu {...{employeename:username,...props}}/>}
+       // drawerContent={CustomSidebarMenu}
        //drawerContent={<CustomDrawerContentComponent></CustomDrawerContentComponent>}
 
     >
@@ -307,7 +344,7 @@ const DrawerNavigatorRoutes = (props) => {
         // options={{ drawerLabel: "Dashboard" }}
        // options={{ drawerLabel: "Dashboard" ,headerTitle: props => <LogoTitle {...props} /> }}
        options={{
-        drawerLabel: props => <DashboardMenu {...props} />,
+        drawerLabel: props => <DashboardMenu {...{employeename:username,...props}} />,
         // headerRight: () => (
         //   <LogoTitle
         //     onPress={() => alert('This is a button!')}
@@ -316,22 +353,22 @@ const DrawerNavigatorRoutes = (props) => {
         //   />
         // ),
       }}
+       // component={homeScreenStack({username})}
         component={homeScreenStack}
-       
       />
 
       <Drawer.Screen
         name="profile"
-        options={{ 
-       // drawerLabel: "Profile Overview" }}
-       drawerLabel: props => <ProfileMenu {...props} />
-      }}
+     
+          options={{drawerLabel: props => <ProfileMenu {...{employeename:username,...props}} />,
+    }}
 
+      //  drawerLabel: props => <ProfileMenu {...props} 
         component={profileScreenStack}
       />
       <Drawer.Screen
         name="settingScreenStack"
-        options={{drawerLabel: props => <SettingsMenu {...props} />,
+        options={{drawerLabel: props => <SettingsMenu {...{employeename:username,...props}} />,
       }}
         component={settingScreenStack}
       />

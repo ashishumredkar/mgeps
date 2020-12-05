@@ -19,78 +19,16 @@ import {
   DrawerItemList,
   SafeAreaView,
 } from "@react-navigation/drawer";
-import { Avatar, Divider, Icon, Overlay } from "react-native-elements";
+import {Divider } from "react-native-elements";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import { FlatList } from "react-native-gesture-handler";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-const arrMenu = [
-  { id: 0, name: "Home", icon: "home-outline", navScreen: "HomeScreen" },
-  {
-    id: 1,
-    name: "Favourite",
-    icon: "heart-multiple-outline",
-    navScreen: "FavouriteScreen",
-  },
-  {
-    id: 2,
-    name: "Messages",
-    icon: "comment-text-multiple",
-    navScreen: "MessagesScreen",
-  },
-  { id: 3, name: "My Walet", icon: "wallet", navScreen: "MyWaletScreen" },
-  { id: 4, name: "Help", icon: "help", navScreen: "HelpScreen" },
-  { id: 5, name: "Log out", icon: "logout", navScreen: "LoginScreen" },
-];
 
 const CustomSidebarMenu = (props) => {
   // const CustomSidebarMenu = (props) => {
+    // const [name, setName] = useState('John Doe');
 
-  console.log("CustomSidebarMenuash ", props);
-  console.log("CustomSidebarMenuash44 ", props.state.routes);
+    console.log("CustomSidebarMenu ",props.employeename)
 
-  const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
-
-  const navigateToScreen = (navScreen) => {
-    props.navigation.toggleDrawer();
-    props.navigation.replace(navScreen);
-    // this.props.navigation.navigate(navScreen)
-  };
-
-  // const [username,setUserName]=useState("ashish")
-  // const [profileImage,setProfileImage]=useState("")
-
-  // Similar to componentDidMount and componentDidUpdate:
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   readData();
-  // },[]);
-
-  // const readData = async () => {
-  //   try {
-  //      const userData = await AsyncStorage.getItem('@user_data');
-  //      console.log("userData",userData);
-  //    // const token = await AsyncStorage.getItem("auth_token");
-
-  //     // const mData = JSON.parse(userData);
-
-  //     // if (token) {
-  //     //   setAuthToken(token);
-  //     // }
-  //     if (token) {
-  //       this.setState({
-  //         // userId: mData.id,
-  //         // userType: mData.userType,
-  //         authToken: token,
-  //       });
-
-  //     }
-  //   } catch (e) {
-  //     console.log("catch ", e);
-  //     alert("Failed to fetch the data from storage" + e);
-  //   }
-  // };
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <ImageBackground
@@ -109,7 +47,7 @@ const CustomSidebarMenu = (props) => {
             style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
           />
           <Text style={stylesSidebar.profileHeaderText}>mgeps</Text>
-          <Text style={stylesSidebar.profileHeaderText}>UserName: ashish</Text>
+          <Text style={stylesSidebar.profileHeaderText}>UserName:{props.employeename}</Text>
         </View>
       </View>
 
@@ -137,9 +75,9 @@ const CustomSidebarMenu = (props) => {
             <View style={{ flexDirection: "row" }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
-                source={require("../../Image/menu_logo.png")}
+                source={require("../../Image/logout.png")}
               />
-              <Text style={{ color: "black" }}>Logout</Text>
+              <Text style={{ color: "black",marginTop:5 }}>Logout</Text>
             </View>
           )}
           onPress={() => {
@@ -168,33 +106,7 @@ const CustomSidebarMenu = (props) => {
         />
       </DrawerContentScrollView>
 
-      {/* <View elevation={6} style={{ backgroundColor: '#ffffff' }}>
-          <TouchableNativeFeedback onPress={()=> navigateToScreen("Profile")} background={ripple}>
-            <View style={styles.containDrawerOption}>
-              <Icon
-                name='logout'
-                type='simple-line-icon'
-                size={20}
-                color={'grey'}
-                containerStyle={{ marginRight: '10%' }}
-              />
-              <Text style={{ color: 'black', fontFamily: 'sans-serif-medium' }}>Logout</Text>
-            </View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback onPress={()=> props.navigation.toggleDrawer()} background={ripple}>
-            <View style={styles.containDrawerOption}>
-              <Icon
-                name='user-secret'
-                type='font-awesome'
-                size={24}
-                color={'grey'}
-                containerStyle={{ marginRight: '10%' }}
-              />
-              <Text style={{ color: 'black', fontFamily: 'sans-serif-medium' }}>Developer</Text>
-            </View>
-          </TouchableNativeFeedback>
-
-        </View> */}
+      
     </View>
   );
 };

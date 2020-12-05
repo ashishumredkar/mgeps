@@ -21,6 +21,7 @@ const STORAGE_KEY = "@user_data";
 import Loader from "../Components/Loader";
 import { AppColors } from "../../style/AppColors";
 import { homeStyles } from "../../style/homeStyles";
+import BottomView from "../BottomView";
 
 const colors = [
   "#29B6F6",
@@ -149,94 +150,61 @@ class HomeScreen extends React.Component {
     if (this.state.loading) return <Loader loading={this.state.loading} />;
 
     return (
-      <View style={styles.container}>
-        
-        <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.listContainer}
-          data={this.state.menuList}
-          horizontal={false}
-          numColumns={2}
-          keyExtractor={(item) => {
-            return "" + item.id;
-          }}
-          ListEmptyComponent={this.EmptyListMessage}
-          renderItem={({ item, index }) => {
-            return (
-              <Pressable
-                style={[homeStyles.card, { backgroundColor: colors[index] }]}
-                onPress={() => {
-                  if (item.sub.length > 0) {
-                    this.props.navigation.navigate("SubMenues", {
-                      data: [...item.sub],
-                      title: item.name,
-                    });
-                  } else {
-                    this.props.navigation.navigate("Details", {
-                      link: item.link,
-                      title: item.name,
-                    });
-                  }
-                }}
-              >
-                <View style={homeStyles.cardHeader}>
-                  <Text style={homeStyles.title}>{item.name}</Text>
-                  {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
-                </View>
-
-                <View style={homeStyles.cardFooter}>
-                  <Image
-                    style={homeStyles.cardImage}
-                    source={imagesArray[index]}
-                    //source={{ uri: imagesArray[index] }}
-                  />
-
-                  <Text style={homeStyles.subTitle}>
-                    {item.unRead} Unread Notices
-                  </Text>
-                </View>
-                <View style={homeStyles.cardHeader}></View>
-              </Pressable>
-            );
-          }}
-        />
-<BottomView/>
-        {/* <View style={styles.bottomView}>
-          <View
-            style={{
-              flexDirection: "row",
-              flex: 0.5,
+      <View style={{ flex: 1}}>
+        <View style={{ flex: 0.9,margin:5  }}>
+          <FlatList
+            style={styles.list}
+            contentContainerStyle={styles.listContainer}
+            data={this.state.menuList}
+            horizontal={false}
+            numColumns={2}
+            keyExtractor={(item,index) => {
+              return "" + index;
             }}
-          >
-            <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <Image
-              source={require("../../Image/menu_logo.png")}
-              style={styles.image}
-            />
-            <View style={{ width: 20 }} />
-          </View>
-          <View style={{ width: 40}} />
-          <View  style={{flexDirection:'row',flex:0.5}}>
+            ListEmptyComponent={this.EmptyListMessage}
+            renderItem={({ item, index }) => {
+              return (
+                <Pressable
+                  style={[homeStyles.card, { backgroundColor: colors[index] }]}
+                  onPress={() => {
+                    if (item.sub.length > 0) {
+                      this.props.navigation.navigate("SubMenues", {
+                        data: [...item.sub],
+                        title: item.name,
+                      });
+                    } else {
+                      this.props.navigation.navigate("Details", {
+                        link: item.link,
+                        title: item.name,
+                      });
+                    }
+                  }}
+                >
+                  <View style={homeStyles.cardHeader}>
+                    <Text style={homeStyles.title}>{item.name}</Text>
+                    {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
+                  </View>
 
-          <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
-              Powered By:
-            </Text>
+                  <View style={homeStyles.cardFooter}>
+                    <Image
+                      style={homeStyles.cardImage}
+                      source={imagesArray[index]}
+                      //source={{ uri: imagesArray[index] }}
+                    />
 
-            <Image
-              source={require("../../Image/nextenders_logo.png")}
-              style={{
-                width: 90,
-                height: 30,
-                position: "relative",
-                top: 8,
-                resizeMode: 'contain'
-              }}
-            />
-          </View>
-          
-        </View> */}
+                    <Text style={homeStyles.subTitle}>
+                      {item.unRead} Unread Notices
+                    </Text>
+                  </View>
+                  <View style={homeStyles.cardHeader}></View>
+                </Pressable>
+              );
+            }}
+          />
+        </View>
+        <View style={{ flex: 0.1, alignSelf: "auto" }}>
+          <BottomView />
+        </View>
       </View>
     );
   }

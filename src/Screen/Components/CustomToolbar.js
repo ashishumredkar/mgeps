@@ -2,17 +2,25 @@ import React from 'react';
 import { Text, View, StyleSheet,Image } from 'react-native';
 import BackButton from './BackButton'; 
 // import {withNavigation} from 'react-navigation';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import { gStyles } from '../../style/appStyles';
- 
- class CustomToolbar extends React.Component {
-    constructor(props) {
-        super(props);     
+
+import OptionMenu from '../Components/OptionMenu'
+const myIcon = (<Icon name="more-vert" size={30} color="white" />)
+import { useNavigation } from '@react-navigation/native';
+
+//  class CustomToolbar extends React.Component {
+  const CustomToolbar = (props) => {
+
+    const navigation = useNavigation();
+
+    const navSettings =()=>{
+      navigation.navigate("settingScreenStack")
     }
-    
-  render() {
+   
+  
     return (
-        <View style={[styles.navBar,{backgroundColor:this.props.backgroundColor}]}>
+        <View style={[styles.navBar,{backgroundColor:props.backgroundColor}]}>
         <View style={styles.leftContainer}>
          <BackButton/>   
         </View>
@@ -24,9 +32,7 @@ import { gStyles } from '../../style/appStyles';
          <Image
      style={{ width: 35,
        height: 35,backgroundColor:'white'}}
-     source={{
-       uri: 'https://reactnative.dev/img/tiny_logo.png',
-     }}
+       source={require('../../Image/menu_logo.png')}
    />
          </View>
        
@@ -36,27 +42,29 @@ import { gStyles } from '../../style/appStyles';
        {/* CONTACT DETAILS  */}
        <View style={{ paddingTop: 8 }}>
          <Text style={[gStyles.contactStyle,{color:'white',fontSize:18}]}>
-         {this.props.title} 
+         {props.title} 
          </Text>
          <Text style={[{color:'white',fontSize:14}]}>
-          UserType: {this.props.userType} 
+          UserType: {props.userType} 
          </Text>
        </View>
      </View>
         </Text>
         <View style={styles.rightContainer}>
           <View style={styles.rightIcon}>
-          {/* <Icon name="ios-search" size={25} color="#000000" /> */}
+          <OptionMenu
+  customButton={myIcon}
+  destructiveIndex={1}
+  options={["Settings",undefined]}
+  actions={[navSettings]}/>
               </View>
-              <View style={styles.rightIcon}>
-          <Icon name="options-vertical" size={25} color="white" />
-              </View>
+            
         </View>
       </View>
       );
     
     
-  }
+  
 }
 export default CustomToolbar;
 const styles = StyleSheet.create({

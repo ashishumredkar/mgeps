@@ -91,7 +91,7 @@ export default class Details extends Component {
           // userType: mData.userType,
           authToken: token,
         });
-        this.fetchUsers();
+        this.fetchData();
       }
     } catch (e) {
       console.log("catch ", e);
@@ -99,7 +99,7 @@ export default class Details extends Component {
     }
   };
 
-  fetchUsers = async () => {
+  fetchData = async () => {
     //console.log("componentDidMount ", this.props.route.params.link);
     this.setState({
       pageTitle: this.props.route.params.title,
@@ -131,16 +131,23 @@ export default class Details extends Component {
         .then((responseJson) => {
           console.log("responseJson", responseJson);
           const mData = responseJson.rows;
-
+         if(mData){
           this.state.page === 1
-            ? this.setState({ users: mData })
-            : this.setState({
-                users: [...this.state.users, ...responseJson.rows],
-              });
+          ? this.setState({ users: mData })
+          : this.setState({
+              users: [...this.state.users, ...responseJson.rows],
+            });
+        this.setState({
+          isLoading: false,
+          totalCount: responseJson.totalRows,
+        });
+         }else{
           this.setState({
             isLoading: false,
             totalCount: responseJson.totalRows,
           });
+         }
+          
         })
         .catch((error) => {});
     } catch (err) {
@@ -150,20 +157,16 @@ export default class Details extends Component {
 
   refreshUsers = () => {
     this.setState({ page: 1 }, () => {
-      this.fetchUsers();
+      this.fetchData();
     });
   };
 
   loadMoreUsers = () => {
     this.setState({ page: this.state.page + 1, isLoadingMore: true }, () => {
-      this.fetchUsers();
+      this.fetchData();
       this.setState({ isLoadingMore: false });
     });
   };
-
-  // componentDidMount() {
-  //   this.fetchUsers();
-  // }
 
   AppHeader = (title) => {
     return (
@@ -178,7 +181,7 @@ export default class Details extends Component {
     return (
       // Flat List Item
       !isLoading && (
-        <Pressable style={[styles.container2]} onPress={this.fetchUsers}>
+        <Pressable style={[styles.container2]} onPress={this.fetchData}>
           <Image
             style={styles.cardImage}
             source={{
@@ -187,7 +190,7 @@ export default class Details extends Component {
             }}
           />
           <Text style={styles.welcome}> No Records Found </Text>
-          <Button title="tap to retry" onPress={this.fetchUsers} />
+          <Button title="tap to retry" onPress={this.fetchData} />
         </Pressable>
       )
     );

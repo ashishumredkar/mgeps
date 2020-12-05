@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, Platform, Image, View, Text } from "react-native";
+import { AppColors } from "../style/AppColors";
 
 export default class BottomView extends Component {
   render() {
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
     height: 50,
     flex: 1,
-    backgroundColor: "#D62223",
+    backgroundColor:AppColors.lightBlue50,
   },
   bottomView: {
     flexDirection: "row",
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 5,
     paddingBottom: Platform.OS === "ios" ? 10 : 10,
-    backgroundColor: "#D62223",
+    backgroundColor:AppColors.lightBlue50,
   },
 
   MainContainer: {

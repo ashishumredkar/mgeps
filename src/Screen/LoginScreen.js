@@ -15,7 +15,8 @@ import {
   KeyboardAvoidingView,
   Picker,
   Platform,
-  ImageBackground,Linking
+  ImageBackground,
+  Linking,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -23,9 +24,10 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Loader from "./Components/Loader";
 
 // import DropDownPicker from "react-native-dropdown-picker";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
-import axios from "axios";
+import Toast from "react-native-simple-toast";
+
 //import messaging from "@react-native-firebase/messaging";
 // import firebase from '@react-native-firebase/app';
 // import PushNotificationIOS from "@react-native-community/push-notification-ios";
@@ -41,17 +43,17 @@ import BottomView from "./BottomView";
 // import { Container, Footer, Title, Button } from "native-base";
 
 const LoginScreen = ({ navigation }) => {
-  const [userEmail, setUserEmail] = useState("");//kiranab
-  const [userPassword, setUserPassword] = useState("");//dsa@1234
+  const [userEmail, setUserEmail] = useState(""); //kiranab
+  const [userPassword, setUserPassword] = useState(""); //dsa@1234
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState("");
   const [forgotPassword, setForgotPassword] = useState("");
 
   const [loginType, setLoginType] = useState("Merchant");
   const [loginCollection, setLoginCollection] = useState([
-       { label: "Agency", value: "Agency" },
-       { label: "Merchant", value: "Merchant" },
-     ]);
+    { label: "Agency", value: "Agency" },
+    { label: "Merchant", value: "Merchant" },
+  ]);
   const [fcmId, setfcmId] = useState(
     "sdlfksdlflsdf987987s9d89f7sd987f987sd89f798s7df"
   );
@@ -60,31 +62,26 @@ const LoginScreen = ({ navigation }) => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType')
+    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType")
       .then((response) => response.json())
       .then((json) => {
-        setForgotPassword(json.forgetPassword)
-        var points = ([json.LoginTypes]);   
-        
-        var mData=[];// Good
-        console.log("data ",points)
-        console.log("data ",points.length)
+        setForgotPassword(json.forgetPassword);
+        var points = [json.LoginTypes];
 
-       
-        if(points[0].Agency){
-          
-          mData=mData.concat ({ label: "Agency", value: "Agency" });
-          
-        } 
-        if(points[0].Merchant){
-          
-          mData=mData.concat ({ label: "Merchant", value: "Merchant" });
-          
-        }  
-        
-        console.log("mData",mData)
+        var mData = []; // Good
+        console.log("data ", points);
+        console.log("data ", points.length);
 
-        setLoginCollection(mData)
+        if (points[0].Agency) {
+          mData = mData.concat({ label: "Agency", value: "Agency" });
+        }
+        if (points[0].Merchant) {
+          mData = mData.concat({ label: "Merchant", value: "Merchant" });
+        }
+
+        console.log("mData", mData);
+
+        setLoginCollection(mData);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
@@ -216,11 +213,13 @@ const LoginScreen = ({ navigation }) => {
   const handleSubmitPress = () => {
     setErrortext("");
     if (!userEmail) {
-      alert("Please fill Email");
+      Toast.showWithGravity("Please fill Email", Toast.LONG, Toast.CENTER);
+
       return;
     }
     if (!userPassword) {
-      alert("Please fill Password");
+      Toast.showWithGravity("Please fill Password", Toast.LONG, Toast.CENTER);
+
       return;
     }
     setLoading(true);
@@ -232,8 +231,8 @@ const LoginScreen = ({ navigation }) => {
       country: "IN",
     };
     console.log("dataToSend ", dataToSend);
-   
-     fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", {
+
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", {
       method: "POST",
       body: JSON.stringify({
         username: userEmail,
@@ -252,8 +251,16 @@ const LoginScreen = ({ navigation }) => {
       .then((responseJson) => {
         //Hide Loader
         setLoading(false);
-        console.log("res1 ", responseJson.userData);
+        console.log("res1 ", responseJson);
         console.log("res2 ", responseJson.data);
+
+        if (responseJson.errorCode === 1) {
+          Toast.showWithGravity(
+            responseJson.errorMessage,
+            Toast.LONG,
+            Toast.CENTER
+          );
+        }
 
         // If server response message same as Data Matched
         if (responseJson.userData) {
@@ -261,9 +268,8 @@ const LoginScreen = ({ navigation }) => {
 
           //const log=JSON.stringify(responseJson.userData)
 
-          
-
           AsyncStorage.setItem("user_id", "" + responseJson.userData.id);
+          AsyncStorage.setItem("userType", loginType);
 
           AsyncStorage.setItem(
             "@user_data",
@@ -283,8 +289,7 @@ const LoginScreen = ({ navigation }) => {
       });
   };
 
-  const onForgotpassword = async() =>{
-
+  const onForgotpassword = async () => {
     //alert("forgotPassword "+forgotPassword)
     const supported = await Linking.canOpenURL(forgotPassword);
 
@@ -293,7 +298,7 @@ const LoginScreen = ({ navigation }) => {
       // by some browser in the mobile
       await Linking.openURL(forgotPassword);
     }
-  }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -302,28 +307,27 @@ const LoginScreen = ({ navigation }) => {
         source={require("../Image/website_image_fit.png")}
       />
       <Loader loading={loading} />
-      <View style={{ width: null,height: "43%",}}/>
+      <View style={{ width: null, height: "43%" }} />
 
       <View>
-      <DropDownPicker
-      items={loginCollection}
-    // items={[
-    //   { label: "Agency", value: "Agency" },
-    //   { label: "Merchant", value: "Merchant" },
-    // ]}
-     placeholder="Select Login Type"
-    containerStyle={{height: 40}}
-    style={{backgroundColor: '#fafafa'}}
-    itemStyle={{
-        justifyContent: 'flex-start'
-    }}
-    dropDownStyle={{backgroundColor: '#fafafa'}}
-    onChangeItem={item =>  setLoginType(item.value)}
-/>
-      <View style={{ width: 300,height: 45,}}/>
-        
+        <DropDownPicker
+          items={loginCollection}
+          // items={[
+          //   { label: "Agency", value: "Agency" },
+          //   { label: "Merchant", value: "Merchant" },
+          // ]}
+          placeholder="Select Login Type"
+          containerStyle={{ height: 40 }}
+          style={{ backgroundColor: "#fafafa" }}
+          itemStyle={{
+            justifyContent: "flex-start",
+          }}
+          dropDownStyle={{ backgroundColor: "#fafafa" }}
+          onChangeItem={(item) => setLoginType(item.value)}
+        />
+        <View style={{ width: 300, height: 45 }} />
       </View>
-      
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputs}
@@ -377,31 +381,28 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.btnText}>Forgot your password?</Text>
       </TouchableOpacity> */}
       <TouchableOpacity
-                      style={[styles.buttonContainer, styles.loginButton]}
+        style={[styles.buttonContainer, styles.loginButton]}
+        activeOpacity={0.5}
+        onPress={
+          // showNoti
+          handleSubmitPress
+        }
+      >
+        <Text style={styles.buttonTextStyle}>LOGIN</Text>
+      </TouchableOpacity>
 
-              activeOpacity={0.5}
-              onPress={
-                // showNoti
-                handleSubmitPress
-              }
-            >
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
-            </TouchableOpacity>
-      
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => onForgotpassword()}
       >
         <Text style={styles.btnText}>Forgot Password</Text>
       </TouchableOpacity>
-      <View style={{flexDirection:'row',marginTop:20}}>
-      <Text style={[styles.btnText,{height:40,marginTop:10}]}>Copyright {"\u00A9"}By.philGEPS </Text>
-      <Image
-            source={require("../Image/success.png")}
-            style={styles.image}
-          />
+      <View style={{ flexDirection: "row", marginTop: 20 }}>
+        <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+          Copyright {"\u00A9"}By.philGEPS{" "}
+        </Text>
+        <Image source={require("../Image/success.png")} style={styles.image} />
       </View>
-     
     </KeyboardAvoidingView>
   );
 
@@ -557,7 +558,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 300,
     height: 45,
-    marginTop:20,
+    marginTop: 20,
     marginBottom: 20,
     flexDirection: "row",
     alignItems: "center",
@@ -588,7 +589,7 @@ const styles = StyleSheet.create({
     height: 45,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems:'center',
+    alignItems: "center",
     marginBottom: 20,
     width: 300,
     borderRadius: 30,
@@ -631,7 +632,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  
+
   MainContainer: {
     flex: 1,
     alignItems: "center",

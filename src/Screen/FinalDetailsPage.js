@@ -205,7 +205,7 @@ export default class FinalDetailsPage extends Component {
             >
             
             
-              <Text style={{width:'100%'}}>
+           {userSelected.noticeReferenceNumber ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Notice Reference Number </Text>
                 <Text
                   style={{
@@ -220,9 +220,12 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.noticeReferenceNumber}
                 </Text>
-              </Text>
-              <Divider />
-              <Text style={{width:'100%'}}>
+                </View> : null}
+              
+              {userSelected.noticeReferenceNumber  ? <Divider /> : null}
+              
+               {userSelected.controlNumber?
+              <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Control Number </Text>
                 <Text
                   style={{
@@ -236,12 +239,12 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.controlNumber}
                 </Text>
-              </Text>
-              <Divider />
+              </View>: null}
+              {userSelected.controlNumber ?  <Divider /> : null}
 
            
 
-              <Text style={{width:'100%'}}>
+             { userSelected.projectTitle? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Projct Title  </Text>
                 <Text
                   style={{
@@ -255,11 +258,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.projectTitle}
                 </Text>
-              </Text>
-              <Divider />
+                </View>: null}
+             {userSelected.projectTitle? <Divider /> : null}
 
              
-              <Text style={{width:'100%'}}>
+             {userSelected.noticeTitle ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}> Notice Title  </Text>
                 <Text
                   style={{
@@ -273,11 +276,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.noticeTitle}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+              {userSelected.noticeTitle ? <Divider /> : null}
 
               
-              <Text style={{width:'100%'}}>
+              {userSelected.modeOfProcurement ?<View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Mode of proc  </Text>
                 <Text
                   style={{
@@ -291,12 +294,12 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.modeOfProcurement}
                 </Text>
-              </Text>
-              <Divider />
+                </View>: null}
+             {userSelected.modeOfProcurement ? <Divider /> : null } 
 
             
 
-              <Text style={{width:'100%'}}>
+              {userSelected.businessCategory ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}> Business Category  </Text>
                 <Text
                   style={{
@@ -310,11 +313,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.businessCategory}
                 </Text>
-              </Text>
-              <Divider />
+                </View>: null}
+              {userSelected.businessCategory ? <Divider /> : null}
 
              
-              <Text style={{width:'100%'}}>
+              { userSelected.applicableProcRule ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Applicable Proc Rule   </Text>
                 <Text
                   style={{
@@ -328,11 +331,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.applicableProcRule}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null }
+                {userSelected.applicableProcRule ? <Divider /> : null}
 
             
-              <Text style={{width:'100%'}}>
+                { userSelected.sourceFunds ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Source Funds </Text>
                 <Text
                   style={{
@@ -346,10 +349,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.sourceFunds}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.sourceFunds ? <Divider /> : null}
 
-              <Text style={{width:'100%'}}>
+
+                { userSelected.modeOfBidSubmission ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Mode of bid Submission  </Text>
                 <Text
                   style={{
@@ -363,11 +367,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.modeOfBidSubmission}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.modeOfBidSubmission ? <Divider /> : null}
 
              
-              <Text style={{width:'100%'}}>
+                { userSelected.deliveryLocation ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Delivery Location  </Text>
                 <Text
                   style={{
@@ -381,11 +385,12 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.deliveryLocation}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.deliveryLocation ? <Divider /> : null}
+
 
             
-              <Text style={{width:'100%'}}>
+                { userSelected.classification ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Classification </Text>
                 <Text
                   style={{
@@ -399,11 +404,12 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.classification}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.classification ? <Divider /> : null}
 
 
-              <Text style={{width:'100%'}}>
+
+                { userSelected.lotType ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Lot Type </Text>
                 <Text
                   style={{
@@ -417,12 +423,13 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.lotType}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.lotType ? <Divider /> : null}
+
 
               {/* <Text style={styles.name}>Created By {userSelected.createdBy}</Text> */}
 
-              <Text style={{width:'100%'}}>
+             {userSelected.createdBy ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Created By </Text>
                 <Text
                   style={{
@@ -436,11 +443,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.createdBy}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.createdBy ? <Divider /> : null}
 
               
-              <Text style={{width:'100%'}}>
+              { userSelected.createdByUsername ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}>Created By UserName </Text>
                 <Text
                   style={{
@@ -454,10 +461,11 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.createdByUsername}
                 </Text>
-              </Text>
-              <Divider />
+                </View> : null}
+                {userSelected.createdByUsername ? <Divider /> : null}
 
-              <Text style={{width:'100%'}}>
+
+              { userSelected.createdByEmail ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
                 <Text style={styles.name}> Created By email </Text>
                 <Text
                   style={{
@@ -471,7 +479,7 @@ export default class FinalDetailsPage extends Component {
                 >
                   {userSelected.createdByEmail}
                 </Text>
-              </Text>
+              </View> : null}
             </View>
           </View>
         </View>

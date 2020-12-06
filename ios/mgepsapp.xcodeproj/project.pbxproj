@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* mgepsappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mgepsappTests.m */; };
-		04DEBB7AAC254AA9896E56FE /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06282A9E04184CB790595DAB /* Feather.ttf */; };
-		071C830537314EC5B45BDFDA /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F8AEBC99A4374C2DB4D55D52 /* MaterialCommunityIcons.ttf */; };
-		0D4D7AD3C26E40FABDC0BDD8 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A73D215F000048FAB7CA4FE9 /* Entypo.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -18,24 +15,11 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* mgepsappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mgepsappTests.m */; };
-		41EB703BC07C42949513DD07 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE3E71910A77444E8DD7C3C2 /* SimpleLineIcons.ttf */; };
-		4CDC00CD30AF477AA106852B /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1814FC3070F146C6A6B358E2 /* EvilIcons.ttf */; };
-		5E0C116355DE47D48DD557C0 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84C380598CEE420EB378FD42 /* Ionicons.ttf */; };
 		6A2B1AB71FB65379436B62B2 /* libPods-mgepsapp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 830BF990DB93C7D2E7718840 /* libPods-mgepsapp-tvOS.a */; };
-		72BCA60D9F204CC1ABB22AA5 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 454D51F37B1E42068319F1F0 /* MaterialIcons.ttf */; };
-		8197498A30A74F21BD07C3E5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6102F1CEEAC6477C935D3721 /* AntDesign.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8C27666BDB23412787D921CE /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4DCF23C177BD44CF9CBCB007 /* FontAwesome5_Brands.ttf */; };
-		98C81F1F949D4CDAB16A5223 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3FFDF376824B4C25B101670A /* Octicons.ttf */; };
 		A2C7C7A6DDAC0FABE600C45E /* libPods-mgepsapp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33929EE3C419E8585F94B275 /* libPods-mgepsapp-tvOSTests.a */; };
 		A8ECEAD94982350D9CA75DA7 /* libPods-mgepsapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5185AB8732B61CF22C4B6244 /* libPods-mgepsapp.a */; };
-		B0056FCB61374F6B8A55FE36 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EEB79A53A41C43AC88EA90BA /* FontAwesome5_Regular.ttf */; };
 		B6491190A595BCE7170123AE /* libPods-mgepsapp-mgepsappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77492A335845065F19618829 /* libPods-mgepsapp-mgepsappTests.a */; };
-		BB27C93E55074DCBA2723BE9 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BCEE8EA815C45D9B5448C47 /* Fontisto.ttf */; };
-		C7C043B5EF424AA7A47993E9 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F96FE578B3384AB5A3FB69A4 /* FontAwesome5_Solid.ttf */; };
-		D6687AC4478C493A87924223 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9723AD828F8444DD8734ADBD /* Zocial.ttf */; };
-		E7666AEE1D6647B7A5BBF3B2 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3ABA4CCC00CB4621AAEFF6B8 /* Foundation.ttf */; };
-		F949E36CD85940438F5EE763 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 62BCA81993344B3297BF174B /* FontAwesome.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -401,22 +385,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				8197498A30A74F21BD07C3E5 /* AntDesign.ttf in Resources */,
-				0D4D7AD3C26E40FABDC0BDD8 /* Entypo.ttf in Resources */,
-				4CDC00CD30AF477AA106852B /* EvilIcons.ttf in Resources */,
-				04DEBB7AAC254AA9896E56FE /* Feather.ttf in Resources */,
-				F949E36CD85940438F5EE763 /* FontAwesome.ttf in Resources */,
-				8C27666BDB23412787D921CE /* FontAwesome5_Brands.ttf in Resources */,
-				B0056FCB61374F6B8A55FE36 /* FontAwesome5_Regular.ttf in Resources */,
-				C7C043B5EF424AA7A47993E9 /* FontAwesome5_Solid.ttf in Resources */,
-				BB27C93E55074DCBA2723BE9 /* Fontisto.ttf in Resources */,
-				E7666AEE1D6647B7A5BBF3B2 /* Foundation.ttf in Resources */,
-				5E0C116355DE47D48DD557C0 /* Ionicons.ttf in Resources */,
-				071C830537314EC5B45BDFDA /* MaterialCommunityIcons.ttf in Resources */,
-				72BCA60D9F204CC1ABB22AA5 /* MaterialIcons.ttf in Resources */,
-				98C81F1F949D4CDAB16A5223 /* Octicons.ttf in Resources */,
-				41EB703BC07C42949513DD07 /* SimpleLineIcons.ttf in Resources */,
-				D6687AC4478C493A87924223 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1079,7 +1047,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "mgepsapp" */ = {
 			isa = XCConfigurationList;
@@ -1088,7 +1056,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "mgepsapp-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1097,7 +1065,7 @@
 				2D02E4981E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "mgepsapp-tvOSTests" */ = {
 			isa = XCConfigurationList;
@@ -1106,7 +1074,7 @@
 				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "mgepsapp" */ = {
 			isa = XCConfigurationList;
@@ -1115,7 +1083,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

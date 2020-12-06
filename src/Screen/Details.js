@@ -22,7 +22,8 @@ import BackButton from "./Components/BackButton";
 // import {withNavigation} from '@react-navigation/native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomToolbar from "./Components/CustomToolbar";
-import { homeStyles } from "../style/appStyles";
+import { gStyles, homeStyles } from "../style/appStyles";
+import { AppColors } from "../style/AppColors";
 
 export const Loader = () => (
   <View style={{ minHeight: 230, padding: 20 }}>
@@ -201,7 +202,7 @@ export default class Details extends Component {
     return (
       <View style={styles.container}>
         <GeneralStatusBarColor
-          backgroundColor="#44444f"
+          backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
         />
 
@@ -212,6 +213,16 @@ export default class Details extends Component {
           backgroundColor="#3775f0"
         />
         {/* {this.state.isLoading ?<Loader loading={this.state.isLoading} /> : null } */}
+        <View style={{ paddingTop: 8 ,paddingLeft:8}}>
+            <Text
+              numberOfLines={1}
+              style={[gStyles.contactStyle, { color: "grey", fontSize: 14,marginTop:5 }]}
+            >
+             {this.state.pageTitle}
+            </Text>
+          </View>
+        
+        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
 
         <View style={{ flex: 0.9 }}>
           {/* <Header
@@ -229,7 +240,7 @@ export default class Details extends Component {
                   style={{ flex: 1, marginBottom: 10 }}
                   onPress={() => {
                     this.props.navigation.navigate("FinalDetailsPage", {
-                      data: item,
+                      data: item,pageTitle:this.state.pageTitle
                     });
                   }}
                 >
@@ -384,9 +395,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    marginBottom: 70,
+    marginBottom: 80,
     width: "100%",
-    height: 50,
+    height: 40,
     // backgroundColor: '#EE5407',
     justifyContent: "center",
     alignItems: "flex-end",
@@ -402,10 +413,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
+  
   },
   textshadow: {
     fontWeight: "bold",
     fontSize: 20,
+    backgroundColor:'white',
     color: "#FFFFFF",
     fontFamily: "Times New Roman",
     paddingLeft: 10,

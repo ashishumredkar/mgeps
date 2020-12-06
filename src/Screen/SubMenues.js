@@ -18,6 +18,8 @@ import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import CustomToolbar from "./Components/CustomToolbar";
 import BottomView from "./BottomView";
 import { homeStyles } from "../style/homeStyles";
+import { gStyles } from "../style/appStyles";
+import { AppColors } from "../style/AppColors";
 
 const STORAGE_KEY = "@user_data";
 
@@ -69,6 +71,8 @@ class SubMenues extends React.Component {
       authToken: "",
       loading: "",
       title: "",
+      iconBackColor:'',
+      iconUri:'',
     };
   }
   async componentDidMount() {
@@ -77,6 +81,8 @@ class SubMenues extends React.Component {
     this.setState({
       menuList: this.props.route.params.data,
       title: this.props.route.params.title,
+      iconBackColor:this.props.route.params.backgroundColor,
+      iconUri:this.props.route.params.iconUrl,
     });
     //this.readData();
   }
@@ -140,7 +146,8 @@ class SubMenues extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <GeneralStatusBarColor
-          backgroundColor="#44444f"
+        backgroundColor={AppColors.colorPrimary}
+
           barStyle="light-content"
         />
 
@@ -150,10 +157,30 @@ class SubMenues extends React.Component {
           userType={"Merchant"}
           backgroundColor="#3775f0"
         />
-        {/* this.props.navigation.navigate("Details", {
-                      link: item.link,
-                      title: this.state.title + "/" + item.name,
-                    }); */}
+       <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
+          <View style={[gStyles.userAvatarStyle,{backgroundColor:this.state.iconBackColor}]}>
+            <Image
+              style={{ width: 35, height: 35, }}
+              // source={require("../Image/menu_logo.png")}
+              source={this.state.iconUri}
+             
+            />
+          </View>
+
+          <View style={{ width: 10 }}></View>
+
+          {/* CONTACT DETAILS  */}
+          <View style={{ paddingTop: 8 }}>
+            <Text
+              numberOfLines={1}
+              style={[gStyles.contactStyle, { color: "black", fontSize: 18,marginTop:5 }]}
+            >
+             {this.state.title}
+            </Text>
+          </View>
+        </View>
+        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
+
         <View style={{ flex: 0.9,margin:5 }}>
           <FlatList
             data={this.state.menuList}

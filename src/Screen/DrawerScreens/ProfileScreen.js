@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, Pressable, StyleSheet } from "react-native";
 import { gStyles } from "../../../src/style/appStyles";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -10,9 +10,9 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { Card } from "react-native-elements";
 import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
 import CustomToolbar from "../Components/CustomToolbar";
+import { AppColors } from "../../style/AppColors";
 
 const ProfileScreen = (props) => {
-  
   const [profileData, setProfileData] = useState({
     id: 23,
     user_type: 11,
@@ -56,22 +56,20 @@ const ProfileScreen = (props) => {
   });
   const [username, setUserName] = useState("");
 
-
   useEffect(() => {
     readData();
-   
   }, [username]);
-  
+
   const readData = async () => {
     try {
-     // const userData = await AsyncStorage.getItem("@user_data");
+      // const userData = await AsyncStorage.getItem("@user_data");
 
-      const userType=await AsyncStorage.getItem("userType");
+      const userType = await AsyncStorage.getItem("userType");
 
       //const value = JSON.parse(userData);
       console.log("setAnimatingabc ", userType);
 
-      setUserName(userType)
+      setUserName(userType);
       //setProfileData(value);
     } catch (e) {
       console.log("catch ", e);
@@ -80,22 +78,26 @@ const ProfileScreen = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <GeneralStatusBarColor
+        backgroundColor={AppColors.colorPrimary}
+        barStyle="light-content"
+      />
 
-<GeneralStatusBarColor
-          backgroundColor="#44444f"
-          barStyle="light-content"
-        />
-      
-      <CustomToolbar title={"Profile"} userType ={username} backgroundColor="#3775f0"/>
+      <CustomToolbar
+        title={"Profile"}
+        userType={username}
+        backgroundColor="#3775f0"
+      />
 
-      <Card style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}>
+      <Card
+        style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
+      >
         <View style={{ flexDirection: "row" }}>
-            <View style={[gStyles.userAvatarStyle]}>
-              <Text>
-                {profileData.fname.charAt(0) + profileData.lname.charAt(0)}
-              </Text>
-            </View>
-          
+          <View style={[gStyles.userAvatarStyle]}>
+            <Text>
+              {profileData.fname.charAt(0) + profileData.lname.charAt(0)}
+            </Text>
+          </View>
 
           <View style={{ width: 10 }}></View>
 
@@ -136,7 +138,7 @@ const ProfileScreen = (props) => {
             </View>
 
             <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text style={styles.nameLabel}>Salutation</Text>
+              <Text style={styles.nameLabel}>Salutation</Text>
               <Text>{profileData.salutation}</Text>
             </View>
           </View>

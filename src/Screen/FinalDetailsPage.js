@@ -15,6 +15,8 @@ import BottomView from "./BottomView";
 import CustomToolbar from "./Components/CustomToolbar";
 import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import AsyncStorage from "@react-native-community/async-storage";
+import { gStyles } from "../style/appStyles";
+import { AppColors } from "../style/AppColors";
 
 export const Divider = () => {
   return (
@@ -40,6 +42,7 @@ export default class FinalDetailsPage extends Component {
       apiUrl: "",
       urlParameter: {},
       authToken: "",
+      title:''
     };
   }
 
@@ -58,6 +61,7 @@ export default class FinalDetailsPage extends Component {
       userType: userType,
       urlParameter: mData.urlParameter,
       apiUrl: mData.detailsUrl,
+      title:this.props.route.params.pageTitle,
     });
 
     this.getDetails(token, mData.urlParameter, mData.detailsUrl);
@@ -153,7 +157,7 @@ export default class FinalDetailsPage extends Component {
     return (
       <View style={{ flex: 1 }}>
         <GeneralStatusBarColor
-          backgroundColor="#D62223"
+          backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
         />
 
@@ -163,12 +167,23 @@ export default class FinalDetailsPage extends Component {
           userType={userType}
           backgroundColor="#3775f0"
         />
+        
+         <View style={{ paddingTop: 8 ,paddingLeft:8}}>
+            <Text
+              numberOfLines={1}
+              style={[gStyles.contactStyle, { color: "grey", fontSize: 14,marginTop:5 }]}
+            >
+             {this.state.title}
+            </Text>
+          </View>
+        
+        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
         <View style={{ flex: 0.9, margin: 8 }}>
           <View
             style={{
-              height: 40,
+              height: 32,
               width: "100%",
-              backgroundColor: "blue",
+              backgroundColor: "#3775f0",
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
               borderBottomLeftRadius: 2,
@@ -188,70 +203,227 @@ export default class FinalDetailsPage extends Component {
                 alignContent: "flex-start",
               }}
             >
-              <Text style={styles.name}>Tender Id {urlParameter.tenderId}</Text>
+            
+            
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Notice Reference Number </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                    paddingLeft:5
+                  }}
+                >
+                  {userSelected.noticeReferenceNumber}
+                </Text>
+              </Text>
               <Divider />
-              <Text style={styles.name}>
-                Notice Reference Number {userSelected.noticeReferenceNumber}
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Control Number </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.controlNumber}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Control Number {userSelected.controlNumber}
+           
+
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Projct Title  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.projectTitle}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Projct Title {userSelected.projectTitle}
+             
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}> Notice Title  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.noticeTitle}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Notice Title {userSelected.noticeTitle}
+              
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Mode of proc  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.modeOfProcurement}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Mode of proc {userSelected.modeOfProcurement}
+            
+
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}> Business Category  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.businessCategory}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Business Category {userSelected.businessCategory}
+             
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Applicable Proc Rule   </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.applicableProcRule}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Applicable Proc Rule {userSelected.applicableProcRule}
+            
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Source Funds </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.sourceFunds}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Source Funds {userSelected.sourceFunds}
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Mode of bid Submission  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.modeOfBidSubmission}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Mode of bid Submission {userSelected.modeOfBidSubmission}
+             
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Delivery Location  </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.deliveryLocation}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Delivery Location {userSelected.deliveryLocation}
+            
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Classification </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.classification}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Classification {userSelected.classification}
-              </Text>
-              <Divider />
 
-              <Text style={styles.name}>Lot Type {userSelected.lotType}</Text>
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Lot Type </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.lotType}
+                </Text>
+              </Text>
               <Divider />
 
               {/* <Text style={styles.name}>Created By {userSelected.createdBy}</Text> */}
 
               <Text style={{width:'100%'}}>
-                <Text style={styles.name}>Created By</Text>
+                <Text style={styles.name}>Created By </Text>
                 <Text
                   style={{
                     flex:1,
@@ -267,13 +439,38 @@ export default class FinalDetailsPage extends Component {
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Created By UserName {userSelected.createdByUsername}
+              
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}>Created By UserName </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.createdByUsername}
+                </Text>
               </Text>
               <Divider />
 
-              <Text style={styles.name}>
-                Created By email {userSelected.createdByEmail}
+              <Text style={{width:'100%'}}>
+                <Text style={styles.name}> Created By email </Text>
+                <Text
+                  style={{
+                    flex:1,
+                    fontSize: 14,
+                     marginLeft:16,
+                    alignContent:'center',
+                    color: "grey",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {userSelected.createdByEmail}
+                </Text>
               </Text>
             </View>
           </View>
@@ -357,7 +554,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
 
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 0,
+    borderBottomEndRadius:8,
+    borderBottomStartRadius:8,
+
     padding: 8,
 
     // Set border color.
@@ -369,8 +569,9 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignContent: "center",
     alignItems: "center",
-    fontWeight: "bold",
+    fontWeight: "normal",
     margin: 5,
+    height:30
   },
 
   name: {
@@ -378,6 +579,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     color: "black",
     fontWeight: "bold",
+    marginRight:8
   },
   position: {
     fontSize: 14,

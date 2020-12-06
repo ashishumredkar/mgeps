@@ -22,6 +22,8 @@ import Loader from "../Components/Loader";
 import { AppColors } from "../../style/AppColors";
 import { homeStyles } from "../../style/homeStyles";
 import BottomView from "../BottomView";
+import { Dialog,ConfirmDialog } from "react-native-simple-dialogs";
+import Tnc from "../Components/Tnc";
 
 const colors = [
   "#29B6F6",
@@ -61,6 +63,7 @@ class HomeScreen extends React.Component {
       userType: "",
       authToken: "",
       loading: true,
+      isConditionAccepted:false,
     };
   }
   componentDidMount() {
@@ -70,7 +73,15 @@ class HomeScreen extends React.Component {
   readData = async () => {
     try {
       const userData = await AsyncStorage.getItem(STORAGE_KEY);
+     
       const token = await AsyncStorage.getItem("auth_token");
+
+      const tncFlag = await AsyncStorage.getItem("tnc");
+
+      if(!tncFlag){
+      this.setState({isConditionAccepted:true})
+      }
+
 
       const mData = JSON.parse(userData);
       console.log("userData", token);
@@ -146,19 +157,40 @@ class HomeScreen extends React.Component {
     );
   };
 
+  onResponse = (response)=>{
+
+    AsyncStorage.setItem("tnc", ""+response);
+
+    this.setState({isConditionAccepted:false})
+
+
+  }
+
+  closeModal= ()=>{
+    this.setState({isConditionAccepted:false})
+  }
+
   render() {
     if (this.state.loading) return <Loader loading={this.state.loading} />;
 
+    const {isConditionAccepted}=this.state;
+
     return (
-      <View style={{ flex: 1}}>
-        <View style={{ flex: 0.9,margin:5  }}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 0.9, margin: 5 }}>
+        <Tnc
+        loading={isConditionAccepted}
+        onResponse={this.onResponse}
+        onCloseModal={this.closeModal}
+      />
+
           <FlatList
             style={styles.list}
             contentContainerStyle={styles.listContainer}
             data={this.state.menuList}
             horizontal={false}
             numColumns={2}
-            keyExtractor={(item,index) => {
+            keyExtractor={(item, index) => {
               return "" + index;
             }}
             ListEmptyComponent={this.EmptyListMessage}
@@ -171,6 +203,8 @@ class HomeScreen extends React.Component {
                       this.props.navigation.navigate("SubMenues", {
                         data: [...item.sub],
                         title: item.name,
+                        backgroundColor: colors[index],
+                        iconUrl:imagesArray[index]
                       });
                     } else {
                       this.props.navigation.navigate("Details", {

@@ -27,8 +27,6 @@ import FinalDetailsPage from "./FinalDetailsPage";
 import CustomDrawerContentComponent from "./Components/CustomDrawerContentComponent";
 import AsyncStorage from "@react-native-community/async-storage";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Avatar, Badge, Divider, Modal, Portal } from "react-native-paper";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RippleButton } from "./Components/RippleButton";
 
 import { gStyles } from "../../src/style/appStyles";

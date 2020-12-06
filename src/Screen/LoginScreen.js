@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, isValidElement } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -17,16 +17,19 @@ import {
   Platform,
   ImageBackground,
   Linking,
+  Button,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
 
 import Loader from "./Components/Loader";
+import AlertModal from "./Components/AlertModal";
 
 // import DropDownPicker from "react-native-dropdown-picker";
 import DropDownPicker from "react-native-dropdown-picker";
 
 import Toast from "react-native-simple-toast";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 //import messaging from "@react-native-firebase/messaging";
 // import firebase from '@react-native-firebase/app';
@@ -36,6 +39,7 @@ import Toast from "react-native-simple-toast";
 // import FCM from "react-native-fcm";
 
 import BottomView from "./BottomView";
+import { Modal } from "react-native-paper";
 // import Loader from './Components/Loader'
 
 //import {Notifications} from 'react-native-notifications';
@@ -49,11 +53,15 @@ const LoginScreen = ({ navigation }) => {
   const [errortext, setErrortext] = useState("");
   const [forgotPassword, setForgotPassword] = useState("");
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const [loginType, setLoginType] = useState("Merchant");
+
   const [loginCollection, setLoginCollection] = useState([
-    { label: "Agency", value: "Agency" },
-    { label: "Merchant", value: "Merchant" },
+    // { label: "Agency", value: "Agency" },
+    // { label: "Merchant", value: "Merchant" },
   ]);
+
   const [fcmId, setfcmId] = useState(
     "sdlfksdlflsdf987987s9d89f7sd987f987sd89f798s7df"
   );
@@ -61,6 +69,10 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   useEffect(() => {
+    fetchUserType();
+  }, []);
+
+  const fetchUserType = async () => {
     setLoading(true);
     fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType")
       .then((response) => response.json())
@@ -83,10 +95,12 @@ const LoginScreen = ({ navigation }) => {
 
         setLoginCollection(mData);
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        setModalVisible(true);
+        console.error(error);
+      })
       .finally(() => setLoading(false));
-  }, []);
-
+  };
   // useEffect(() => {
 
   //  // requestUserPermission();
@@ -291,13 +305,41 @@ const LoginScreen = ({ navigation }) => {
 
   const onForgotpassword = async () => {
     //alert("forgotPassword "+forgotPassword)
-    const supported = await Linking.canOpenURL(forgotPassword);
 
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL(forgotPassword);
+
+    try{
+      const supported = await Linking.canOpenURL(forgotPassword);
+
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(forgotPassword);
+      }else{
+        Toast.showWithGravity("Please connect with internet or try again", Toast.LONG, Toast.CENTER);
+  
+      }
+    }catch(err){
+      Toast.showWithGravity("Please connect with internet or try again", Toast.LONG, Toast.CENTER);
+
     }
+  };
+
+  const ModalScreen = () => {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+        <Button onPress={() => navigation.goBack()} title="Dismiss" />
+      </View>
+    );
+  };
+
+  const onRety = () => {
+    setModalVisible(false);
+    fetchUserType();
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   return (
@@ -307,15 +349,18 @@ const LoginScreen = ({ navigation }) => {
         source={require("../Image/website_image_fit.png")}
       />
       <Loader loading={loading} />
-      <View style={{ width: null, height: "43%" }} />
+
+      <AlertModal
+        loading={isModalVisible}
+        onRety={onRety}
+        onCloseModal={closeModal}
+      />
+
+      <View style={{ width: null, height: "42%" }} />
 
       <View>
         <DropDownPicker
           items={loginCollection}
-          // items={[
-          //   { label: "Agency", value: "Agency" },
-          //   { label: "Merchant", value: "Merchant" },
-          // ]}
           placeholder="Select Login Type"
           containerStyle={{ height: 40 }}
           style={{ backgroundColor: "#fafafa" }}
@@ -325,7 +370,7 @@ const LoginScreen = ({ navigation }) => {
           dropDownStyle={{ backgroundColor: "#fafafa" }}
           onChangeItem={(item) => setLoginType(item.value)}
         />
-        <View style={{ width: 300, height: 45 }} />
+        <View style={{ width: 300, height: 60 }} />
       </View>
 
       <View style={styles.inputContainer}>
@@ -373,172 +418,65 @@ const LoginScreen = ({ navigation }) => {
           source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
         />
       </View>
-
-      {/* <TouchableOpacity
-        style={styles.btnForgotPassword}
-        onPress={() => onForgotpassword}
-      >
-        <Text style={styles.btnText}>Forgot your password?</Text>
-      </TouchableOpacity> */}
-      <TouchableOpacity
-        style={[styles.buttonContainer, styles.loginButton]}
-        activeOpacity={0.5}
-        onPress={
-          // showNoti
-          handleSubmitPress
-        }
-      >
-        <Text style={styles.buttonTextStyle}>LOGIN</Text>
+      <TouchableOpacity style={styles.outerCircle}
+       onPress={() => handleSubmitPress()}>
+        <View style={styles.innerCircle}>
+          {/* <Text style={styles.paragraph}/> */}
+          <Image
+            style={{
+              width: 25,
+              height: 25,
+              alignItems: "center",
+              justifyContent: "center",
+              alignContent: "center",
+              marginTop: 15,
+            }}
+            source={require("../../src/Image/right_arrw.png")}
+          />
+        </View>
       </TouchableOpacity>
+      <View
+        style={{
+          width: 80,
+          height: 2,
+          backgroundColor: "white",
+          alignSelf: "center",
+          marginTop: 6,
+        }}
+      />
+
+      <Text style={styles.paragraph}> Log In </Text>
 
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={() => onForgotpassword()}
       >
-        <Text style={styles.btnText}>Forgot Password</Text>
+        <Text style={[styles.btnText, styles.underline]}>Forgot Password?</Text>
       </TouchableOpacity>
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
           Copyright {"\u00A9"}By.philGEPS{" "}
         </Text>
-        <Image source={require("../Image/success.png")} style={styles.image} />
+        <Image source={require("../Image/menu_logo.png")} style={styles.image} />
       </View>
+      {/* <Modal
+            animationType = {"slide"}
+            transparent={false}
+            visible={isModalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has now been closed.');
+            }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+            <Image 
+              source={require('../Image/menu_logo.png')}
+              style = { styles.image }/>
+              <Text style = { styles.text }>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                  Maecenas eget tempus augue, a convallis velit.</Text>
+                  </View>
+          </Modal> */}
     </KeyboardAvoidingView>
-  );
-
-  return1(
-    <View style={styles.container}>
-      <Loader loading={loading} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-          alignContent: "center",
-        }}
-      >
-        <ImageBackground
-          style={styles.bgImage}
-          source={require("../Image/website_image_fit.png")}
-        >
-          <KeyboardAvoidingView enabled>
-            <View style={{ alignItems: "center" }}></View>
-            <View style={styles.SectionStyle}>
-              <DropDownPicker
-                items={[
-                  { label: "Agency", value: "Agency" },
-                  { label: "Merchant", value: "Merchant" },
-                ]}
-                defaultNull
-                placeholder="Select Login Type"
-                containerStyle={{
-                  height: 40,
-                  width: "99%",
-                  flex: 1,
-                  color: "white",
-                  paddingLeft: 15,
-                  paddingRight: 15,
-                  borderWidth: 1,
-                  borderRadius: 30,
-                  borderColor: "#dadae8",
-                  alignItems: "center",
-                  alignContent: "center",
-                }}
-                onChangeItem={(item) => setLoginType(item.value)}
-              />
-            </View>
-            {/* <DropDownPicker
-                items={[
-                  {
-                    label: "USA",
-                    value: "usa",
-                   // icon: () => <Icon name="flag" size={18} color="#900" />,
-                    hidden: true,
-                  },
-                  {
-                    label: "UK",
-                    value: "uk",
-                   // icon: () => <Icon name="flag" size={18} color="#900" />,
-                  },
-                  {
-                    label: "France",
-                    value: "france",
-                    //icon: () => <Icon name="flag" size={18} color="#900" />,
-                  },
-                ]}
-                defaultValue={loginType}
-                containerStyle={{ height: 40 }}
-                style={{ backgroundColor: "#fafafa" }}
-                itemStyle={{
-                  justifyContent: "flex-start",
-                }}
-                dropDownStyle={{ backgroundColor: "#fafafa" }}
-                onChangeItem={(item) => setLoginType(item.value)}
-              /> */}
-
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserEmail) => setUserEmail(UserEmail)}
-                placeholder="USERNAME" //dummy@abc.com
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="none"
-                value={userEmail}
-                keyboardType="default"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                  passwordInputRef.current && passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-              />
-            </View>
-            <View style={styles.SectionStyle}>
-              <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserPassword) => setUserPassword(UserPassword)}
-                placeholder="PASSWORD" //12345
-                placeholderTextColor="#8b9cb5"
-                keyboardType="default"
-                value={userPassword}
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
-                secureTextEntry={true}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-              />
-            </View>
-            {errortext != "" ? (
-              <Text style={styles.errorTextStyle}>{errortext}</Text>
-            ) : null}
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              activeOpacity={0.5}
-              onPress={
-                // showNoti
-                handleSubmitPress
-              }
-            >
-              <View style={styles.circle}>
-                {/* <Icon name="comments" size={30} color="#900" /> */}
-              </View>
-
-              <Text style={styles.buttonTextStyle}>LOGIN</Text>
-            </TouchableOpacity>
-            <Text
-              style={styles.registerTextStyle}
-              onPress={() => {
-                navigation.navigate("RegisterScreen");
-              }}
-            >
-              New Here ? Register
-            </Text>
-          </KeyboardAvoidingView>
-          <BottomView />
-        </ImageBackground>
-      </ScrollView>
-    </View>
   );
 };
 export default LoginScreen;
@@ -586,7 +524,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    height: 45,
+    height: 30,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -665,5 +603,75 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     flex: 1,
+  },
+  circle: {
+    width: 60,
+    height: 60,
+    borderRadius: 60 / 2,
+    backgroundColor: "red",
+    borderColor: "black",
+    borderWidth: 3,
+  },
+  container3: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  outerCircle: {
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    backgroundColor: "white",
+  },
+  innerCircle: {
+    borderRadius: 30,
+    width: 50,
+    height: 50,
+    margin: 5,
+    backgroundColor: "white",
+    alignSelf: "center",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  paragraph: {
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+    fontStyle: "normal",
+    fontSize: 20,
+  },
+  underline: { textDecorationLine: "underline" },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00BCD4",
+    height: 300,
+    width: "80%",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    marginTop: 80,
+    marginLeft: 40,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
   },
 });

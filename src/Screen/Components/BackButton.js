@@ -17,7 +17,7 @@ function BackButton(props)  {
         return (
             <TouchableOpacity
             onPress={() =>navigation.goBack()}>  
-            <View style={{ padding:20, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ padding:10, justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="arrow-back-ios" size={25} color="#FFFFFF" />  
             </View>
             </TouchableOpacity>
@@ -26,7 +26,7 @@ function BackButton(props)  {
         return (
             <TouchableOpacity
             onPress={() => navigation.goBack()}>
-            <View style={{  padding:20,justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{  padding:10,justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="arrow-back" size={25} color="#FFFFFF" />     
             
             </View>

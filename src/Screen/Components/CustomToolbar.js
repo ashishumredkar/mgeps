@@ -24,10 +24,10 @@ const CustomToolbar = (props) => {
       </View>
       <Text style={styles.middleContainer}>
         {/* {this.props.title} */}
-        <View style={{ flexDirection: "row", marginLeft: -20, marginTop: 5 }}>
+        <View style={{ flexDirection: "row", marginTop: 5 }}>
           <View style={[gStyles.userAvatarStyle]}>
             <Image
-              style={{ width: 35, height: 35, backgroundColor: "white" }}
+              style={{ width: 35, height: 35 }}
               source={require("../../Image/menu_logo.png")}
             />
           </View>
@@ -38,11 +38,11 @@ const CustomToolbar = (props) => {
           <View style={{ paddingTop: 8 }}>
             <Text
               numberOfLines={1}
-              style={[gStyles.contactStyle, { color: "white", fontSize: 18 }]}
+              style={[gStyles.contactStyle, { color: "white"}]}
             >
-              {props.title.length < 20
+              {props.title.length < 25
                 ? `${props.title}`
-                : `${props.title.substring(0, 20)}...`}
+                : `${props.title.substring(0, 25)}...`}
             </Text>
             <Text style={[{ color: "white", fontSize: 14 }]}>
               UserType: {props.userType}
@@ -79,14 +79,15 @@ const styles = StyleSheet.create({
   },
   leftContainer: {
     justifyContent: "flex-start",
-    flexDirection: "row",
+    width: 65,
+    marginLeft: -12
   },
   middleContainer: {
     flex: 2,
     color: "white",
     flexDirection: "row",
     fontSize: 18,
-    marginLeft: 10,
+    marginLeft: -10,
     marginRight: 10,
   },
   rightContainer: {

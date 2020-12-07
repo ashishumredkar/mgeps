@@ -3,12 +3,7 @@
 
 // Import React
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  Image,
-  useWindowDimensions
-} from "react-native";
+import { Text, View, Image, useWindowDimensions } from "react-native";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -26,11 +21,10 @@ import Details from "./Details";
 import FinalDetailsPage from "./FinalDetailsPage";
 import CustomDrawerContentComponent from "./Components/CustomDrawerContentComponent";
 import AsyncStorage from "@react-native-community/async-storage";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { RippleButton } from "./Components/RippleButton";
 
 import { gStyles } from "../../src/style/appStyles";
-
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -67,7 +61,7 @@ const homeScreenStack = ({ navigation }) => {
         // options={{
         //   title: "Sub Menues", //Set Header Title
         // }}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Details"
@@ -75,12 +69,12 @@ const homeScreenStack = ({ navigation }) => {
         // options={{
         //   title: "Details", //Set Header Title
         // }}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="FinalDetailsPage"
         component={FinalDetailsPage}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       {/* <Stack.Screen
         name="ProfileScreen"
@@ -93,9 +87,7 @@ const homeScreenStack = ({ navigation }) => {
   );
 };
 export function LogoTitle(props) {
-
   const [username, setUserName] = useState("");
- 
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -104,67 +96,60 @@ export function LogoTitle(props) {
 
   const readData = async () => {
     try {
-     // const userData = await AsyncStorage.getItem("@user_data");
+      // const userData = await AsyncStorage.getItem("@user_data");
 
-      const userType=await AsyncStorage.getItem("userType");
+      const userType = await AsyncStorage.getItem("userType");
 
       //const value = JSON.parse(userData);
       console.log("setAnimatingabc ", userType);
 
-      setUserName(userType)
+      setUserName(userType);
       //setProfileData(value);
     } catch (e) {
       console.log("catch ", e);
     }
   };
 
-
   return (
-    <View style={{ flexDirection: "row",marginLeft: -20,marginTop:5 }}>
-         
-            <View style={[gStyles.userAvatarStyle]}>
-            <Image
-        style={{ width: 35,
-          height: 35,backgroundColor:'white'}}
-          source={require('../Image/menu_logo.png')}
-      />
-            </View>
-          
+    <View style={{ flexDirection: "row", marginLeft: -20, marginTop: 5 }}>
+      <View style={[gStyles.userAvatarStyle]}>
+        <Image
+          style={{ width: 35, height: 35, backgroundColor: "white" }}
+          source={require("../Image/menu_logo.png")}
+        />
+      </View>
 
-          <View style={{ width: 10 }}></View>
+      <View style={{ width: 10 }}></View>
 
-          {/* CONTACT DETAILS  */}
-          <View style={{ paddingTop: 8 }}>
-            <Text style={[gStyles.contactStyle,{color:'white',fontSize:18}]}>
-              Dashboard
-            </Text>
-            <Text style={[{color:'white',fontSize:14}]}>
-             UserType: {username}
-            </Text>
-          </View>
-        </View>
+      {/* CONTACT DETAILS  */}
+      <View style={{ paddingTop: 8 }}>
+        <Text style={[gStyles.contactStyle, { color: "white", fontSize: 18 }]}>
+          Dashboard
+        </Text>
+        <Text style={[{ color: "white", fontSize: 14 }]}>
+          UserType: {username}
+        </Text>
+      </View>
+    </View>
   );
 }
-
 
 export function NotificationView() {
   const navigation = useNavigation();
   return (
     <RippleButton
       onPress={() => navigation.navigate("HomeScreen")}
-      rippleColor={'orange'}
+      rippleColor={"orange"}
       rippleStyle={{ marginRight: 16 }}
     >
       <View>
-         {/* <Badge size={10} style={{width:40,height:40}} /> */}
-         <Image
-        style={{ width: 40,
-          height: 40,backgroundColor:'#307ecc'}}
-          source={require('../Image/notification.png')}
-      />
+        {/* <Badge size={10} style={{width:40,height:40}} /> */}
+        <Image
+          style={{ width: 40, height: 40, backgroundColor: "#307ecc" }}
+          source={require("../Image/notification.png")}
+        />
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
-        {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */} 
-
+        {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */}
       </View>
     </RippleButton>
   );
@@ -192,9 +177,8 @@ const profileScreenStack = ({ navigation }) => {
           <NavigationDrawerHeader navigationProps={navigation} />
         ),
 
-        headerRight :()=>(
+        headerRight: () => (
           <Icon name="circle-notifications" size={30} color="#900" />
-
         ),
         headerStyle: {
           backgroundColor: "#307ecc", //Set Header color
@@ -208,7 +192,7 @@ const profileScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -258,7 +242,7 @@ const DrawerNavigatorRoutes = (props) => {
       const value = JSON.parse(userData);
       console.log("setAnimatingabc ", value);
 
-      setUserName(value.username)
+      setUserName(value.username);
       setProfileData(value);
     } catch (e) {
       console.log("catch ", e);
@@ -268,47 +252,64 @@ const DrawerNavigatorRoutes = (props) => {
   const App = () => {
     return <CustomDrawerContentComponent />;
   };
-   
+
   function DashboardMenu(props) {
     return (
-      <View style={{ flexDirection: "row", marginTop: 2,marginBottom:2,height:35 }}>
-
-      <Image
-        style={{ width: 25, height: 25 }}
-        source={require('../Image/dashboard.png')}
-      />
-      <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
-      Dashboard
-            </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 2,
+          marginBottom: 2,
+          height: 35,
+        }}
+      >
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/dashboard.png")}
+        />
+        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
+          Dashboard
+        </Text>
       </View>
     );
   }
   function SettingsMenu(props) {
     return (
-      <View style={{ flexDirection: "row", marginTop: 2,marginBottom:2,height:35 }}>
-
-      <Image
-        style={{ width: 25, height: 25 }}
-        source={require('../Image/settings.png')}
-      />
-      <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
-      Settings
-            </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 2,
+          marginBottom: 2,
+          height: 35,
+        }}
+      >
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/settings.png")}
+        />
+        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
+          Settings
+        </Text>
       </View>
     );
   }
   function ProfileMenu(props) {
-
     return (
-      <View style={{ flexDirection: "row", marginTop: 2,marginBottom:2,height:35 }}>
-
-      <Image
-        style={{ width: 25, height: 25 }}
-        source={require('../Image/profile.png')}
-      />
-      <Text style={[{ height: 40, marginTop: 5,marginLeft:4 }]}>
-      Profile Overview
-            </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 2,
+          marginBottom: 2,
+          height: 35,
+        }}
+      >
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/profile.png")}
+        />
+        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
+          Profile Overview
+        </Text>
       </View>
     );
   }
@@ -330,44 +331,50 @@ const DrawerNavigatorRoutes = (props) => {
       // drawerStyle={isLargeScreen ? null : { width: '50%' }}
       // overlayColor="transparent"
 
-
       screenOptions={{ headerShown: false }}
-      drawerContent={(props) => <CustomSidebarMenu {...{employeename:username,...props}}/>}
-       // drawerContent={CustomSidebarMenu}
-       //drawerContent={<CustomDrawerContentComponent></CustomDrawerContentComponent>}
-
+      drawerContent={(props) => (
+        <CustomSidebarMenu {...{ employeename: username, ...props }} />
+      )}
+      // drawerContent={CustomSidebarMenu}
+      //drawerContent={<CustomDrawerContentComponent></CustomDrawerContentComponent>}
     >
       <Drawer.Screen
         name="homeScreenStack"
         // options={{ drawerLabel: "Dashboard" }}
-       // options={{ drawerLabel: "Dashboard" ,headerTitle: props => <LogoTitle {...props} /> }}
-       options={{
-        drawerLabel: props => <DashboardMenu {...{employeename:username,...props}} />,
-        // headerRight: () => (
-        //   <LogoTitle
-        //     onPress={() => alert('This is a button!')}
-        //     title="Info"
-        //     color="#fff"
-        //   />
-        // ),
-      }}
-       // component={homeScreenStack({username})}
+        // options={{ drawerLabel: "Dashboard" ,headerTitle: props => <LogoTitle {...props} /> }}
+        options={{
+          drawerLabel: (props) => (
+            <DashboardMenu {...{ employeename: username, ...props }} />
+          ),
+          // headerRight: () => (
+          //   <LogoTitle
+          //     onPress={() => alert('This is a button!')}
+          //     title="Info"
+          //     color="#fff"
+          //   />
+          // ),
+        }}
+        // component={homeScreenStack({username})}
         component={homeScreenStack}
       />
 
       <Drawer.Screen
         name="profile"
-     
-          options={{drawerLabel: props => <ProfileMenu {...{employeename:username,...props}} />,
-    }}
-
-      //  drawerLabel: props => <ProfileMenu {...props} 
+        options={{
+          drawerLabel: (props) => (
+            <ProfileMenu {...{ employeename: username, ...props }} />
+          ),
+        }}
+        //  drawerLabel: props => <ProfileMenu {...props}
         component={profileScreenStack}
       />
       <Drawer.Screen
         name="settingScreenStack"
-        options={{drawerLabel: props => <SettingsMenu {...{employeename:username,...props}} />,
-      }}
+        options={{
+          drawerLabel: (props) => (
+            <SettingsMenu {...{ employeename: username, ...props }} />
+          ),
+        }}
         component={settingScreenStack}
       />
     </Drawer.Navigator>

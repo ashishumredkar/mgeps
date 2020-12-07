@@ -23,6 +23,7 @@ import BackButton from "./Components/BackButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomToolbar from "./Components/CustomToolbar";
 import { gStyles, homeStyles } from "../style/appStyles";
+import { listStyles } from "../style/listStyles";
 import { AppColors } from "../style/AppColors";
 
 export const Loader = () => (
@@ -41,7 +42,7 @@ export const Divider = () => {
       style={{
         height: 1,
         width: "100%",
-        backgroundColor: "#000",
+        backgroundColor: AppColors.grey10
       }}
     />
   );
@@ -134,23 +135,22 @@ export default class Details extends Component {
         .then((responseJson) => {
           console.log("responseJson", responseJson);
           const mData = responseJson.rows;
-         if(mData){
-          this.state.page === 1
-          ? this.setState({ users: mData })
-          : this.setState({
-              users: [...this.state.users, ...responseJson.rows],
+          if (mData) {
+            this.state.page === 1
+              ? this.setState({ users: mData })
+              : this.setState({
+                  users: [...this.state.users, ...responseJson.rows],
+                });
+            this.setState({
+              isLoading: false,
+              totalCount: responseJson.totalRows,
             });
-        this.setState({
-          isLoading: false,
-          totalCount: responseJson.totalRows,
-        });
-         }else{
-          this.setState({
-            isLoading: false,
-            totalCount: responseJson.totalRows,
-          });
-         }
-          
+          } else {
+            this.setState({
+              isLoading: false,
+              totalCount: responseJson.totalRows,
+            });
+          }
         })
         .catch((error) => {});
     } catch (err) {
@@ -213,16 +213,26 @@ export default class Details extends Component {
           backgroundColor="#3775f0"
         />
         {/* {this.state.isLoading ?<Loader loading={this.state.isLoading} /> : null } */}
-        <View style={{ paddingTop: 8 ,paddingLeft:8}}>
-            <Text
-              numberOfLines={1}
-              style={[gStyles.contactStyle, { color: "grey", fontSize: 14,marginTop:5 }]}
-            >
-             {this.state.pageTitle}
-            </Text>
-          </View>
-        
-        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
+        <View style={{ paddingTop: 8, paddingLeft: 8 }}>
+          <Text
+            numberOfLines={1}
+            style={[
+              gStyles.contactStyle,
+              { color: "grey", fontSize: 14, marginTop: 5 },
+            ]}
+          >
+            {this.state.pageTitle}
+          </Text>
+        </View>
+
+        <Text
+          style={{
+            height: 2,
+            backgroundColor: "blue",
+            width: "100%",
+            marginTop: 5,
+          }}
+        />
 
         <View style={{ flex: 0.9 }}>
           {/* <Header
@@ -240,69 +250,36 @@ export default class Details extends Component {
                   style={{ flex: 1, marginBottom: 10 }}
                   onPress={() => {
                     this.props.navigation.navigate("FinalDetailsPage", {
-                      data: item,pageTitle:this.state.pageTitle
+                      data: item,
+                      pageTitle: this.state.pageTitle,
                     });
                   }}
                 >
-                  <View style={{ flexDirection: "column", margin: 10 }}>
-                    <View style={{ flexDirection: "row", fontWeight: "" }}>
+                  <View style={listStyles.viewColumn}>
+                    <View style={listStyles.viewRow}>
                       <Text
-                        style={[
-                          {
-                            color: "blue",
-                            fontSize: 18,
-                            flex: 1,
-                            fontWeight:
-                              item.isAcknowledge === 1 ? "bold" : "normal",
-                          },
-                        ]}
-                      >
+                        style={[listStyles.title, {fontWeight: item.isAcknowledge === 0 ? "bold" : "normal"}]}>
                         {index + 1 + ". " + item.activityType}
                       </Text>
-                      <View style={{ flex: 1, flexDirection: "row-reverse" }}>
+                      <View style={listStyles.notificationIconView}>
                         {item.isAcknowledge === 1 ? (
-                          <Image
-                            style={[
-                              {
-                                marginRight: 5,
-                                height: 28,
-                                width: 28,
-                                backgroundColor: "white",
-                              },
-                            ]}
-                            source={require("../Image/fileunread.png")}
+                          <Image 
+                            style={[listStyles.notificationIcon, {tintColor: AppColors.green200}]}
+                            source={require("../Image/ic_published.png")}
                           />
                         ) : (
                           <Image
-                            style={[
-                              {
-                                marginRight: 5,
-                                height: 28,
-                                width: 28,
-                                backgroundColor: "grey",
-                              },
-                            ]}
-                            source={require("../Image/fileread.png")}
+                            style={[listStyles.notificationIcon, {tintColor: AppColors.red200}]}
+                            source={require("../Image/ic_unpublished.png")}
                           />
                         )}
                       </View>
                     </View>
 
-                    <Text style={[{ color: "black", fontSize: 14 }]}>
+                    <Text style={listStyles.notificationText}>
                       {item.notification}
                     </Text>
-                    {/* <Text style={[{color:'black',fontSize:14}]}>
-             UserType: merchant
-            </Text> */}
                   </View>
-                  {/* <ListItem
-                  
-                  title={index+1 + ". "+item.activityType}
-                  Content={item.notification}
-                  subtitle={item.notification}
-                  //   leftAvatar={{ source: { uri: item.picture.thumbnail } }}
-                /> */}
-                  {/* <Text>ashish</Text> */}
                 </Pressable>
               );
             }}
@@ -326,15 +303,15 @@ export default class Details extends Component {
           )}
         </View>
         {!this.state.isLoading && this.state.users && (
-          <View style={styles.footer}>
-            <View style={styles.textshadow}>
-              <Text style={styles.textStyle}>
+          <View style={listStyles.totalRowsView}>
+            <View style={listStyles.textShadow}>
+              <Text style={listStyles.textStyle}>
                 Total Rows : {this.state.totalCount}
               </Text>
             </View>
           </View>
         )}
-        <View style={{flex:0.1}}>
+        <View style={{ flex: 0.1 }}>
           <BottomView />
         </View>
       </View>
@@ -392,44 +369,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     alignContent: "center",
-  },
-  footer: {
-    flex: 1,
-    marginBottom: 80,
-    width: "100%",
-    height: 40,
-    // backgroundColor: '#EE5407',
-    justifyContent: "center",
-    alignItems: "flex-end",
-    position: "absolute", //Here is the trick
-    bottom: 0, //Here is the trick,
-  },
-  textStyle: {
-    color: "black",
-    fontSize: 18,
-    marginRight: 10,
-    marginTop: 8,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-  
-  },
-  textshadow: {
-    fontWeight: "bold",
-    fontSize: 20,
-    backgroundColor:'white',
-    color: "#FFFFFF",
-    fontFamily: "Times New Roman",
-    paddingLeft: 10,
-    paddingRight: 10,
-    textShadowColor: "#585858",
-    textShadowOffset: { width: 5, height: 5 },
-    textShadowRadius: 10,
-    borderColor: "red",
-    borderWidth: 1,
-    marginRight: 10,
-    borderRadius:8,
   },
 });
 

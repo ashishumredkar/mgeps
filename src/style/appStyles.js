@@ -143,7 +143,7 @@ export const gStyles = StyleSheet.create({
     marginHorizontal: 16,
   },
   contactStyle: {
-    fontSize: 18,
+    fontSize: 17,
     color: AppColors.colorPrimary,
     fontWeight: 'bold'
   },

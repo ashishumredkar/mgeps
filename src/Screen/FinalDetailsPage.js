@@ -16,6 +16,7 @@ import CustomToolbar from "./Components/CustomToolbar";
 import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import AsyncStorage from "@react-native-community/async-storage";
 import { gStyles } from "../style/appStyles";
+import { viewDetailStyles } from "../style/viewDetailStyles";
 import { AppColors } from "../style/AppColors";
 
 export const Divider = () => {
@@ -42,7 +43,7 @@ export default class FinalDetailsPage extends Component {
       apiUrl: "",
       urlParameter: {},
       authToken: "",
-      title:''
+      title: "",
     };
   }
 
@@ -61,7 +62,7 @@ export default class FinalDetailsPage extends Component {
       userType: userType,
       urlParameter: mData.urlParameter,
       apiUrl: mData.detailsUrl,
-      title:this.props.route.params.pageTitle,
+      title: this.props.route.params.pageTitle,
     });
 
     this.getDetails(token, mData.urlParameter, mData.detailsUrl);
@@ -86,6 +87,7 @@ export default class FinalDetailsPage extends Component {
 
         if (responseJson) {
           this.setState({ loading: false, userSelected: responseJson });
+          this.setState({ loading: false });
           this.sendAckForRead(
             this.state.authToken,
             responseJson.notificationId,
@@ -126,16 +128,10 @@ export default class FinalDetailsPage extends Component {
     )
       .then((response) => response.json())
       .then((responseJson) => {
-        //Hide Loader
-        this.setState({ loading: false });
-
         console.log("sendAckForRead ", responseJson);
       })
       .catch((error) => {
         //Hide Loader
-        //setLoading(false);
-        this.setState({ loading: false });
-
         console.error("qwerty  ", error);
       })
       .finally(() => this.setState({ loading: false }));
@@ -153,6 +149,9 @@ export default class FinalDetailsPage extends Component {
 
   render() {
     const { userSelected, userType, urlParameter } = this.state;
+    const noticeDetails = Object.keys(userSelected).map((key) => ({
+      [key]: userSelected[key],
+    }));
 
     return (
       <View style={{ flex: 1 }}>
@@ -167,17 +166,27 @@ export default class FinalDetailsPage extends Component {
           userType={userType}
           backgroundColor="#3775f0"
         />
-        
-         <View style={{ paddingTop: 8 ,paddingLeft:8}}>
-            <Text
-              numberOfLines={1}
-              style={[gStyles.contactStyle, { color: "grey", fontSize: 14,marginTop:5 }]}
-            >
-             {this.state.title}
-            </Text>
-          </View>
-        
-        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
+
+        <View style={{ paddingTop: 8, paddingLeft: 8 }}>
+          <Text
+            numberOfLines={1}
+            style={[
+              gStyles.contactStyle,
+              { color: "grey", fontSize: 14, marginTop: 5 },
+            ]}
+          >
+            {this.state.title}
+          </Text>
+        </View>
+
+        <Text
+          style={{
+            height: 2,
+            backgroundColor: "blue",
+            width: "100%",
+            marginTop: 5,
+          }}
+        />
         <View style={{ flex: 0.9, margin: 8 }}>
           <View
             style={{
@@ -189,10 +198,10 @@ export default class FinalDetailsPage extends Component {
               borderBottomLeftRadius: 2,
             }}
           >
-            <Text style={styles.cardTitle}>Details</Text>
+            <Text style={viewDetailStyles.cardTitle}>Details</Text>
           </View>
-          <View style={styles.card}>
-            <View style={styles.cardContent} />
+          <View style={viewDetailStyles.card}>
+            <View style={viewDetailStyles.cardContent} />
 
             <View
               style={{
@@ -203,283 +212,41 @@ export default class FinalDetailsPage extends Component {
                 alignContent: "flex-start",
               }}
             >
-            
-            
-           {userSelected.noticeReferenceNumber ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Notice Reference Number </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                    paddingLeft:5
-                  }}
-                >
-                  {userSelected.noticeReferenceNumber}
-                </Text>
-                </View> : null}
-              
-              {userSelected.noticeReferenceNumber  ? <Divider /> : null}
-              
-               {userSelected.controlNumber?
-              <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Control Number </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.controlNumber}
-                </Text>
-              </View>: null}
-              {userSelected.controlNumber ?  <Divider /> : null}
+              <FlatList
+                data={noticeDetails}
+                renderItem={({ item, index }) => {
+                  //console.log("item ", item);
+                  const keyValue = Object.keys(item).map((key) => [
+                    key,
+                    item[key],
+                  ]);
+                  console.log(
+                    "Key Value :: ",
+                    keyValue + " Type :: " + typeof keyValue[0][1]
+                  );
 
-           
+                  if (
+                    typeof keyValue[0][1] === "string" ||
+                    typeof keyValue[0][1] === "number"
+                  ) {
+                    var key = keyValue[0][0];
+                    var value = keyValue[0][1];
+                    return (
+                      <View style={viewDetailStyles.notificationLabel}>
+                        <Text style={viewDetailStyles.name}>{key}:</Text>
+                        <Text style={viewDetailStyles.notificationValue}>
+                          {value}
+                        </Text>
 
-             { userSelected.projectTitle? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Projct Title  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.projectTitle}
-                </Text>
-                </View>: null}
-             {userSelected.projectTitle? <Divider /> : null}
-
-             
-             {userSelected.noticeTitle ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}> Notice Title  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.noticeTitle}
-                </Text>
-                </View> : null}
-              {userSelected.noticeTitle ? <Divider /> : null}
-
-              
-              {userSelected.modeOfProcurement ?<View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Mode of proc  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.modeOfProcurement}
-                </Text>
-                </View>: null}
-             {userSelected.modeOfProcurement ? <Divider /> : null } 
-
-            
-
-              {userSelected.businessCategory ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}> Business Category  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.businessCategory}
-                </Text>
-                </View>: null}
-              {userSelected.businessCategory ? <Divider /> : null}
-
-             
-              { userSelected.applicableProcRule ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Applicable Proc Rule   </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.applicableProcRule}
-                </Text>
-                </View> : null }
-                {userSelected.applicableProcRule ? <Divider /> : null}
-
-            
-                { userSelected.sourceFunds ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Source Funds </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.sourceFunds}
-                </Text>
-                </View> : null}
-                {userSelected.sourceFunds ? <Divider /> : null}
-
-
-                { userSelected.modeOfBidSubmission ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Mode of bid Submission  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.modeOfBidSubmission}
-                </Text>
-                </View> : null}
-                {userSelected.modeOfBidSubmission ? <Divider /> : null}
-
-             
-                { userSelected.deliveryLocation ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Delivery Location  </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.deliveryLocation}
-                </Text>
-                </View> : null}
-                {userSelected.deliveryLocation ? <Divider /> : null}
-
-
-            
-                { userSelected.classification ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Classification </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.classification}
-                </Text>
-                </View> : null}
-                {userSelected.classification ? <Divider /> : null}
-
-
-
-                { userSelected.lotType ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Lot Type </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.lotType}
-                </Text>
-                </View> : null}
-                {userSelected.lotType ? <Divider /> : null}
-
-
-              {/* <Text style={styles.name}>Created By {userSelected.createdBy}</Text> */}
-
-             {userSelected.createdBy ?  <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Created By </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.createdBy}
-                </Text>
-                </View> : null}
-                {userSelected.createdBy ? <Divider /> : null}
-
-              
-              { userSelected.createdByUsername ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}>Created By UserName </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.createdByUsername}
-                </Text>
-                </View> : null}
-                {userSelected.createdByUsername ? <Divider /> : null}
-
-
-              { userSelected.createdByEmail ? <View style={{width:'100%',flexDirection:'row',alignContent:'center',marginTop:3}}>
-                <Text style={styles.name}> Created By email </Text>
-                <Text
-                  style={{
-                    flex:1,
-                    fontSize: 14,
-                     marginLeft:16,
-                    alignContent:'center',
-                    color: "grey",
-                    fontWeight: "normal",
-                  }}
-                >
-                  {userSelected.createdByEmail}
-                </Text>
-              </View> : null}
+                        <View></View>
+                      </View>
+                    );
+                  }
+                }}
+                //Setting the number of column
+                numColumns={1}
+                keyExtractor={(item, index) => "" + index}
+              />
             </View>
           </View>
         </View>
@@ -495,162 +262,3 @@ export default class FinalDetailsPage extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "ios" ? 20 : 0,
-    backgroundColor: "#ebf0f7",
-  },
-  header: {
-    backgroundColor: "#00CED1",
-    height: 200,
-  },
-  headerContent: {
-    padding: 10,
-    alignItems: "flex-start",
-    flex: 1,
-  },
-  detailContent: {
-    top: 80,
-    height: 500,
-    width: Dimensions.get("screen").width - 90,
-    marginHorizontal: 30,
-    flexDirection: "row",
-    position: "absolute",
-    backgroundColor: "#ffffff",
-  },
-  userList: {
-    flex: 1,
-  },
-  cardContent: {
-    marginLeft: 20,
-    marginTop: 10,
-  },
-  image: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
-  },
-  BorderClass: {
-    // Setting up image width.
-    width: 160,
-
-    // Setting up image height.
-    height: 160,
-
-    // Set border width.
-    borderWidth: 1,
-
-    // Set border color.
-    borderColor: "#F44336",
-  },
-  card: {
-    shadowColor: "#00000021",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
-
-    // marginVertical: 5,
-    backgroundColor: "white",
-    // marginHorizontal: 5,
-    flexDirection: "column",
-    marginBottom: 16,
-
-    borderWidth: 1,
-    borderRadius: 0,
-    borderBottomEndRadius:8,
-    borderBottomStartRadius:8,
-
-    padding: 8,
-
-    // Set border color.
-    borderColor: "blue",
-  },
-  cardTitle: {
-    color: "white",
-    fontSize: 18,
-    alignSelf: "flex-start",
-    alignContent: "center",
-    alignItems: "center",
-    fontWeight: "normal",
-    margin: 5,
-    height:30
-  },
-
-  name: {
-    fontSize: 14,
-    alignSelf: "flex-start",
-    color: "black",
-    fontWeight: "bold",
-    marginRight:8
-  },
-  position: {
-    fontSize: 14,
-    flex: 1,
-    alignSelf: "center",
-    color: "#696969",
-  },
-  about: {
-    marginHorizontal: 10,
-  },
-
-  followButton: {
-    marginTop: 10,
-    height: 35,
-    width: 100,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
-    backgroundColor: "#00BFFF",
-  },
-  followButtonText: {
-    color: "#FFFFFF",
-    fontSize: 20,
-  },
-  /************ modals ************/
-  popup: {
-    backgroundColor: "white",
-    marginTop: 80,
-    marginHorizontal: 20,
-    borderRadius: 7,
-  },
-  popupOverlay: {
-    backgroundColor: "#00000057",
-    flex: 1,
-    marginTop: 30,
-  },
-  popupContent: {
-    //alignItems: 'center',
-    margin: 5,
-    height: 250,
-  },
-  popupHeader: {
-    marginBottom: 45,
-  },
-  popupButtons: {
-    marginTop: 15,
-    flexDirection: "row",
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    justifyContent: "center",
-  },
-  popupButton: {
-    flex: 1,
-    marginVertical: 16,
-  },
-  btnClose: {
-    height: 20,
-    backgroundColor: "#20b2aa",
-    padding: 20,
-  },
-  modalInfo: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

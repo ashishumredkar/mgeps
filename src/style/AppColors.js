@@ -21,5 +21,8 @@ export const AppColors = {
   whiteop01: '#ffffff55',
   blue: '#0000FF',
   lightBlue50: '#E1F5FE',
-  colorPrimary: '#1976D2'
+  colorPrimary: '#1976D2',
+  red200: '#EF9A9A',
+  green200: '#A5D6A7',
+  grey10: '#e6e6e6',
 };

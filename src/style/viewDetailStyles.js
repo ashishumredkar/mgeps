@@ -166,13 +166,14 @@ export const viewDetailStyles = StyleSheet.create({
     justifyContent: "center",
   },
   notificationLabel: {
+    flexDirection:'row',
     borderRadius: 10,
     marginRight: 5,
     marginLeft: 5,
     marginBottom: 8,
   },
   notificationValue: {
-    flex: 1,
+    // flex: 1,
     fontSize: 14,
     marginLeft: 16,
     alignContent: "center",

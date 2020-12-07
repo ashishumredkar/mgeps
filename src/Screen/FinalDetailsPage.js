@@ -214,6 +214,8 @@ export default class FinalDetailsPage extends Component {
             >
               <FlatList
                 data={noticeDetails}
+                showsVerticalScrollIndicator ={false}
+                showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
                   //console.log("item ", item);
                   const keyValue = Object.keys(item).map((key) => [

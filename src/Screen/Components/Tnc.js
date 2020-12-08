@@ -46,9 +46,10 @@ const Tnc = (props) => {
             buttonStyle={{
               marginTop: 5,
               borderRadius: 16,
-              backgroundColor: "#F24E0B",
+              backgroundColor: AppColors.red800,
               alignContent: "center",
-              height: 40,
+              height: 35,
+              width: 120,
             }}
             onPress={() => props.onCloseModal()}
           />
@@ -90,9 +91,9 @@ const Tnc = (props) => {
               buttonStyle={{
                 marginTop: 5,
                 borderRadius: 16,
-                backgroundColor: "#A1E13E",
+                backgroundColor: AppColors.green600,
                 width:120,
-                height: 40,
+                height: 35,
               }}
               onPress={() => props.onResponse(true)}
             />
@@ -109,9 +110,9 @@ const Tnc = (props) => {
               buttonStyle={{
                 marginTop: 5,
                 borderRadius: 16,
-                backgroundColor: "#F24E0B",
+                backgroundColor: AppColors.red800,
                 width:120,
-                height: 40,
+                height: 35,
               }}
               onPress={() => props.onResponse(false)}
             />

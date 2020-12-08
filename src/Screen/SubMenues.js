@@ -121,7 +121,8 @@ class SubMenues extends React.Component {
     };
     console.log("authToken5 ", token);
 
-    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
+    /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -206,7 +207,6 @@ class SubMenues extends React.Component {
                     <Image
                       style={homeStyles.cardImage}
                       source={imagesArray[index]}
-                      //source={{ uri: imagesArray[index] }}
                     />
 
                     <Text style={homeStyles.subTitle}>

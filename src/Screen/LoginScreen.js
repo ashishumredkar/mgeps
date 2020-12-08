@@ -74,7 +74,8 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchUserType = async () => {
     setLoading(true);
-    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType")
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
+    // fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -306,21 +307,26 @@ const LoginScreen = ({ navigation }) => {
   const onForgotpassword = async () => {
     //alert("forgotPassword "+forgotPassword)
 
-
-    try{
+    try {
       const supported = await Linking.canOpenURL(forgotPassword);
 
       if (supported) {
         // Opening the link with some app, if the URL scheme is "http" the web link should be opened
         // by some browser in the mobile
         await Linking.openURL(forgotPassword);
-      }else{
-        Toast.showWithGravity("Please connect with internet or try again", Toast.LONG, Toast.CENTER);
-  
+      } else {
+        Toast.showWithGravity(
+          "Please connect with internet or try again",
+          Toast.LONG,
+          Toast.CENTER
+        );
       }
-    }catch(err){
-      Toast.showWithGravity("Please connect with internet or try again", Toast.LONG, Toast.CENTER);
-
+    } catch (err) {
+      Toast.showWithGravity(
+        "Please connect with internet or try again",
+        Toast.LONG,
+        Toast.CENTER
+      );
     }
   };
 
@@ -418,8 +424,10 @@ const LoginScreen = ({ navigation }) => {
           source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
         />
       </View>
-      <TouchableOpacity style={styles.outerCircle}
-       onPress={() => handleSubmitPress()}>
+      <TouchableOpacity
+        style={styles.outerCircle}
+        onPress={() => handleSubmitPress()}
+      >
         <View style={styles.innerCircle}>
           {/* <Text style={styles.paragraph}/> */}
           <Image
@@ -454,10 +462,24 @@ const LoginScreen = ({ navigation }) => {
         <Text style={[styles.btnText, styles.underline]}>Forgot Password?</Text>
       </TouchableOpacity>
       <View style={{ flexDirection: "row", marginTop: 20 }}>
-        <Text style={[styles.btnText, { height: 40, marginTop: 10 }]}>
+        <Text
+          style={[styles.btnText, { height: 40, marginTop: 10 }]}
+          onPress={() => {
+            Linking.openURL("https://www.philgeps.gov.ph/");
+          }}
+        >
           Copyright {"\u00A9"}By.philGEPS{" "}
         </Text>
-        <Image source={require("../Image/menu_logo.png")} style={styles.image} />
+        <TouchableOpacity
+          onPress={() => {
+            Linking.openURL("https://www.philgeps.gov.ph/");
+          }}
+        >
+          <Image
+            source={require("../Image/menu_logo.png")}
+            style={styles.image}
+          />
+        </TouchableOpacity>
       </View>
       {/* <Modal
             animationType = {"slide"}

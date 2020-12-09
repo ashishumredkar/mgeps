@@ -95,7 +95,7 @@ const ProfileScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1,backgroundColor:'white' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <GeneralStatusBarColor
         backgroundColor={AppColors.colorPrimary}
         barStyle="light-content"
@@ -132,103 +132,101 @@ const ProfileScreen = (props) => {
           </View>
         </Card>
       ) : null}
-<View style={{ flex: 0.9, margin: 5 }}>
-      <Card
-        style={{
-          padding: 10,
-          margin: 10,
-          height: "40%",
-          borderRadius: 80,
-          marginBottom: 8,
-          
-        }}
-      >
-        <FlatList
-          data={profileData}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => {
-            //console.log("item ", item);
-            const keyValue = Object.keys(item).map((key) => [key, item[key]]);
-            console.log(
-              "Key Value :: ",
-              keyValue + " Type :: " + typeof keyValue[0][1]
-            );
-
-            if (
-              typeof keyValue[0][1] === "string" ||
-              typeof keyValue[0][1] === "number"
-            ) {
-              var key = keyValue[0][0];
-              var value = keyValue[0][1];
-              return (
-                
-                <View
-                  style={{
-                    padding: 3,
-                    margin: 2,
-                    borderRadius: 10,
-                    flex: 1,
-                    marginBottom: 8,
-                    flexDirection: "column",
-                    justifyContent:'space-evenly'
-                  }}
-                >
-                  <View
-                    style={[
-                      viewDetailStyles.notificationLabel,
-                      { flexDirection: "column" },
-                    ]}
-                  >
-                    <Text style={viewDetailStyles.name}>{key}:</Text>
-                    <Text
-                      style={{
-                        flex:1,
-                        width:'100%',
-                        fontSize: 14,
-                        marginLeft: 1,
-                        alignContent: "center",
-                        color: "grey",
-                        fontWeight: "normal",
-                        paddingLeft: 0,
-                      }}
-                    >
-                      {value}
-                    </Text>
-                  </View>
-                  {index % 2 != 0 ? (
-                    <View
-                      style={{
-                        height: 1,
-                        width: "100%",
-                        backgroundColor: "grey",
-                        marginTop: 8,
-                      }}
-                    />
-                  ) : null}
-                  {index % 2 === 0 ? (
-                    <View
-                      style={{
-                        height: 1,
-                        width: "100%",
-                        backgroundColor: "grey",
-                        marginTop: 8,
-                      }}
-                    />
-                  ) : null}
-                </View>
-              );
-            }
+      <View style={{ flex: 0.9, margin: 5 }}>
+        <Card
+          style={{
+            padding: 10,
+            margin: 10,
+            height: "40%",
+            borderRadius: 80,
+            marginBottom: 8,
           }}
-          //Setting the number of column
-          numColumns={2}
-          keyExtractor={(item, index) => "" + index}
-        />
-      </Card>
+        >
+          <FlatList
+            data={profileData}
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => {
+              //console.log("item ", item);
+              const keyValue = Object.keys(item).map((key) => [key, item[key]]);
+              console.log(
+                "Key Value :: ",
+                keyValue + " Type :: " + typeof keyValue[0][1]
+              );
+
+              if (
+                typeof keyValue[0][1] === "string" ||
+                typeof keyValue[0][1] === "number"
+              ) {
+                var key = keyValue[0][0];
+                var value = keyValue[0][1];
+                return (
+                  <View
+                    style={{
+                      padding: 3,
+                      margin: 2,
+                      borderRadius: 10,
+                      flex: 1,
+                      marginBottom: 8,
+                      flexDirection: "column",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <View
+                      style={[
+                        viewDetailStyles.notificationLabel,
+                        { flexDirection: "column" },
+                      ]}
+                    >
+                      <Text style={viewDetailStyles.name}>{key}:</Text>
+                      <Text
+                        style={{
+                          flex: 1,
+                          width: "100%",
+                          fontSize: 14,
+                          marginLeft: 1,
+                          alignContent: "center",
+                          color: "grey",
+                          fontWeight: "normal",
+                          paddingLeft: 0,
+                        }}
+                      >
+                        {value}
+                      </Text>
+                    </View>
+                    {index % 2 != 0 ? (
+                      <View
+                        style={{
+                          height: 1,
+                          width: "100%",
+                          backgroundColor: "grey",
+                          marginTop: 8,
+                        }}
+                      />
+                    ) : null}
+                    {index % 2 === 0 ? (
+                      <View
+                        style={{
+                          height: 1,
+                          width: "100%",
+                          backgroundColor: "grey",
+                          marginTop: 8,
+                        }}
+                      />
+                    ) : null}
+                  </View>
+                );
+              }
+            }}
+            //Setting the number of column
+            numColumns={2}
+            keyExtractor={(item, index) => "" + index}
+          />
+        </Card>
       </View>
       <View style={{ flex: 0.1, alignSelf: "auto" }}>
-          <BottomView />
-        </View>
+        <BottomView />
+      </View>
     </SafeAreaView>
   );
 };

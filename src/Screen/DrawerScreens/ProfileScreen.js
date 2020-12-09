@@ -3,7 +3,14 @@
 
 // Import React and Component
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, Pressable, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  StyleSheet,
+  FlatList,
+} from "react-native";
 import { gStyles } from "../../../src/style/appStyles";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -11,6 +18,9 @@ import { Card } from "react-native-elements";
 import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
 import CustomToolbar from "../Components/CustomToolbar";
 import { AppColors } from "../../style/AppColors";
+import { homeStyles } from "../../style/homeStyles";
+import { viewDetailStyles } from "../../style/viewDetailStyles";
+import BottomView from "../BottomView";
 
 const ProfileScreen = (props) => {
   const [profileData, setProfileData] = useState({
@@ -20,7 +30,7 @@ const ProfileScreen = (props) => {
     salutation: "Mr",
     fname: "kiran",
     mname: "a",
-    lname: "b",
+    lname: "bc",
     email: " ",
     designation: "dev",
     gender: "Male",
@@ -56,28 +66,36 @@ const ProfileScreen = (props) => {
   });
   const [username, setUserName] = useState("");
 
+  const [userData, setUserData] = useState();
+
   useEffect(() => {
     readData();
   }, [username]);
 
   const readData = async () => {
     try {
-      // const userData = await AsyncStorage.getItem("@user_data");
+      const userData = await AsyncStorage.getItem("@user_data");
 
       const userType = await AsyncStorage.getItem("userType");
 
-      //const value = JSON.parse(userData);
-      console.log("setAnimatingabc ", userType);
+      const value = JSON.parse(userData);
 
       setUserName(userType);
-      //setProfileData(value);
+      setUserData(value);
+
+      const noticeDetails = Object.keys(value).map((key) => ({
+        [key]: value[key],
+      }));
+      console.log("setAnimatingabc ", noticeDetails);
+
+      setProfileData(noticeDetails);
     } catch (e) {
       console.log("catch ", e);
     }
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1,backgroundColor:'white' }}>
       <GeneralStatusBarColor
         backgroundColor={AppColors.colorPrimary}
         barStyle="light-content"
@@ -89,88 +107,128 @@ const ProfileScreen = (props) => {
         backgroundColor="#3775f0"
       />
 
+      {userData ? (
+        <Card
+          style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <View style={[gStyles.userAvatarStyle]}>
+              <Text>{userData.fname.charAt(0) + userData.lname.charAt(0)}</Text>
+            </View>
+
+            <View style={{ width: 10 }}></View>
+
+            {/* CONTACT DETAILS  */}
+            <View style={{ paddingTop: 8 }}>
+              <Text style={gStyles.contactStyle}>
+                {userData.fname} {userData.mname} {userData.lname}
+              </Text>
+              <Text>
+                {userData.email === undefined || userData.email.length === 0
+                  ? "email"
+                  : userData.email}
+              </Text>
+            </View>
+          </View>
+        </Card>
+      ) : null}
+<View style={{ flex: 0.9, margin: 5 }}>
       <Card
-        style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <View style={[gStyles.userAvatarStyle]}>
-            <Text>
-              {profileData.fname.charAt(0) + profileData.lname.charAt(0)}
-            </Text>
-          </View>
-
-          <View style={{ width: 10 }}></View>
-
-          {/* CONTACT DETAILS  */}
-          <View style={{ paddingTop: 8 }}>
-            <Text style={gStyles.contactStyle}>
-              {profileData.fname} {profileData.mname} {profileData.lname}
-            </Text>
-            <Text>
-              {profileData.email === undefined || profileData.email.length === 0
-                ? "email"
-                : profileData.email}
-            </Text>
-          </View>
-        </View>
-      </Card>
-      <View
         style={{
-          height: 1,
-          width: "100%",
-          backgroundColor: "grey",
-          marginTop: 8,
+          padding: 10,
+          margin: 10,
+          height: "40%",
+          borderRadius: 80,
+          marginBottom: 8,
+          
         }}
-      />
+      >
+        <FlatList
+          data={profileData}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item, index }) => {
+            //console.log("item ", item);
+            const keyValue = Object.keys(item).map((key) => [key, item[key]]);
+            console.log(
+              "Key Value :: ",
+              keyValue + " Type :: " + typeof keyValue[0][1]
+            );
 
-      <Card style={{ padding: 10, margin: 10 }}>
-        <View style={styles.container}>
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              backgroundColor: "white",
-            }}
-          >
-            <View style={{ flex: 1, flexDirection: "column", marginStart: 15 }}>
-              <Text style={styles.nameLabel}>Username</Text>
-              <Text>{profileData.username}</Text>
-            </View>
-
-            <View style={{ flex: 1, flexDirection: "column" }}>
-              <Text style={styles.nameLabel}>Salutation</Text>
-              <Text>{profileData.salutation}</Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              height: 1,
-              width: "100%",
-              backgroundColor: "grey",
-              marginTop: 8,
-            }}
-          />
-
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              backgroundColor: "white",
-            }}
-          >
-            <View style={{ flex: 1, flexDirection: "column", marginStart: 15 }}>
-              <Text>Gender</Text>
-              <Text>{profileData.gender}</Text>
-            </View>
-
-            <View style={{ flex: 1, flexDirection: "column" }}>
-              <Text>Mobile</Text>
-              <Text>{profileData.phone_no}</Text>
-            </View>
-          </View>
-        </View>
+            if (
+              typeof keyValue[0][1] === "string" ||
+              typeof keyValue[0][1] === "number"
+            ) {
+              var key = keyValue[0][0];
+              var value = keyValue[0][1];
+              return (
+                
+                <View
+                  style={{
+                    padding: 3,
+                    margin: 2,
+                    borderRadius: 10,
+                    flex: 1,
+                    marginBottom: 8,
+                    flexDirection: "column",
+                    justifyContent:'space-evenly'
+                  }}
+                >
+                  <View
+                    style={[
+                      viewDetailStyles.notificationLabel,
+                      { flexDirection: "column" },
+                    ]}
+                  >
+                    <Text style={viewDetailStyles.name}>{key}:</Text>
+                    <Text
+                      style={{
+                        flex:1,
+                        width:'100%',
+                        fontSize: 14,
+                        marginLeft: 1,
+                        alignContent: "center",
+                        color: "grey",
+                        fontWeight: "normal",
+                        paddingLeft: 0,
+                      }}
+                    >
+                      {value}
+                    </Text>
+                  </View>
+                  {index % 2 != 0 ? (
+                    <View
+                      style={{
+                        height: 1,
+                        width: "100%",
+                        backgroundColor: "grey",
+                        marginTop: 8,
+                      }}
+                    />
+                  ) : null}
+                  {index % 2 === 0 ? (
+                    <View
+                      style={{
+                        height: 1,
+                        width: "100%",
+                        backgroundColor: "grey",
+                        marginTop: 8,
+                      }}
+                    />
+                  ) : null}
+                </View>
+              );
+            }
+          }}
+          //Setting the number of column
+          numColumns={2}
+          keyExtractor={(item, index) => "" + index}
+        />
       </Card>
+      </View>
+      <View style={{ flex: 0.1, alignSelf: "auto" }}>
+          <BottomView />
+        </View>
     </SafeAreaView>
   );
 };

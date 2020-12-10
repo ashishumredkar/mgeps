@@ -9,6 +9,7 @@ import {
   Button,
   Image,
   StatusBar,
+  SafeAreaView
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -200,11 +201,11 @@ export default class Details extends Component {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <GeneralStatusBarColor
+      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
+        {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -213,108 +214,110 @@ export default class Details extends Component {
           backgroundColor="#3775f0"
         />
         {/* {this.state.isLoading ?<Loader loading={this.state.isLoading} /> : null } */}
-        <View style={{ paddingTop: 8, paddingLeft: 8 }}>
+        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+          <View style={{ paddingTop: 8, paddingLeft: 8 }}>
+            <Text
+              numberOfLines={1}
+              style={[
+                gStyles.contactStyle,
+                { color: "grey", fontSize: 14, marginTop: 5 },
+              ]}
+            >
+              {this.state.pageTitle}
+            </Text>
+          </View>
+
           <Text
-            numberOfLines={1}
-            style={[
-              gStyles.contactStyle,
-              { color: "grey", fontSize: 14, marginTop: 5 },
-            ]}
-          >
-            {this.state.pageTitle}
-          </Text>
-        </View>
-
-        <Text
-          style={{
-            height: 2,
-            backgroundColor: "blue",
-            width: "100%",
-            marginTop: 5,
-          }}
-        />
-
-        <View style={{ flex: 0.9 }}>
-          {/* <Header
-            centerComponent={{
-              text: this.state.pageTitle,
-              style: { color: "#fff" },
+            style={{
+              height: 2,
+              backgroundColor: "blue",
+              width: "100%",
+              marginTop: 5,
             }}
-            containerStyle={{ paddingTop: 0, height: 50 }}
-          /> */}
-          <FlatList
-            data={this.state.users}
-            renderItem={({ item, index }) => {
-              return (
-                <Pressable
-                  style={{ flex: 1, marginBottom: 10 }}
-                  onPress={() => {
-                    this.props.navigation.navigate("FinalDetailsPage", {
-                      data: item,
-                      pageTitle: this.state.pageTitle,
-                    });
-                  }}
-                >
-                  <View style={listStyles.viewColumn}>
-                    <View style={listStyles.viewRow}>
-                      <Text
-                        style={[listStyles.title, {fontWeight: item.isAcknowledge === 0 ? "bold" : "normal"}]}>
-                        {index + 1 + ". " + item.activityType}
-                      </Text>
-                      <View style={listStyles.notificationIconView}>
-                        {item.isAcknowledge === 1 ? (
-                          <Image 
-                            style={[listStyles.notificationIcon, {tintColor: AppColors.green200}]}
-                            source={require("../Image/ic_published.png")}
-                          />
-                        ) : (
-                          <Image
-                            style={[listStyles.notificationIcon, {tintColor: AppColors.red200}]}
-                            source={require("../Image/ic_unpublished.png")}
-                          />
-                        )}
-                      </View>
-                    </View>
-
-                    <Text style={listStyles.notificationText}>
-                      {item.notification}
-                    </Text>
-                  </View>
-                </Pressable>
-              );
-            }}
-            keyExtractor={(user) => "" + user.id}
-            refreshing={this.state.isLoadingMore}
-            onRefresh={this.refreshUsers}
-            ItemSeparatorComponent={() => <Divider />}
-            // ListFooterComponent={this.state.isLoadingMore && <Loader />}
-            onEndReached={this.loadMoreUsers}
-            onEndThreshold={0}
-            initialNumToRender={8}
-            maxToRenderPerBatch={2}
-            onEndReachedThreshold={0.5}
-            ListEmptyComponent={this.EmptyListMessage}
           />
 
-          {this.state.isLoading && (
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <ActivityIndicator size="large" color="#ff6a00" />
+          <View style={{ flex: 0.9 }}>
+            {/* <Header
+              centerComponent={{
+              text: this.state.pageTitle,
+              style: { color: "#fff" },
+              }}
+              containerStyle={{ paddingTop: 0, height: 50 }}
+            /> */}
+            <FlatList
+              data={this.state.users}
+              renderItem={({ item, index }) => {
+                return (
+                  <Pressable
+                    style={{ flex: 1, marginBottom: 10 }}
+                    onPress={() => {
+                      this.props.navigation.navigate("FinalDetailsPage", {
+                        data: item,
+                        pageTitle: this.state.pageTitle,
+                      });
+                    }}
+                  >
+                    <View style={listStyles.viewColumn}>
+                      <View style={listStyles.viewRow}>
+                        <Text
+                          style={[listStyles.title, {fontWeight: item.isAcknowledge === 0 ? "bold" : "normal"}]}>
+                          {index + 1 + ". " + item.activityType}
+                        </Text>
+                        <View style={listStyles.notificationIconView}>
+                          {item.isAcknowledge === 1 ? (
+                            <Image
+                              style={[listStyles.notificationIcon, {tintColor: AppColors.green200}]}
+                              source={require("../Image/ic_published.png")}
+                            />
+                          ) : (
+                            <Image
+                              style={[listStyles.notificationIcon, {tintColor: AppColors.red200}]}
+                              source={require("../Image/ic_unpublished.png")}
+                            />
+                          )}
+                        </View>
+                      </View>
+
+                      <Text style={listStyles.notificationText}>
+                        {item.notification}
+                      </Text>
+                    </View>
+                  </Pressable>
+                );
+              }}
+              keyExtractor={(user) => "" + user.id}
+              refreshing={this.state.isLoadingMore}
+              onRefresh={this.refreshUsers}
+              ItemSeparatorComponent={() => <Divider />}
+              // ListFooterComponent={this.state.isLoadingMore && <Loader />}
+              onEndReached={this.loadMoreUsers}
+              onEndThreshold={0}
+              initialNumToRender={8}
+              maxToRenderPerBatch={2}
+              onEndReachedThreshold={0.5}
+              ListEmptyComponent={this.EmptyListMessage}
+            />
+
+            {this.state.isLoading && (
+              <View style={{ flex: 1, alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#ff6a00" />
+              </View>
+            )}
+          </View>
+          {!this.state.isLoading && this.state.users && (
+            <View style={listStyles.totalRowsView}>
+              <View style={listStyles.textShadow}>
+                <Text style={listStyles.textStyle}>
+                  Total Rows : {this.state.totalCount}
+                </Text>
+              </View>
             </View>
           )}
-        </View>
-        {!this.state.isLoading && this.state.users && (
-          <View style={listStyles.totalRowsView}>
-            <View style={listStyles.textShadow}>
-              <Text style={listStyles.textStyle}>
-                Total Rows : {this.state.totalCount}
-              </Text>
-            </View>
+          <View style={{ flex: 0.1 }}>
+            <BottomView />
           </View>
-        )}
-        <View style={{ flex: 0.1 }}>
-          <BottomView />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -322,6 +325,7 @@ export default class Details extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FFFFFF"
   },
   container2: {
     flex: 1,

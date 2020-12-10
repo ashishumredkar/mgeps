@@ -145,12 +145,12 @@ class SubMenues extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <GeneralStatusBarColor
-        backgroundColor={AppColors.colorPrimary}
+      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
+        {/* <GeneralStatusBarColor
+          backgroundColor={AppColors.colorPrimary}
 
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -158,13 +158,14 @@ class SubMenues extends React.Component {
           userType={"Merchant"}
           backgroundColor="#3775f0"
         />
-       <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
+        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+        <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
           <View style={[gStyles.userAvatarStyle,{backgroundColor:this.state.iconBackColor}]}>
             <Image
               style={{ width: 35, height: 35, }}
               // source={require("../Image/menu_logo.png")}
               source={this.state.iconUri}
-             
+
             />
           </View>
 
@@ -176,7 +177,7 @@ class SubMenues extends React.Component {
               numberOfLines={1}
               style={[gStyles.contactStyle, { color: "black", fontSize: 18,marginTop:5 }]}
             >
-             {this.state.title}
+              {this.state.title}
             </Text>
           </View>
         </View>
@@ -226,6 +227,7 @@ class SubMenues extends React.Component {
         <View style={{ flex: 0.1, alignSelf: "auto" }}>
           <BottomView />
         </View>
+      </View>
       </SafeAreaView>
     );
   }

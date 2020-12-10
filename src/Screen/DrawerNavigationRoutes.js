@@ -3,7 +3,7 @@
 
 // Import React
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, useWindowDimensions } from "react-native";
+import { Text, View, Image, useWindowDimensions, Platform } from "react-native";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -111,7 +111,7 @@ export function LogoTitle(props) {
   };
 
   return (
-    <View style={{ flexDirection: "row", marginLeft: -20, marginTop: 5 }}>
+    <View style={{ flexDirection: "row", marginLeft: -20, marginTop: 5, marginTop: (Platform.OS == 'ios') ? -10 : 0 }}>
       <View style={[gStyles.userAvatarStyle]}>
         <Image
           style={{ width: 35, height: 35, backgroundColor: "white" }}
@@ -123,7 +123,7 @@ export function LogoTitle(props) {
 
       {/* CONTACT DETAILS  */}
       <View style={{ paddingTop: 8 }}>
-        <Text style={[gStyles.contactStyle, { color: "white", fontSize: 18 }]}>
+        <Text style={{ color: "white", fontSize: 18}}>
           Dashboard
         </Text>
         <Text style={[{ color: "white", fontSize: 14 }]}>
@@ -145,7 +145,7 @@ export function NotificationView() {
       <View>
         {/* <Badge size={10} style={{width:40,height:40}} /> */}
         <Image
-          style={{ width: 40, height: 40, backgroundColor: "#307ecc" }}
+          style={{ width: (Platform.OS == 'ios') ? 30 : 40, height: (Platform.OS == 'ios') ? 30 : 40, backgroundColor: "#307ecc" }}
           source={require("../Image/notification.png")}
         />
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
@@ -305,7 +305,8 @@ const DrawerNavigatorRoutes = (props) => {
       >
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/profile.png")}
+          //source={require("../Image/profile.png")}
+          source={{uri: "https://bootdey.com/img/Content/avatar/avatar7.png"}}
         />
         <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
           Profile Overview

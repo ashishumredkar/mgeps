@@ -38,10 +38,10 @@ const CustomSidebarMenu = (props) => {
       <View Style={{ flexDirection: "row" }}>
         <View style={stylesSidebar.profileHeader}>
           {/* <View style={stylesSidebar.profileHeaderPicCircle}>
-          <Text style={{fontSize: 25, color: '#307ecc'}}>
+            <Text style={{fontSize: 25, color: '#307ecc'}}>
             {'About React'.charAt(0)}
-          </Text>
-        </View> */}
+            </Text>
+          </View> */}
           <Image
             source={{ uri: "http://loremflickr.com/g/50/50/paris" }}
             style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
@@ -68,7 +68,7 @@ const CustomSidebarMenu = (props) => {
 
           {/* <View style={{ marginTop: '5%' }}>
             <Divider style={{ backgroundColor: '#777f7c90' }} />
-         </View> */}
+          </View> */}
         </View>
         <DrawerItem
           label={({ color }) => (
@@ -86,19 +86,19 @@ const CustomSidebarMenu = (props) => {
               "Logout",
               "Are you sure? You want to logout?",
               [
-                {
+              {
                   text: "Cancel",
-                  onPress: () => {
+                onPress: () => {
                     return null;
-                  },
                 },
-                {
+              },
+              {
                   text: "Confirm",
-                  onPress: () => {
-                    AsyncStorage.clear();
-                    props.navigation.replace("Auth");
-                  },
+                onPress: () => {
+                  AsyncStorage.clear();
+                  props.navigation.replace("Auth");
                 },
+              },
               ],
               { cancelable: false }
             );
@@ -106,7 +106,7 @@ const CustomSidebarMenu = (props) => {
         />
       </DrawerContentScrollView>
 
-      
+
     </View>
   );
 };

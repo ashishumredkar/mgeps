@@ -71,8 +71,8 @@ class SubMenues extends React.Component {
       authToken: "",
       loading: "",
       title: "",
-      iconBackColor:'',
-      iconUri:'',
+      iconBackColor: "",
+      iconUri: "",
     };
   }
   async componentDidMount() {
@@ -81,8 +81,8 @@ class SubMenues extends React.Component {
     this.setState({
       menuList: this.props.route.params.data,
       title: this.props.route.params.title,
-      iconBackColor:this.props.route.params.backgroundColor,
-      iconUri:this.props.route.params.iconUrl,
+      iconBackColor: this.props.route.params.backgroundColor,
+      iconUri: this.props.route.params.iconUrl,
     });
     //this.readData();
   }
@@ -121,8 +121,9 @@ class SubMenues extends React.Component {
     };
     console.log("authToken5 ", token);
 
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
-    /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {
+      //Live UAT
+      /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -147,24 +148,28 @@ class SubMenues extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <GeneralStatusBarColor
-        backgroundColor={AppColors.colorPrimary}
-
+          backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
         />
 
         <CustomToolbar
           navigation={this.props.navigation}
-          title={this.state.title}
-          userType={"Merchant"}
+          title={"Sub Menus"}
+          userType={this.state.userType}
           backgroundColor="#3775f0"
         />
-       <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
-          <View style={[gStyles.userAvatarStyle,{backgroundColor:this.state.iconBackColor}]}>
+        
+        <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
+          <View
+            style={[
+              gStyles.userAvatarStyle,
+              { backgroundColor: this.state.iconBackColor },
+            ]}
+          >
             <Image
-              style={{ width: 35, height: 35, }}
+              style={{ width: 35, height: 35 }}
               // source={require("../Image/menu_logo.png")}
               source={this.state.iconUri}
-             
             />
           </View>
 
@@ -174,15 +179,25 @@ class SubMenues extends React.Component {
           <View style={{ paddingTop: 8 }}>
             <Text
               numberOfLines={1}
-              style={[gStyles.contactStyle, { color: "black", fontSize: 18,marginTop:5 }]}
+              style={[
+                gStyles.contactStyle,
+                { color: "black", fontSize: 18, marginTop: 5 },
+              ]}
             >
-             {this.state.title}
+              {this.state.title}
             </Text>
           </View>
         </View>
-        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
+        <Text
+          style={{
+            height: 2,
+            backgroundColor: "blue",
+            width: "100%",
+            marginTop: 5,
+          }}
+        />
 
-        <View style={{ flex: 0.9,margin:5 }}>
+        <View style={{ flex: 0.9, margin: 5 }}>
           <FlatList
             data={this.state.menuList}
             renderItem={({ item, index }) => {

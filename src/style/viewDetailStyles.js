@@ -100,6 +100,7 @@ export const viewDetailStyles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     marginRight: 8,
+    width: 120,
   },
   position: {
     fontSize: 14,

@@ -5,6 +5,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Modal, Image, Text } from "react-native";
 import { Button } from "react-native-elements";
+import { AppColors } from "../../style/AppColors";
 
 const AlertModal = (props) => {
   const { loading, ...attributes } = props;
@@ -32,7 +33,7 @@ const AlertModal = (props) => {
         <View style={styles.activityIndicatorWrapper}>
           <View
             style={{
-              backgroundColor: "#F24E0B",
+              backgroundColor: AppColors.red300,
               flex: 1,
               width: "100%",
               alignSelf: "center",
@@ -47,7 +48,7 @@ const AlertModal = (props) => {
             <Text style={styles.paragraph}>Login Type</Text>
           </View>
 
-          <View style={{ backgroundColor: "white", flex: 1 }}>
+          <View style={{ backgroundColor: "white", flex: 1, marginTop: 15}}>
             <Text style={styles.text}>No Records Found</Text>
 
             <Button
@@ -55,7 +56,7 @@ const AlertModal = (props) => {
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 16,
-                backgroundColor: "#F24E0B",
+                backgroundColor: AppColors.red300,
               }}
               onPress={() => props.onRety()}
             />
@@ -65,7 +66,7 @@ const AlertModal = (props) => {
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 16,
-                backgroundColor: "#F24E0B",
+                backgroundColor: AppColors.red300,
               }}
               onPress={() => props.onCloseModal()}
             />

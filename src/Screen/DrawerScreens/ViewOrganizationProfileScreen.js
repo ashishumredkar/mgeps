@@ -11,7 +11,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import { gStyles } from "../../../src/style/appStyles";
+import { gStyles } from "../../style/appStyles";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import { Card } from "react-native-elements";
@@ -21,63 +21,31 @@ import { AppColors } from "../../style/AppColors";
 import { homeStyles } from "../../style/homeStyles";
 import { viewDetailStyles } from "../../style/viewDetailStyles";
 import BottomView from "../BottomView";
+const STORAGE_KEY = "@user_data";
 
-const ProfileScreen = (props) => {
-  const [profileData, setProfileData] = useState({
-    id: 23,
-    user_type: 11,
-    username: "kiranab",
-    salutation: "Mr",
-    fname: "kiran",
-    mname: "a",
-    lname: "bc",
-    email: " ",
-    designation: "dev",
-    gender: "Male",
-    hint_question_id: 3,
-    hint_answer: "45",
-    mobile: "435643564645645",
-    phone_country_code: 63,
-    phone_no: 456546546,
-    landline_extension_no: "4564",
-    area_code: "54645",
-    fax_number: "456456456",
-    fax_area_code: "45654",
-    fax_extension_no: "4564",
-    otp: 58155,
-    location: "local",
-    company_type: 3,
-    bussiness_reg_number: "",
-    organization_name: "ABCD",
-    old_organization_name: null,
-    bussiness_tax_number: "123123213123",
-    is_deleted: "N",
-    primary_user_id: 0,
-    is_primary_user: "Y",
-    primary_parent_id: 23,
-    reset_password_code: null,
-    fcm_id: 0,
-    mobile_country: null,
-    is_migration: "NO",
-    is_data_update: "YES",
-    old_user_id: 0,
-    modified: "2019-04-27T19:08:35+08:00",
-    created: "2019-04-27T19:08:35+08:00",
-  });
-  const [username, setUserName] = useState("");
+class ViewOrganizationProfileScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      organizationDetails: [],
+      pageTitle: "",
+      loading: false,
+      userType: "",
+      apiUrl: "",
+      urlParameter: {},
+      authToken: "",
+      title: "",
+    };
+  }
+  
+  componentDidMount() {
+    this.readData();
+  }
 
-  const [userData, setUserData] = useState();
-
-  useEffect(() => {
-    readData();
-  }, [username]);
-
-  const readData = async () => {
+  readData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
-
       const userType = await AsyncStorage.getItem("userType");
-
       const value = JSON.parse(userData);
 
       setUserName(userType);
@@ -94,19 +62,72 @@ const ProfileScreen = (props) => {
     }
   };
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
-      {/* <GeneralStatusBarColor
-        backgroundColor={AppColors.colorPrimary}
-        barStyle="light-content"
-      /> */}
+  getOrganizationDetails = async () => {
+    this.setState({ loading: true });
 
-      <CustomToolbar
-        title={"Profile"}
-        userType={username}
-        backgroundColor="#3775f0"
-      />
-      <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+    const userData = await AsyncStorage.getItem(STORAGE_KEY);
+    const mData = JSON.parse(userData);
+
+    const token = await AsyncStorage.getItem("auth_token");
+
+    console.log("Token ::", token);
+    console.log("user Type", mData.userType);
+    console.log("user Id", mData.id);
+    const data = {
+      userId: mData.id,
+      userType: mData.userType
+    };
+
+    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/viewOrganization"; // Pune UAT
+    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/viewOrganization"; // Live UAT
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+
+        if (responseJson) {
+          this.setState({ loading: false, organizationDetails: responseJson });
+          this.setState({ loading: false });
+        }
+
+        console.log("getDetails ", responseJson);
+      })
+      .catch((error) => {
+        //Hide Loader
+        //setLoading(false);
+        console.log("getDetails ", error);
+        this.setState({ loading: false });
+
+        console.error("qwerty  ", error);
+      })
+      .finally(() => this.setState({ loading: false }));
+  };
+
+  render() {
+    if (this.state.loading) return <Loader loading={this.state.loading} />;
+
+    const { isConditionAccepted } = this.state;
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <GeneralStatusBarColor
+          backgroundColor={AppColors.colorPrimary}
+          barStyle="light-content"
+        />
+
+        <CustomToolbar
+          title={"View Organization"}
+          userType={"Somshine"}
+          backgroundColor="#3775f0"
+        />
+
         {userData ? (
           <Card
             style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
@@ -143,7 +164,7 @@ const ProfileScreen = (props) => {
             }}
           >
             <FlatList
-              data={profileData}
+              data={organizationDetails}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               renderItem={({ item, index }) => {
@@ -178,7 +199,7 @@ const ProfileScreen = (props) => {
                           { flexDirection: "column" },
                         ]}
                       >
-                        <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                        <Text style={viewDetailStyles.name}>{key}:</Text>
                         <Text
                           style={{
                             flex: 1,
@@ -227,12 +248,12 @@ const ProfileScreen = (props) => {
         <View style={{ flex: 0.1, alignSelf: "auto" }}>
           <BottomView />
         </View>
-      </View>
-    </SafeAreaView>
-  );
+      </SafeAreaView>
+    );
+  }
 };
 
-export default ProfileScreen;
+export default ViewOrganizationProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 // Import Screens
 import HomeScreen from "./DrawerScreens/HomeScreen";
 import SettingsScreen from "./DrawerScreens/SettingsScreen";
+import ViewOrganizationProfileScreen from "./DrawerScreens/ViewOrganizationProfileScreen";
 import CustomSidebarMenu from "./Components/CustomSidebarMenu"; //DrawerMenu
 import NavigationDrawerHeader from "./Components/NavigationDrawerHeader";
 import SubMenues from "./SubMenues";
@@ -198,6 +199,36 @@ const profileScreenStack = ({ navigation }) => {
   );
 };
 
+const viewOrganizationProfileStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="ViewOrganizationProfileScreen"
+      screenOptions={{
+        headerLeft: () => (
+          <NavigationDrawerHeader navigationProps={navigation} />
+        ),
+
+        headerRight: () => (
+          <Icon name="circle-notifications" size={30} color="#900" />
+        ),
+        headerStyle: {
+          backgroundColor: "#307ecc", //Set Header color
+        },
+        headerTintColor: "#fff", //Set Header text color
+        headerTitleStyle: {
+          fontWeight: "bold", //Set Header text style
+        },
+      }}
+    >
+      <Stack.Screen
+        name="ViewOrganizationProfileScreen"
+        component={ViewOrganizationProfileScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const settingScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
@@ -314,6 +345,27 @@ const DrawerNavigatorRoutes = (props) => {
       </View>
     );
   }
+
+  function ViewOrganizationProfile(props) {
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 2,
+          marginBottom: 2,
+          height: 35,
+        }}
+      >
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/profile.png")}
+        />
+        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
+          View Organization
+        </Text>
+      </View>
+    );
+  }
   const dimensions = useWindowDimensions();
 
   const isLargeScreen = dimensions.width >= 768;
@@ -347,16 +399,19 @@ const DrawerNavigatorRoutes = (props) => {
           drawerLabel: (props) => (
             <DashboardMenu {...{ employeename: username, ...props }} />
           ),
-          // headerRight: () => (
-          //   <LogoTitle
-          //     onPress={() => alert('This is a button!')}
-          //     title="Info"
-          //     color="#fff"
-          //   />
-          // ),
         }}
-        // component={homeScreenStack({username})}
         component={homeScreenStack}
+      />
+
+      <Drawer.Screen
+        name="viewOrganizationProfile"
+        options={{
+          drawerLabel: (props) => (
+            <ViewOrganizationProfile {...{ employeename: username, ...props }} />
+          ),
+        }}
+        //  drawerLabel: props => <ProfileMenu {...props}
+        component={viewOrganizationProfileStack}
       />
 
       <Drawer.Screen

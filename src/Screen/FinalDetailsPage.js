@@ -10,7 +10,6 @@ import {
   Modal,
   ScrollView,
   Platform,
-  SafeAreaView
 } from "react-native";
 import BottomView from "./BottomView";
 import CustomToolbar from "./Components/CustomToolbar";
@@ -58,7 +57,7 @@ export default class FinalDetailsPage extends Component {
 
     this.setState({
       authToken: token,
-      userSelected: mData,
+      userSelected: [],
       pageTitle: mData.activityType,
       userType: userType,
       urlParameter: mData.urlParameter,
@@ -115,18 +114,15 @@ export default class FinalDetailsPage extends Component {
       notificationId: notificationId,
     };
     this.setState({ loading: true });
-    fetch(
-      "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(apiUrl + "/BuyerUsers/readNotifcationApi", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("sendAckForRead ", responseJson);
@@ -155,11 +151,11 @@ export default class FinalDetailsPage extends Component {
     }));
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
+      <View style={{ flex: 1 }}>
+        <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        /> */}
+        />
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -167,102 +163,110 @@ export default class FinalDetailsPage extends Component {
           userType={userType}
           backgroundColor="#3775f0"
         />
-        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
-          <View style={{ paddingTop: 8, paddingLeft: 8 }}>
-            <Text
-              numberOfLines={1}
-              style={[
-                gStyles.contactStyle,
-                { color: "grey", fontSize: 14, marginTop: 5 },
-              ]}
-            >
-              {this.state.title}
-            </Text>
-          </View>
 
+        <View style={{ paddingTop: 8, paddingLeft: 8 }}>
           <Text
+            numberOfLines={1}
+            style={[
+              gStyles.contactStyle,
+              { color: "grey", fontSize: 14, marginTop: 5 },
+            ]}
+          >
+            {this.state.title}
+          </Text>
+        </View>
+
+        <Text
+          style={{
+            height: 2,
+            backgroundColor: "blue",
+            width: "100%",
+            marginTop: 5,
+          }}
+        />
+        <View style={{ flex: 0.9, margin: 8 }}>
+          <View
             style={{
-              height: 2,
-              backgroundColor: "blue",
+              height: 32,
               width: "100%",
-              marginTop: 5,
+              backgroundColor: "#3775f0",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              borderBottomLeftRadius: 2,
             }}
-          />
-          <View style={{ flex: 0.9, margin: 8 }}>
+          >
+            <Text style={viewDetailStyles.cardTitle}>Details</Text>
+          </View>
+          <View style={viewDetailStyles.card}>
+            <View style={viewDetailStyles.cardContent} />
+
             <View
               style={{
-                height: 32,
                 width: "100%",
-                backgroundColor: "#3775f0",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-                borderBottomLeftRadius: 2,
+                // height: "70%",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                alignContent: "flex-start",
               }}
             >
-              <Text style={viewDetailStyles.cardTitle}>Details</Text>
-            </View>
-            <View style={viewDetailStyles.card}>
-              <View style={viewDetailStyles.cardContent} />
+              <FlatList
+                data={noticeDetails}
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) => {
+                  //console.log("item ", item);
+                  const keyValue = Object.keys(item).map((key) => [
+                    key,
+                    item[key],
+                  ]);
+                  console.log(
+                    "Key Value :: ",
+                    keyValue + " Type :: " + typeof keyValue[0][1]
+                  );
 
-              <View
-                style={{
-                  width: "100%",
-                  // height: "70%",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  alignContent: "flex-start",
-                }}
-              >
-                <FlatList
-                  data={noticeDetails}
-                  showsVerticalScrollIndicator ={false}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item, index }) => {
-                    //console.log("item ", item);
-                    const keyValue = Object.keys(item).map((key) => [
-                      key,
-                      item[key],
-                    ]);
-                    console.log(
-                      "Key Value :: ",
-                      keyValue + " Type :: " + typeof keyValue[0][1]
+                  if (
+                    typeof keyValue[0][1] === "string" ||
+                    typeof keyValue[0][1] === "number"
+                  ) {
+                    var key = keyValue[0][0];
+                    var value = keyValue[0][1];
+                    return (
+                      <View style={viewDetailStyles.notificationLabel}>
+                        <Text style={viewDetailStyles.name}>
+                          {key
+                            .replace(/([A-Z])/g, " $1")
+                            .trim()
+                            .replace(/^./, function (str) {
+                              return str.toUpperCase();
+                            })}
+                          :
+                        </Text>
+                        <Text style={viewDetailStyles.notificationValue}>
+                          {value}
+                        </Text>
+
+                        <View></View>
+                      </View>
                     );
-
-                    if (
-                      typeof keyValue[0][1] === "string" ||
-                      typeof keyValue[0][1] === "number"
-                    ) {
-                      var key = keyValue[0][0];
-                      var value = keyValue[0][1];
-                      return (
-                        <View style={viewDetailStyles.notificationLabel}>
-                          <Text style={viewDetailStyles.name}>{key}:</Text>
-                          <Text style={viewDetailStyles.notificationValue}>
-                            {value}
-                          </Text>
-
-                          <View></View>
-                        </View>
-                      );
-                    }
-                  }}
-                  //Setting the number of column
-                  numColumns={1}
-                  keyExtractor={(item, index) => "" + index}
-                />
-              </View>
+                  }
+                }}
+                //Setting the number of column
+                numColumns={1}
+                Ter
+                keyExtractor={(item, index) => "" + index}
+              />
             </View>
-          </View>
-          {this.state.isLoading && (
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <ActivityIndicator size="large" color="#ff6a00" />
-            </View>
-          )}
-          <View style={{ flex: 0.1 }}>
-            <BottomView />
           </View>
         </View>
-      </SafeAreaView>
+        {this.state.isLoading && (
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <ActivityIndicator size="large" color="#ff6a00" />
+          </View>
+        )}
+        <View style={{ flex: 0.1 }}>
+          <BottomView />
+        </View>
+      </View>
     );
   }
 }

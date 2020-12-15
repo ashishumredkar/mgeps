@@ -110,7 +110,9 @@ class HomeScreen extends React.Component {
       userType: muserType,
     };
     this.setState({ loading: true });
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {
+    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard"; //Live UAT
+    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard";
+    fetch(url, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + this.state.authToken,
@@ -178,6 +180,15 @@ class HomeScreen extends React.Component {
             onResponse={this.onResponse}
             onCloseModal={this.closeModal}
           />
+
+        <TouchableOpacity style={homeStyles.facebookStyle} activeOpacity={0.5}>
+            <Image
+            source={require('../../Image/calendar.png')}
+            style={homeStyles.imageIconStyle}
+            />
+            <View style={homeStyles.iconSeparatorStyle} />
+            <Text style={homeStyles.textStyle}> BID EVENT CALENDAR </Text>
+        </TouchableOpacity>
 
           <FlatList
             style={homeStyles.list}

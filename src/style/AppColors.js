@@ -23,6 +23,7 @@ export const AppColors = {
   lightBlue50: '#E1F5FE',
   colorPrimary: '#1976D2',
   red200: '#EF9A9A',
+  red300: '#E57373',
   red800: '#C62828',
   green200: '#A5D6A7',
   green600: '#7CB342',

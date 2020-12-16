@@ -25,7 +25,7 @@ const CustomToolbar = (props) => {
       <Text style={styles.middleContainer}>
         {/* {this.props.title} */}
         <View style={{ flexDirection: "row", marginTop: 5 }}>
-          <View style={[gStyles.userAvatarStyle]}>
+          <View style={{paddingTop: 10}}>
             <Image
               style={{ width: 35, height: 35 }}
               source={require("../../Image/menu_logo.png")}
@@ -35,7 +35,7 @@ const CustomToolbar = (props) => {
           <View style={{ width: 10 }}></View>
 
           {/* CONTACT DETAILS  */}
-          <View style={{ paddingTop: 8 }}>
+          <View style={{ paddingTop: 10 }}>
             <Text
               numberOfLines={1}
               style={[gStyles.contactStyle, { color: "white"}]}

@@ -21,7 +21,8 @@ import {
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
-
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 import Loader from "./Components/Loader";
 import AlertModal from "./Components/AlertModal";
 
@@ -74,8 +75,9 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchUserType = async () => {
     setLoading(true);
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
-    // fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
+    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType"; // Live UAT
+    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType"; // Pune UAT
+    fetch(url)
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -95,6 +97,56 @@ const LoginScreen = ({ navigation }) => {
         console.log("mData", mData);
 
         setLoginCollection(mData);
+
+        //PushNotification.checkPermissions(PushNotification.requestPermissions());
+
+        // PushNotification.configure({
+        //   requestPermissions: Platform.OS === 'ios',
+        //   // (optional) Called when Token is generated (iOS and Android)
+        //   onRegister: function(token) {
+        //                 console.log('TOKEN:', token);
+        //                 setfcmId(token);
+        //               },
+
+        //   // (required) Called when a remote or local notification is opened or received
+        //   onNotification: function(notification) {
+        //     console.log('NotificationHandler:', notification);
+        //   },
+
+        //   // (optional) Called when Action is pressed (Android)
+        //   onAction: function(notification) {
+        //     console.log ('Notification action received:');
+        //     console.log(notification.action);
+        //     console.log(notification);
+
+        //     if(notification.action === 'Yes') {
+        //       PushNotification.invokeApp(notification);
+        //     }
+        //   },
+
+        //   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+        //   onRegistrationError: function(err) {
+        //     console.log("onRegistrationError: ",err);
+        //   },
+
+        //   // IOS ONLY (optional): default: all - Permissions to register.
+        //   permissions: {
+        //     alert: true,
+        //     badge: true,
+        //     sound: true,
+        //   },
+
+        //   // Should the initial notification be popped automatically
+        //   // default: true
+        //   popInitialNotification: true,
+
+        //   /**
+        //    * (optional) default: true
+        //    * - Specified if permissions (ios) and token (android and ios) will requested or not,
+        //    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+        //    */
+        //   requestPermissions: true,
+        // });
       })
       .catch((error) => {
         setModalVisible(true);
@@ -247,13 +299,15 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", {
+    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken";
+    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/getToken";
+    fetch(url, {
       method: "POST",
       body: JSON.stringify({
         username: userEmail,
         password: userPassword,
         login_type: loginType,
-        fcm_id: "sdlfksdlflsdf987987s9d89f7sd987f987sd89f798s7df",
+        fcm_id: fcmId,
         country: "IN",
       }),
       headers: {
@@ -490,11 +544,11 @@ const LoginScreen = ({ navigation }) => {
             }}>
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-            <Image 
+            <Image
               source={require('../Image/menu_logo.png')}
               style = { styles.image }/>
               <Text style = { styles.text }>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Maecenas eget tempus augue, a convallis velit.</Text>
                   </View>
           </Modal> */}

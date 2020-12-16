@@ -57,7 +57,7 @@ export default class FinalDetailsPage extends Component {
 
     this.setState({
       authToken: token,
-      userSelected: mData,
+      userSelected: [],
       pageTitle: mData.activityType,
       userType: userType,
       urlParameter: mData.urlParameter,
@@ -114,18 +114,15 @@ export default class FinalDetailsPage extends Component {
       notificationId: notificationId,
     };
     this.setState({ loading: true });
-    fetch(
-      "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(apiUrl + "/BuyerUsers/readNotifcationApi", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("sendAckForRead ", responseJson);
@@ -214,7 +211,7 @@ export default class FinalDetailsPage extends Component {
             >
               <FlatList
                 data={noticeDetails}
-                showsVerticalScrollIndicator ={false}
+                showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item, index }) => {
                   //console.log("item ", item);
@@ -235,7 +232,15 @@ export default class FinalDetailsPage extends Component {
                     var value = keyValue[0][1];
                     return (
                       <View style={viewDetailStyles.notificationLabel}>
-                        <Text style={viewDetailStyles.name}>{key}:</Text>
+                        <Text style={viewDetailStyles.name}>
+                          {key
+                            .replace(/([A-Z])/g, " $1")
+                            .trim()
+                            .replace(/^./, function (str) {
+                              return str.toUpperCase();
+                            })}
+                          :
+                        </Text>
                         <Text style={viewDetailStyles.notificationValue}>
                           {value}
                         </Text>
@@ -247,6 +252,7 @@ export default class FinalDetailsPage extends Component {
                 }}
                 //Setting the number of column
                 numColumns={1}
+                Ter
                 keyExtractor={(item, index) => "" + index}
               />
             </View>

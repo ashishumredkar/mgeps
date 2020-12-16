@@ -211,6 +211,8 @@ dependencies {
         implementation jscFlavor
     }
     implementation 'androidx.multidex:multidex:2.0.1'
+	implementation 'com.google.firebase:firebase-core:9.6.1'
+	implementation "com.google.firebase:firebase-messaging:21.0.0"
 }
 
 // Run this once to be able to run the application with BUCK

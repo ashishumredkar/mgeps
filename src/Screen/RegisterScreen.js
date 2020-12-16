@@ -24,10 +24,7 @@ const RegisterScreen = (props) => {
   const [userAddress, setUserAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  const [
-    isRegistraionSuccess,
-    setIsRegistraionSuccess
-  ] = useState(false);
+  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
 
   const nameInputRef = createRef();
   const emailInputRef = createRef();

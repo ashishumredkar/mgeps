@@ -7,6 +7,7 @@ import {StyleSheet, View, Modal, ActivityIndicator} from 'react-native';
 
 const Loader = (props) => {
   const {loading, ...attributes} = props;
+  const apiUrl = "https://mgeps-uat.philgeps.gov.ph/api";
 
   return (
     <Modal

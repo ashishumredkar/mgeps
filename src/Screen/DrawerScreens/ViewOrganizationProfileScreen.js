@@ -148,10 +148,11 @@ class ViewOrganizationProfileScreen extends React.Component {
           userType={userType}
           backgroundColor="#3775f0"
         />
-      <View style={{flex:1, backgroundColor:'white' }}>
-
-        <View style={[styles.card,{ flex: 0.9, margin: 5,marginBottom:10 }]}>
-          {/* <Card
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <View
+            style={[styles.card, { flex: 0.9, margin: 5, marginBottom: 10 }]}
+          >
+            {/* <Card
             style={{
               padding: 10,
               margin: 10,
@@ -160,7 +161,7 @@ class ViewOrganizationProfileScreen extends React.Component {
               marginBottom: 19,
             }}
           > */}
-            <Text style={gStyles.contactStyle}>Organization Details</Text>
+            <Text style={[gStyles.contactStyle, {marginBottom: 20}]}>Organization Details</Text>
 
             <FlatList
               data={orgDetails}
@@ -186,27 +187,37 @@ class ViewOrganizationProfileScreen extends React.Component {
                         borderRadius: 10,
                         flex: 1,
                         marginBottom: 8,
+                        marginTop: 0,
                         flexDirection: "column",
-                         justifyContent: "space-evenly",
-                         
+                        justifyContent: "space-evenly",
                       }}
                     >
                       <View
                         style={[
                           viewDetailStyles.notificationLabel,
-                          { flexDirection: "row" ,flex:1},
-                        ]} >
-                        <Text style={[viewDetailStyles.name,{flex:1}]}>{key}:</Text>
+                          { flexDirection: "row", flex: 1 },
+                        ]}
+                      >
+                        <Text style={[viewDetailStyles.name, { flex: 1, fontWeight: "normal" }]}>
+                          {key
+                            .replace(/([A-Z])/g, " $1")
+                            .trim()
+                            .replace(/^./, function (str) {
+                              return str.toUpperCase();
+                            })}
+                          :
+                        </Text>
                         <Text
                           style={{
-                           flex: 1,
+                            flex: 1,
                             width: "100%",
-                            fontSize: 14,
+                            fontSize: 15,
                             marginLeft: 1,
+                            textAlign: "right",
                             alignContent: "center",
-                            color: "grey",
                             fontWeight: "normal",
                             paddingLeft: 0,
+                            color: AppColors.colorPrimary,
                           }}
                         >
                           {value}
@@ -217,7 +228,7 @@ class ViewOrganizationProfileScreen extends React.Component {
                           style={{
                             height: 1,
                             width: "100%",
-                            backgroundColor: "grey",
+                            backgroundColor: AppColors.AppGrey001,
                             marginTop: 8,
                           }}
                         />
@@ -227,7 +238,7 @@ class ViewOrganizationProfileScreen extends React.Component {
                           style={{
                             height: 1,
                             width: "100%",
-                            backgroundColor: "grey",
+                            backgroundColor: AppColors.AppGrey001,
                             marginTop: 8,
                           }}
                         />
@@ -241,10 +252,10 @@ class ViewOrganizationProfileScreen extends React.Component {
               keyExtractor={(item, index) => "" + index}
             />
           </View>
-        {/* </View> */}
-        <View style={{ flex: 0.1, alignSelf: "auto" }}>
-          <BottomView />
-        </View>
+          {/* </View> */}
+          <View style={{ flex: 0.1, alignSelf: "auto" }}>
+            <BottomView />
+          </View>
         </View>
       </SafeAreaView>
     );
@@ -268,12 +279,11 @@ const styles = StyleSheet.create({
     color: "#34495e",
   },
   card: {
-    
     borderWidth: 3,
     borderRadius: 3,
-    borderColor: '#000',
-    margin:4,
-    marginRight:8,
-    padding: 10
-  }
+    borderColor: AppColors.AppGrey001,
+    margin: 4,
+    marginRight: 8,
+    padding: 10,
+  },
 });

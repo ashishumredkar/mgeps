@@ -171,7 +171,7 @@ export const viewDetailStyles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 5,
     marginLeft: 5,
-    marginBottom: 8,
+    marginBottom: 2,
   },
   notificationValue: {
     // flex: 1,

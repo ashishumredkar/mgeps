@@ -71,8 +71,8 @@ class SubMenues extends React.Component {
       authToken: "",
       loading: "",
       title: "",
-      iconBackColor: "",
-      iconUri: "",
+      iconBackColor:'',
+      iconUri:'',
     };
   }
   async componentDidMount() {
@@ -81,8 +81,8 @@ class SubMenues extends React.Component {
     this.setState({
       menuList: this.props.route.params.data,
       title: this.props.route.params.title,
-      iconBackColor: this.props.route.params.backgroundColor,
-      iconUri: this.props.route.params.iconUrl,
+      iconBackColor:this.props.route.params.backgroundColor,
+      iconUri:this.props.route.params.iconUrl,
     });
     //this.readData();
   }
@@ -121,11 +121,8 @@ class SubMenues extends React.Component {
     };
     console.log("authToken5 ", token);
 
-      //Live UAT
-      /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard"
-    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard";
-    fetch(url, {
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
+    /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -148,9 +145,7 @@ class SubMenues extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView
-        style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}
-      >
+      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
         {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
 
@@ -159,97 +154,80 @@ class SubMenues extends React.Component {
 
         <CustomToolbar
           navigation={this.props.navigation}
-          title={"Sub Menus"}
-          userType={this.state.userType}
+          title={this.state.title}
+          userType={"Merchant"}
           backgroundColor="#3775f0"
         />
-        <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-          <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
-            <View
-              style={[
-                gStyles.userAvatarStyle,
-                { backgroundColor: this.state.iconBackColor },
-              ]}
-            >
-              <Image
-                style={{ width: 35, height: 35 }}
-                // source={require("../Image/menu_logo.png")}
-                source={this.state.iconUri}
-              />
-            </View>
+        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+        <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
+          <View style={[gStyles.userAvatarStyle,{backgroundColor:this.state.iconBackColor}]}>
+            <Image
+              style={{ width: 35, height: 35, }}
+              // source={require("../Image/menu_logo.png")}
+              source={this.state.iconUri}
 
-            <View style={{ width: 10 }}></View>
-
-            {/* CONTACT DETAILS  */}
-            <View style={{ paddingTop: 8 }}>
-              <Text
-                numberOfLines={1}
-                style={[
-                  gStyles.contactStyle,
-                  { color: "black", fontSize: 18, marginTop: 5 },
-                ]}
-              >
-                {this.state.title}
-              </Text>
-            </View>
-          </View>
-          <Text
-            style={{
-              height: 2,
-              backgroundColor: "blue",
-              width: "100%",
-              marginTop: 5,
-            }}
-          />
-
-          <View style={{ flex: 0.9, margin: 5 }}>
-            <FlatList
-              data={this.state.menuList}
-              renderItem={({ item, index }) => {
-                console.log("item ", item);
-
-                return (
-                  <Pressable
-                    style={[
-                      homeStyles.card,
-                      { backgroundColor: colors[index] },
-                    ]}
-                    onPress={() => {
-                      this.props.navigation.navigate("Details", {
-                        link: item.link,
-                        title: this.state.title + "/" + item.name,
-                      });
-                    }}
-                  >
-                    <View style={homeStyles.cardHeader}>
-                      <Text style={homeStyles.title}>{item.name}</Text>
-                      {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
-                    </View>
-
-                    <View style={homeStyles.cardFooter}>
-                      <Image
-                        style={homeStyles.cardImage}
-                        source={imagesArray[index]}
-                      />
-
-                      <Text style={homeStyles.subTitle}>
-                        {item.unRead} Unread Notices
-                      </Text>
-                    </View>
-                    <View style={homeStyles.cardHeader}></View>
-                  </Pressable>
-                );
-              }}
-              //Setting the number of column
-              numColumns={2}
-              keyExtractor={(item, index) => "" + index}
             />
           </View>
 
-          <View style={{ flex: 0.1, alignSelf: "auto" }}>
-            <BottomView />
+          <View style={{ width: 10 }}></View>
+
+          {/* CONTACT DETAILS  */}
+          <View style={{ paddingTop: 8 }}>
+            <Text
+              numberOfLines={1}
+              style={[gStyles.contactStyle, { color: "black", fontSize: 18,marginTop:5 }]}
+            >
+              {this.state.title}
+            </Text>
           </View>
         </View>
+        <Text style={{ height: 2,backgroundColor:'blue',width:'100%',marginTop:5 }}/>
+
+        <View style={{ flex: 0.9,margin:5 }}>
+          <FlatList
+            data={this.state.menuList}
+            renderItem={({ item, index }) => {
+              console.log("item ", item);
+
+              return (
+                <Pressable
+                  style={[homeStyles.card, { backgroundColor: colors[index] }]}
+                  onPress={() => {
+                    this.props.navigation.navigate("Details", {
+                      link: item.link,
+                      title: this.state.title + "/" + item.name,
+                    });
+                  }}
+                >
+                  <View style={homeStyles.cardHeader}>
+                    <Text style={homeStyles.title}>{item.name}</Text>
+                    {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
+                  </View>
+
+                  <View style={homeStyles.cardFooter}>
+                    <Image
+                      style={homeStyles.cardImage}
+                      source={imagesArray[index]}
+                    />
+
+                    <Text style={homeStyles.subTitle}>
+                      {item.unRead} Unread Notices
+                    </Text>
+                  </View>
+                  <View style={homeStyles.cardHeader}></View>
+                </Pressable>
+              );
+            }}
+            //Setting the number of column
+            numColumns={2}
+            keyExtractor={(item, index) => "" + index}
+          />
+        </View>
+
+        <View style={{ flex: 0.1, alignSelf: "auto" }}>
+          <BottomView />
+        </View>
+      </View>
       </SafeAreaView>
     );
   }

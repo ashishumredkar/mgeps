@@ -59,6 +59,19 @@ export const gStyles = StyleSheet.create({
     marginRight: 30,
   },
 
+  drawerMenu: {
+    flexDirection: "row",
+    marginTop: 2,
+    marginBottom: 2,
+    height: 10,
+  },
+
+  drawerText: {
+    height: 25,
+    marginTop: 5,
+    marginLeft: 4
+  },
+
   radioText: {
     marginLeft: 10,
     fontSize: 15,
@@ -160,6 +173,7 @@ export const gStyles = StyleSheet.create({
     borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: -100,
   },
   contactsView: {
     width: '100%',

@@ -114,7 +114,7 @@ export function LogoTitle(props) {
 
   return (
     <View style={{ flexDirection: "row", marginTop: -10 }}>
-      <ImageBackground source={require("../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: -120, resizeMode: "cover", justifyContent: "center" }}>
+      <ImageBackground source={require("../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: -40, resizeMode: "cover", justifyContent: "center" }}>
         <View style={[gStyles.userAvatarStyle]}>
           <Image
             style={{ width: 35, height: 35 }}

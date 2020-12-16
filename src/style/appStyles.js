@@ -160,7 +160,6 @@ export const gStyles = StyleSheet.create({
     borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: AppColors.AppGrey002,
   },
   contactsView: {
     width: '100%',

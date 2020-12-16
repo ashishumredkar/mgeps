@@ -19,35 +19,38 @@ import {
   DrawerItemList,
   SafeAreaView,
 } from "@react-navigation/drawer";
-import {Divider } from "react-native-elements";
+import { Divider } from "react-native-elements";
 
 import AsyncStorage from "@react-native-community/async-storage";
+import { AppColors } from "../../style/AppColors";
 
 const CustomSidebarMenu = (props) => {
-  // const CustomSidebarMenu = (props) => {
-    // const [name, setName] = useState('John Doe');
-
-    console.log("CustomSidebarMenu ",props.employeename)
+  console.log("CustomSidebarMenu ", props.employeename);
 
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <ImageBackground
         style={styles.bgImage}
-        source={require("../../Image/website_image_fit.png")}
+        source={require("../../Image/material_bg_1.png")}
       />
       <View Style={{ flexDirection: "row" }}>
         <View style={stylesSidebar.profileHeader}>
-          {/* <View style={stylesSidebar.profileHeaderPicCircle}>
-            <Text style={{fontSize: 25, color: '#307ecc'}}>
-            {'About React'.charAt(0)}
-            </Text>
-          </View> */}
           <Image
-            source={{ uri: "http://loremflickr.com/g/50/50/paris" }}
-            style={{ width: 40, height: 40, borderRadius: 40 / 2 }}
+            source={require("../../Image/logo_192.png")}
+            // source={{ uri: "http://loremflickr.com/g/50/50/paris" }}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: 60 / 2,
+              marginTop: -40,
+              marginBottom: 30,
+              backgroundColor: AppColors.AppGrey001,
+            }}
           />
-          <Text style={stylesSidebar.profileHeaderText}>mgeps</Text>
-          <Text style={stylesSidebar.profileHeaderText}>UserName:{props.employeename}</Text>
+          <Text style={stylesSidebar.profileHeaderText}>MGEPS</Text>
+          <Text style={stylesSidebar.profileHeaderText}>
+            Username: {props.employeename}
+          </Text>
         </View>
       </View>
 
@@ -77,7 +80,7 @@ const CustomSidebarMenu = (props) => {
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/logout.png")}
               />
-              <Text style={{ color: "black",marginTop:5 }}>Logout</Text>
+              <Text style={{ color: "black", marginTop: 5 }}>Logout</Text>
             </View>
           )}
           onPress={() => {
@@ -86,27 +89,25 @@ const CustomSidebarMenu = (props) => {
               "Logout",
               "Are you sure? You want to logout?",
               [
-              {
+                {
                   text: "Cancel",
-                onPress: () => {
+                  onPress: () => {
                     return null;
+                  },
                 },
-              },
-              {
+                {
                   text: "Confirm",
-                onPress: () => {
-                  AsyncStorage.clear();
-                  props.navigation.replace("Auth");
+                  onPress: () => {
+                    AsyncStorage.clear();
+                    props.navigation.replace("Auth");
+                  },
                 },
-              },
               ],
               { cancelable: false }
             );
           }}
         />
       </DrawerContentScrollView>
-
-
     </View>
   );
 };
@@ -121,10 +122,9 @@ const styles = StyleSheet.create({
   },
   bgImage: {
     flex: 1,
-    resizeMode,
     position: "absolute",
     width: "100%",
-    height: "100%",
+    height: "58%",
     justifyContent: "center",
   },
   containHeader: {
@@ -180,11 +180,9 @@ const stylesSidebar = StyleSheet.create({
     color: "white",
   },
   profileHeader: {
-    paddingTop: 40,
+    paddingTop: 10,
     flexDirection: "column",
-    // backgroundColor: '#307ecc',
-    padding: 15,
-    //textAlign: 'star',
+    padding: 10,
   },
   profileHeaderPicCircle: {
     width: 60,
@@ -198,14 +196,15 @@ const stylesSidebar = StyleSheet.create({
   },
   profileHeaderText: {
     color: "white",
-    alignSelf: "center",
+    alignSelf: "flex-start",
     paddingHorizontal: 10,
     fontWeight: "bold",
   },
   profileHeaderLine: {
     height: 1,
     marginHorizontal: 20,
-    backgroundColor: "#e2e2e2",
+    backgroundColor: AppColors.colorPrimary,
+    marginTop: 15,
     marginTop: 15,
   },
 });

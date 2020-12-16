@@ -21,8 +21,8 @@ import {
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 import Loader from "./Components/Loader";
 import AlertModal from "./Components/AlertModal";
 
@@ -75,9 +75,8 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchUserType = async () => {
     setLoading(true);
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType"; // Live UAT
-    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType"; // Pune UAT
-    fetch(url)
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
+    // fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -100,53 +99,52 @@ const LoginScreen = ({ navigation }) => {
 
         //PushNotification.checkPermissions(PushNotification.requestPermissions());
 
-        // PushNotification.configure({
-        //   requestPermissions: Platform.OS === 'ios',
-        //   // (optional) Called when Token is generated (iOS and Android)
-        //   onRegister: function(token) {
-        //                 console.log('TOKEN:', token);
-        //                 setfcmId(token);
-        //               },
+        PushNotification.configure({
+          // (optional) Called when Token is generated (iOS and Android)
+          onRegister: function(token) {
+                        console.log('TOKEN:', token);
+                        setfcmId(token);
+                      },
 
-        //   // (required) Called when a remote or local notification is opened or received
-        //   onNotification: function(notification) {
-        //     console.log('NotificationHandler:', notification);
-        //   },
+          // (required) Called when a remote or local notification is opened or received
+          onNotification: function(notification) {
+            console.log('NotificationHandler:', notification);
+          },
 
-        //   // (optional) Called when Action is pressed (Android)
-        //   onAction: function(notification) {
-        //     console.log ('Notification action received:');
-        //     console.log(notification.action);
-        //     console.log(notification);
+          // (optional) Called when Action is pressed (Android)
+          onAction: function(notification) {
+            console.log ('Notification action received:');
+            console.log(notification.action);
+            console.log(notification);
 
-        //     if(notification.action === 'Yes') {
-        //       PushNotification.invokeApp(notification);
-        //     }
-        //   },
+            if(notification.action === 'Yes') {
+              PushNotification.invokeApp(notification);
+            }
+          },
 
-        //   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-        //   onRegistrationError: function(err) {
-        //     console.log("onRegistrationError: ",err);
-        //   },
+          // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+          onRegistrationError: function(err) {
+            console.log("onRegistrationError: ",err);
+          },
 
-        //   // IOS ONLY (optional): default: all - Permissions to register.
-        //   permissions: {
-        //     alert: true,
-        //     badge: true,
-        //     sound: true,
-        //   },
+          // IOS ONLY (optional): default: all - Permissions to register.
+          permissions: {
+            alert: true,
+            badge: true,
+            sound: true,
+          },
 
-        //   // Should the initial notification be popped automatically
-        //   // default: true
-        //   popInitialNotification: true,
+          // Should the initial notification be popped automatically
+          // default: true
+          popInitialNotification: true,
 
-        //   /**
-        //    * (optional) default: true
-        //    * - Specified if permissions (ios) and token (android and ios) will requested or not,
-        //    * - if not, you must call PushNotificationsHandler.requestPermissions() later
-        //    */
-        //   requestPermissions: true,
-        // });
+          /**
+           * (optional) default: true
+           * - Specified if permissions (ios) and token (android and ios) will requested or not,
+           * - if not, you must call PushNotificationsHandler.requestPermissions() later
+           */
+          requestPermissions: true,
+        });
       })
       .catch((error) => {
         setModalVisible(true);
@@ -299,9 +297,7 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken";
-    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/getToken";
-    fetch(url, {
+    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", {
       method: "POST",
       body: JSON.stringify({
         username: userEmail,

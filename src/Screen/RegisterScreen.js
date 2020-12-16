@@ -24,7 +24,10 @@ const RegisterScreen = (props) => {
   const [userAddress, setUserAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
+  const [
+    isRegistraionSuccess,
+    setIsRegistraionSuccess
+  ] = useState(false);
 
   const nameInputRef = createRef();
   const emailInputRef = createRef();
@@ -134,7 +137,7 @@ const RegisterScreen = (props) => {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../Image/menu_logo.png')}
+            source={require('../Image/aboutreact.png')}
             style={{
               width: '50%',
               height: 100,

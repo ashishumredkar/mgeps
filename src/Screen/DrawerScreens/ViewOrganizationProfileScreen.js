@@ -161,7 +161,9 @@ class ViewOrganizationProfileScreen extends React.Component {
               marginBottom: 19,
             }}
           > */}
-            <Text style={[gStyles.contactStyle, {marginBottom: 20}]}>Organization Details</Text>
+            <Text style={[gStyles.contactStyle, { marginBottom: 20 }]}>
+              Organization Details
+            </Text>
 
             <FlatList
               data={orgDetails}
@@ -198,7 +200,12 @@ class ViewOrganizationProfileScreen extends React.Component {
                           { flexDirection: "row", flex: 1 },
                         ]}
                       >
-                        <Text style={[viewDetailStyles.name, { flex: 1, fontWeight: "normal" }]}>
+                        <Text
+                          style={[
+                            viewDetailStyles.name,
+                            { flex: 1, fontWeight: "normal" },
+                          ]}
+                        >
                           {key
                             .replace(/([A-Z])/g, " $1")
                             .trim()

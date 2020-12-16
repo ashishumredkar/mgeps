@@ -36,7 +36,7 @@ export default class ContactUs extends Component {
       calls: [
         {
           id: 1,
-          name: "Profile",
+          name: "Profile3",
           type: "profile",
           image: "https://bootdey.com/img/Content/avatar/avatar7.png",
         },

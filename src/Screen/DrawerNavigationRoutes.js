@@ -28,7 +28,6 @@ import SubMenues from "./SubMenues";
 import ProfileScreen from "./DrawerScreens/ProfileScreen";
 import Details from "./Details";
 import FinalDetailsPage from "./FinalDetailsPage";
-import CustomDrawerContentComponent from "./Components/CustomDrawerContentComponent";
 import AsyncStorage from "@react-native-community/async-storage";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { RippleButton } from "./Components/RippleButton";
@@ -315,7 +314,7 @@ const contactUsStack = ({ navigation }) => {
         name="ContactUs"
         component={ContactUs}
         options={{
-          title: "Settings", //Set Header Title
+          title: "Contact Us", //Set Header Title
         }}
       />
     </Stack.Navigator>
@@ -336,7 +335,7 @@ const DrawerNavigatorRoutes = (props) => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
       const value = JSON.parse(userData);
-      console.log("setAnimatingabc ", value);
+      console.log("setAnimatingabc " , value);
 
       setUserName(value.username);
       setProfileData(value);
@@ -345,10 +344,7 @@ const DrawerNavigatorRoutes = (props) => {
     }
   };
 
-  const App = () => {
-    return <CustomDrawerContentComponent />;
-  };
-
+  
   function DashboardMenu(props) {
     return (
       <View style={gStyles.drawerMenu}>
@@ -398,19 +394,12 @@ const DrawerNavigatorRoutes = (props) => {
 
   function ContactUsMenu(props) {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 2,
-          marginBottom: 2,
-          height: 35,
-        }}
-      >
+      <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
           source={require("../Image/settings.png")}
         />
-        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>FAQ</Text>
+        <Text style={gStyles.drawerText}>Contact Us</Text>
       </View>
     );
   }
@@ -431,8 +420,7 @@ const DrawerNavigatorRoutes = (props) => {
       drawerContent={(props) => (
         <CustomSidebarMenu {...{ employeename: username, ...props }} />
       )}
-      // drawerContent={CustomSidebarMenu}
-      //drawerContent={<CustomDrawerContentComponent></CustomDrawerContentComponent>}
+     
     >
       <Drawer.Screen
         name="homeScreenStack"

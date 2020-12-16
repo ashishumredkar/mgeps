@@ -11,6 +11,7 @@ import {
   TouchableNativeFeedback,
   Image,
   ImageBackground,
+  Linking,
 } from "react-native";
 
 import {
@@ -78,26 +79,7 @@ const CustomSidebarMenu = (props) => {
           )}
           onPress={() => {
             props.navigation.toggleDrawer();
-            Alert.alert(
-              "Logout",
-              "Are you sure? You want to logout?",
-              [
-              {
-                  text: "Cancel",
-                onPress: () => {
-                    return null;
-                },
-              },
-              {
-                  text: "Confirm",
-                onPress: () => {
-                  AsyncStorage.clear();
-                  props.navigation.replace("Auth");
-                },
-              },
-              ],
-              { cancelable: false }
-            );
+            Linking.openURL("https://mgeps-uat.philgeps.gov.ph/CmsHomePages/view_faq");
           }}
         />
         <DrawerItem

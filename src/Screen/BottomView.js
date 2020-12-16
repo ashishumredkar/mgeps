@@ -56,14 +56,15 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 10,
-    paddingBottom: Platform.OS === "ios" ? 10 : 0,
+    margin: 5,
+    paddingBottom: Platform.OS === "ios" ? 10 : 10,
     backgroundColor: AppColors.lightBlue50,
   },
   MainContainer: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === "ios" ? 20 : 0,
+    paddingTop: Platform.OS === "ios" ? 20 : 10,
   },
   image: {
     width: 35,

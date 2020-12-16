@@ -178,7 +178,7 @@ const ProfileScreen = (props) => {
                           { flexDirection: "column" },
                         ]}
                       >
-                        <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                        <Text style={viewDetailStyles.name}>{key}:</Text>
                         <Text
                           style={{
                             flex: 1,

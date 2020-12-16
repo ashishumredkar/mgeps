@@ -25,11 +25,6 @@ Ionicons.loadFont()
 MaterialCommunityIcons.loadFont();
 
 const Stack = createStackNavigator();
-// const apiUrl = "https://mgeps-uat.philgeps.gov.ph/api";
-
-// apiUrl = (item) => {
-//   return "https://mgeps-uat.philgeps.gov.ph/api";
-// };
 
 const Auth = () => {
   // Stack Navigator for Login and Sign up Screen

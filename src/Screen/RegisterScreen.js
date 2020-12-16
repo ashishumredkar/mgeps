@@ -134,7 +134,7 @@ const RegisterScreen = (props) => {
         }}>
         <View style={{alignItems: 'center'}}>
           <Image
-            source={require('../Image/aboutreact.png')}
+            source={require('../Image/menu_logo.png')}
             style={{
               width: '50%',
               height: 100,

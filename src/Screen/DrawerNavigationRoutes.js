@@ -3,7 +3,8 @@
 
 // Import React
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, useWindowDimensions, Platform } from "react-native";
+import { Text, View, Image, useWindowDimensions, Platform, ImageBackground } from "react-native";
+import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -112,25 +113,27 @@ export function LogoTitle(props) {
   };
 
   return (
-    <View style={{ flexDirection: "row", marginLeft: -20, marginTop: 5, marginTop: (Platform.OS == 'ios') ? -10 : 0 }}>
-      <View style={[gStyles.userAvatarStyle]}>
-        <Image
-          style={{ width: 35, height: 35, backgroundColor: "white" }}
-          source={require("../Image/menu_logo.png")}
-        />
-      </View>
+    <View style={{ flexDirection: "row", marginTop: -10 }}>
+      <ImageBackground source={require("../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: -40, resizeMode: "cover", justifyContent: "center" }}>
+        <View style={[gStyles.userAvatarStyle]}>
+          <Image
+            style={{ width: 35, height: 35 }}
+            source={require("../Image/menu_logo.png")}
+          />
+        </View>
 
-      <View style={{ width: 10 }}></View>
+        <View style={{ width: 10 }}></View>
 
-      {/* CONTACT DETAILS  */}
-      <View style={{ paddingTop: 8 }}>
-        <Text style={{ color: "white", fontSize: 18}}>
-          Dashboard
-        </Text>
-        <Text style={[{ color: "white", fontSize: 14 }]}>
-          UserType: {username}
-        </Text>
-      </View>
+        {/* CONTACT DETAILS  */}
+        <View style={{ paddingTop: 8, marginLeft: -8 }}>
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+            Dashboard
+          </Text>
+          <Text style={[{ color: "white", fontSize: 12 }]}>
+            UserType: {username}
+          </Text>
+        </View>
+      </ImageBackground>
     </View>
   );
 }
@@ -146,9 +149,26 @@ export function NotificationView() {
       <View>
         {/* <Badge size={10} style={{width:40,height:40}} /> */}
         <Image
-          style={{ width: (Platform.OS == 'ios') ? 30 : 40, height: (Platform.OS == 'ios') ? 30 : 40, backgroundColor: "#307ecc" }}
+          style={{
+            width: Platform.OS == "ios" ? 30 : 40,
+            height: Platform.OS == "ios" ? 30 : 40,
+            backgroundColor: "#307ecc",
+          }}
           source={require("../Image/notification.png")}
         />
+
+        <Badge
+          status="error"
+          value="99+"
+          containerStyle={{
+            position: "absolute",
+            top: 2,
+            right: -4,
+            fontWeight: "bold",
+            fontSize: 14,
+          }}
+        />
+
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
         {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */}
       </View>
@@ -286,83 +306,47 @@ const DrawerNavigatorRoutes = (props) => {
 
   function DashboardMenu(props) {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 2,
-          marginBottom: 2,
-          height: 35,
-        }}
-      >
+      <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
           source={require("../Image/dashboard.png")}
         />
-        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
-          Dashboard
-        </Text>
+        <Text style={gStyles.drawerText}>Dashboard</Text>
       </View>
     );
   }
   function SettingsMenu(props) {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 2,
-          marginBottom: 2,
-          height: 35,
-        }}
-      >
+      <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
           source={require("../Image/settings.png")}
         />
-        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
-          Settings
-        </Text>
+        <Text style={gStyles.drawerText}>Settings</Text>
       </View>
     );
   }
   function ProfileMenu(props) {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 2,
-          marginBottom: 2,
-          height: 35,
-        }}
-      >
+      <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
           //source={require("../Image/profile.png")}
-          source={{uri: "https://bootdey.com/img/Content/avatar/avatar7.png"}}
+          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar7.png" }}
         />
-        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
-          Profile Overview
-        </Text>
+        <Text style={gStyles.drawerText}>Profile Overview</Text>
       </View>
     );
   }
 
   function ViewOrganizationProfile(props) {
     return (
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 2,
-          marginBottom: 2,
-          height: 35,
-        }}
-      >
+      <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
           source={require("../Image/profile.png")}
         />
-        <Text style={[{ height: 40, marginTop: 5, marginLeft: 4 }]}>
-          View Organization
-        </Text>
+        <Text style={gStyles.drawerText}>View Organization</Text>
       </View>
     );
   }
@@ -379,11 +363,6 @@ const DrawerNavigatorRoutes = (props) => {
           color: "#d8d8d8",
         },
       }}
-      // openByDefault
-      // drawerType={isLargeScreen ? 'permanent' : 'back'}
-      // drawerStyle={isLargeScreen ? null : { width: '50%' }}
-      // overlayColor="transparent"
-
       screenOptions={{ headerShown: false }}
       drawerContent={(props) => (
         <CustomSidebarMenu {...{ employeename: username, ...props }} />
@@ -407,7 +386,9 @@ const DrawerNavigatorRoutes = (props) => {
         name="viewOrganizationProfile"
         options={{
           drawerLabel: (props) => (
-            <ViewOrganizationProfile {...{ employeename: username, ...props }} />
+            <ViewOrganizationProfile
+              {...{ employeename: username, ...props }}
+            />
           ),
         }}
         //  drawerLabel: props => <ProfileMenu {...props}

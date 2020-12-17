@@ -173,7 +173,7 @@ export const gStyles = StyleSheet.create({
     borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: -100,
+    marginLeft: 0,
   },
   subMenuLinking: {
     width: 50,

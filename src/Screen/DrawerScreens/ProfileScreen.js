@@ -95,10 +95,6 @@ const ProfileScreen = (props) => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
-      {/* <GeneralStatusBarColor
-        backgroundColor={AppColors.colorPrimary}
-        barStyle="light-content"
-      /> */}
 
       <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
@@ -116,7 +112,7 @@ const ProfileScreen = (props) => {
             style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
           >
             <View style={{ flexDirection: "row" }}>
-              <View style={[gStyles.userAvatarStyle]}>
+              <View style={[gStyles.userProfileNameStyle]}>
                 <Text>{userData.fname.charAt(0) + userData.lname.charAt(0)}</Text>
               </View>
 

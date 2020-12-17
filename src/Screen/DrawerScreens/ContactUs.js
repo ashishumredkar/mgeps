@@ -67,41 +67,43 @@ export default class ContactUs extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 24, padding: 10, color: "Orange" ,fontWeights:'bold'}}>
+        <View style={{ margin: 10 }}>
+          <Text style={{ fontSize: 20, padding: 10, marginBottom: 20, color: "Orange", fontWeights:'bold'}}>
             Nextenders (India) Private Limited
           </Text>
 
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+          <Text style={{ fontSize: 16, paddingLeft: 10, marginBottom: 7, color: "Orange" }}>
             Yuchit, Juhu Tara Rd,
           </Text>
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+          <Text style={{ fontSize: 16, paddingLeft: 10, marginBottom: 7, color: "Orange" }}>
             Mumbai,Maharashtra 400049,
           </Text>
 
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-              info@nextenders.com
-            </Text>
-            <View
-              style={styles.circle}
-              underlayColor="#ccc"
-              onPress={() => alert("Yaay!")}
-            >
-              <Icon name="email" type="Zocial" color="white" />
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
+            <View style={{ flexDirection: "column" }}>
+              <Text style={{ fontSize: 16, paddingLeft: 10, color: "Orange" }}>
+                info@nextenders.com
+              </Text>
+              <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+                  91 - 22 - 1661 1117
+              </Text>
             </View>
 
-            <View
-              style={styles.circle}
-              underlayColor="#ccc"
-              onPress={() => alert("Yaay!")}
-            >
-              <Icon name="call" type="Zocial" color="white" />
+            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="email" type="Zocial" color="white" />
+                </View>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="call" type="Zocial" color="white" />
+                </View>
             </View>
           </View>
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-            91 - 22 - 1661 1117
-          </Text>
         </View>
 
         <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View>

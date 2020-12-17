@@ -3,7 +3,14 @@
 
 // Import React
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, useWindowDimensions, Platform, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  useWindowDimensions,
+  Platform,
+  ImageBackground,
+} from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
@@ -42,7 +49,7 @@ const homeScreenStack = ({ navigation }) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
-          headerRight: (props) => <NotificationView />,
+          headerRight: (props) => <NotificationView {...props} />,
           headerTitle: (props) => <LogoTitle {...props} />,
           // options={{
           //   headerTitle: (props) => <LogoTitle {...props} />,
@@ -139,8 +146,54 @@ export function LogoTitle(props) {
   );
 }
 
-export function NotificationView() {
+export function NotificationView(props) {
+  const [username, setUserName] = useState("");
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    readData();
+  }, []);
+
+  const readData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("@user_data");
+      const objUserData = JSON.parse(userData);
+      const token = await AsyncStorage.getItem("auth_token");
+      this.setState({ notificationCount: 0 });
+
+      console.log("som Navigation ::  ", objUserData);
+
+      var url = "https://mgeps-uat-pune.etenders.in/api/Calendars/getCountMobileNotification/" + objUserData.id + "/" + objUserData.userType; // Pune UAT
+      // var url = "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" + objUserData.id + "/" + objUserData.userType; // Live UAT
+
+      console.log("URL Count :: " + url);
+
+      fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          //Hide Loader
+          console.log("Response Data :: ", responseJson);
+          console.log("Count :: ", responseJson.notificationCount);
+          this.setState({ notificationCount: responseJson.notificationCount });
+        })
+        .catch((error) => {
+          //Hide Loader
+          console.error("qwerty  ", error);
+        })
+    } catch (e) {
+      console.log("catch ", e);
+    }
+  };
+
   const navigation = useNavigation();
+
   return (
     <RippleButton
       onPress={() => navigation.navigate("HomeScreen")}
@@ -160,7 +213,7 @@ export function NotificationView() {
 
         <Badge
           status="error"
-          value="99+"
+          value="{this.state.notificationCount}"
           containerStyle={{
             position: "absolute",
             top: 2,

@@ -81,6 +81,22 @@ const CustomSidebarMenu = (props) => {
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/logout.png")}
               />
+              <Text style={{ color: "black", marginTop: 5 }}>FAQ</Text>
+            </View>
+          )}
+          onPress={() => {
+            props.navigation.toggleDrawer();
+            Linking.openURL('https://mgeps-uat.philgeps.gov.ph/CmsHomePages/view_faq') 
+           
+          }}
+        />
+        <DrawerItem
+          label={({ color }) => (
+            <View style={{ flexDirection: "row" }}>
+              <Image
+                style={{ width: 35, height: 35, backgroundColor: "white" }}
+                source={require("../../Image/logout.png")}
+              />
               <Text style={{ color: "black", marginTop: 5 }}>Logout</Text>
             </View>
           )}

@@ -12,23 +12,10 @@ import {
   Modal,
   Button,
 } from "react-native";
-import RadioButton from "../Components/RadioButton";
-import { CheckBox } from "react-native-elements";
+import { Icon } from "react-native-elements";
 
-const PROP = [
-  {
-    key: "8 Hours",
-    text: "8 Hours",
-  },
-  {
-    key: "1 Week",
-    text: "1 Week",
-  },
-  {
-    key: "1 Year",
-    text: "1 Year",
-  },
-];
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import BottomView from "../BottomView";
 export default class ContactUs extends Component {
   constructor(props) {
     super(props);
@@ -53,101 +40,74 @@ export default class ContactUs extends Component {
     };
   }
 
-  renderItem = ({ item }) => {
+  renderMap = () => {
     return (
-      <Pressable
-        onPress={() => {
-          if (item.type === "profile") {
-            this.props.navigation.navigate("profile");
-          } else {
-            //this.props.navigation.navigate("settingScreenStack")
-
-            this.setState({ isVisible: true });
-          }
-        }}
-      >
-        <View style={styles.row}>
-          <Image source={{ uri: item.image }} style={styles.pic} />
-          <View>
-            <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>{item.name}</Text>
-            </View>
-            {/* <View style={styles.end}>
-              <Image style={[styles.icon, {marginLeft:15, marginRight:5, width:14, height:14}]}
-               source={require('../../Image/arrow_icon.png')}
-               />
-              <Text style={styles.time}>{item.date} {item.time}</Text>
-            </View> */}
-          </View>
-          <Image
-            style={[styles.icon, { marginRight: 50 }]}
-            source={require("../../Image/arrow_icon.png")}
-          />
-        </View>
-      </Pressable>
+      <View style={styles.container}>
+        <MapView
+          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.map}
+          region={{
+            latitude: 19.094224296260077,
+            longitude: 72.82827441979585,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          }}
+        >
+          <Marker
+            coordinate={{
+              latitude: 19.094224296260077,
+              longitude: 72.82827441979585,
+            }}
+          ></Marker>
+        </MapView>
+      </View>
     );
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Modal
-          style={styles.modal}
-          animationType={"fade"}
-          transparent={false}
-          visible={this.state.isVisible}
-          onRequestClose={() => {
-            console.log("Modal has been closed.");
-          }}
-        >
-          {/*All views of Modal*/}
-          <View style={styles.modal}>
-            <Text style={styles.text}>Mute notification for...!</Text>
-            <Text style={styles.text}>
-              choose any one from following options
-            </Text>
-            <RadioButton PROP={PROP} />
-            
-            <CheckBox
-              title="Show Notifications"
-              checked={this.state.checked}
-              onPress={() => this.setState({ checked: !this.state.checked })}
-            />
+      <View style={{ flex: 1 }}>
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 24, padding: 10, color: "Orange" ,fontWeights:'bold'}}>
+            Nextenders (India) Private Limited
+          </Text>
 
-            <View style={{ flexDirection: "row", margin: 10 }}>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="OK"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                {" "}
-                OK
-              </Text>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="CANCEL"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                CANCEL
-              </Text>
+          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+            Yuchit, Juhu Tara Rd,
+          </Text>
+          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+            Mumbai,Maharashtra 400049,
+          </Text>
+
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+              info@nextenders.com
+            </Text>
+            <View
+              style={styles.circle}
+              underlayColor="#ccc"
+              onPress={() => alert("Yaay!")}
+            >
+              <Icon name="email" type="Zocial" color="white" />
+            </View>
+
+            <View
+              style={styles.circle}
+              underlayColor="#ccc"
+              onPress={() => alert("Yaay!")}
+            >
+              <Icon name="call" type="Zocial" color="white" />
             </View>
           </View>
-          <View
-            style={{ height: 1, width: "100%", backgroundColor: "white" }}
-          />
-        </Modal>
-        <FlatList
-          extraData={this.state}
-          data={this.state.calls}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          renderItem={this.renderItem}
-        />
+          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+            91 - 22 - 1661 1117
+          </Text>
+        </View>
+
+        <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View>
+        <View style={{ flex: 0.2, alignSelf: "auto" }}>
+          <BottomView />
+        </View>
       </View>
     );
   }
@@ -155,69 +115,25 @@ export default class ContactUs extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    height: 400,
+    width: 400,
+    justifyContent: "flex-end",
     alignItems: "center",
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+    // flex:1,
+    // height: 400,
+    // width: 400,
+  },
+  circle: {
+    margin: 5,
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    backgroundColor: "green",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-  },
-
-  modal: {
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
-    height: "60%",
-    width: "80%",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#fff",
-    marginTop: 80,
-    marginLeft: 40,
-  },
-  text: {
-    color: "#3f2949",
-    marginTop: 10,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#dcdcdc",
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    padding: 10,
-    justifyContent: "space-between",
-  },
-  pic: {
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-  },
-  nameContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: 270,
-  },
-  nameTxt: {
-    marginLeft: 15,
-    fontWeight: "600",
-    color: "#222",
-    fontSize: 15,
-  },
-  mblTxt: {
-    fontWeight: "200",
-    color: "#777",
-    fontSize: 13,
-  },
-  end: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  time: {
-    fontWeight: "400",
-    color: "#666",
-    fontSize: 12,
-  },
-  icon: {
-    height: 28,
-    width: 28,
   },
 });

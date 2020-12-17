@@ -26,6 +26,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { RippleButton } from "./Components/RippleButton";
 
 import { gStyles } from "../../src/style/appStyles";
+import ContactUs  from "./DrawerScreens/ContactUs";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -383,7 +384,7 @@ const DrawerNavigatorRoutes = (props) => {
           //source={require("../Image/profile.png")}
           source={{ uri: "https://bootdey.com/img/Content/avatar/avatar7.png" }}
         />
-        <Text style={gStyles.drawerText}>Profile Overview</Text>
+        <Text style={gStyles.drawerText}>Contact Us</Text>
       </View>
     );
   }
@@ -452,6 +453,16 @@ const DrawerNavigatorRoutes = (props) => {
         }}
         //  drawerLabel: props => <ProfileMenu {...props}
         component={profileScreenStack}
+      />
+
+    <Drawer.Screen
+        name="contactUsStack"
+        options={{
+          drawerLabel: (props) => (
+            <ContactUsMenu {...{ employeename: username, ...props }} />
+          ),
+        }}
+        component={contactUsStack}
       />
       <Drawer.Screen
         name="settingScreenStack"

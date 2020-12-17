@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === "ios" ? 20 : 10,
+    paddingTop: Platform.OS === "ios" ? 20 : 0,
   },
   image: {
     width: 35,

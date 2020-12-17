@@ -75,8 +75,8 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchUserType = async () => {
     setLoading(true);
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
-    // fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
+    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
+    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -297,7 +297,8 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", {
+    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/getToken", { // Pune UAT
+    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", { // Live UAT
       method: "POST",
       body: JSON.stringify({
         username: userEmail,

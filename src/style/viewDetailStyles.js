@@ -99,7 +99,9 @@ export const viewDetailStyles = StyleSheet.create({
     alignSelf: "flex-start",
     color: "black",
     fontWeight: "bold",
+    color: AppColors.AppGrey600,
     marginRight: 8,
+    width: 130,
   },
   position: {
     fontSize: 14,

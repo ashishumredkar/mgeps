@@ -58,7 +58,7 @@ export default class FinalDetailsPage extends Component {
 
     this.setState({
       authToken: token,
-      userSelected: mData,
+      userSelected: [],
       pageTitle: mData.activityType,
       userType: userType,
       urlParameter: mData.urlParameter,
@@ -115,9 +115,10 @@ export default class FinalDetailsPage extends Component {
       notificationId: notificationId,
     };
     this.setState({ loading: true });
-    fetch(
-      "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi",
-      {
+
+    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/readNotifcationApi"; // Pune UAT
+    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi"; // LIVE UAt
+    fetch(url, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + token,
@@ -156,10 +157,10 @@ export default class FinalDetailsPage extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
+        <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        /> */}
+        />
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -235,13 +236,21 @@ export default class FinalDetailsPage extends Component {
                       var key = keyValue[0][0];
                       var value = keyValue[0][1];
                       return (
-                        <View style={viewDetailStyles.notificationLabel}>
-                          <Text style={viewDetailStyles.name}>{key}:</Text>
-                          <Text style={viewDetailStyles.notificationValue}>
-                            {value}
-                          </Text>
-
-                          <View></View>
+                        <View>
+                          <View style={viewDetailStyles.notificationLabel}>
+                            <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                            <Text style={viewDetailStyles.notificationValue}>
+                              {value}
+                            </Text>
+                          </View>
+                          <View
+                              style={{
+                                height: 1,
+                                width: "100%",
+                                backgroundColor: AppColors.AppGrey001,
+                                marginTop: 8,
+                              }}
+                            />
                         </View>
                       );
                     }

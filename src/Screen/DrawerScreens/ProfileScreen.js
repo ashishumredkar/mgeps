@@ -75,7 +75,6 @@ const ProfileScreen = (props) => {
   const readData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
-
       const userType = await AsyncStorage.getItem("userType");
 
       const value = JSON.parse(userData);
@@ -100,6 +99,11 @@ const ProfileScreen = (props) => {
         backgroundColor={AppColors.colorPrimary}
         barStyle="light-content"
       /> */}
+
+      <GeneralStatusBarColor
+          backgroundColor={AppColors.colorPrimary}
+          barStyle="light-content"
+        />
 
       <CustomToolbar
         title={"Profile"}
@@ -178,7 +182,7 @@ const ProfileScreen = (props) => {
                           { flexDirection: "column" },
                         ]}
                       >
-                        <Text style={viewDetailStyles.name}>{key}:</Text>
+                        <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
                         <Text
                           style={{
                             flex: 1,

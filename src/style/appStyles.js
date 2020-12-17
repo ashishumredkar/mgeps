@@ -175,6 +175,16 @@ export const gStyles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: -100,
   },
+  subMenuLinking: {
+    width: 50,
+    height: 50,
+    color: AppColors.AppGrey002,
+    fontWeight: 'bold',
+    borderRadius: 50/2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 0,
+  },
   contactsView: {
     width: '100%',
     flexDirection: 'row',

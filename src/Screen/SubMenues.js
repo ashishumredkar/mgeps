@@ -121,8 +121,8 @@ class SubMenues extends React.Component {
     };
     console.log("authToken5 ", token);
 
-    fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
-    /* fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", {//Pune office UAT*/
+    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
+    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", { //Pune office UAT
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -146,11 +146,10 @@ class SubMenues extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
+        <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
-
           barStyle="light-content"
-        /> */}
+        />
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -160,7 +159,7 @@ class SubMenues extends React.Component {
         />
         <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
         <View style={{ flexDirection: "row", marginLeft: 20, marginTop: 5 }}>
-          <View style={[gStyles.userAvatarStyle,{backgroundColor:this.state.iconBackColor}]}>
+          <View style={[gStyles.subMenuLinking, {backgroundColor:this.state.iconBackColor}]}>
             <Image
               style={{ width: 35, height: 35, }}
               // source={require("../Image/menu_logo.png")}

@@ -202,10 +202,10 @@ export default class Details extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
+        <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        /> */}
+        />
 
         <CustomToolbar
           navigation={this.props.navigation}

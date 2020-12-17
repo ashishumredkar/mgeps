@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, ImageBackground } from "react-native";
 import BackButton from "./BackButton";
 // import {withNavigation} from 'react-navigation';
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -19,6 +19,7 @@ const CustomToolbar = (props) => {
 
   return (
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
+    <ImageBackground source={require("../../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: 0, resizeMode: "cover", justifyContent: "center" }}>
       <View style={styles.leftContainer}>
         <BackButton />
       </View>
@@ -60,6 +61,7 @@ const CustomToolbar = (props) => {
           />
         </View>
       </View>
+      </ImageBackground>
     </View>
   );
 };

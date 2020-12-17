@@ -113,28 +113,29 @@ export function LogoTitle(props) {
   };
 
   return (
-    <View style={{ flexDirection: "row", marginTop: -10 }}>
-      <ImageBackground source={require("../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: -40, resizeMode: "cover", justifyContent: "center" }}>
-        <View style={[gStyles.userAvatarStyle]}>
-          <Image
-            style={{ width: 35, height: 35 }}
-            source={require("../Image/menu_logo.png")}
-          />
-        </View>
+      <ImageBackground resizeMode='stretch' source={require("../Image/world_map.png")}
+        style={{ flex:1, width: "100%"}}>
+        <View style={{ flexDirection: "row", marginTop: (Platform.OS == 'ios') ? -5 : 0 }}>
+          <View style={[gStyles.userAvatarStyle]}>
+            <Image
+              style={{ width: 35, height: 35 }}
+              source={require("../Image/menu_logo.png")}
+            />
+          </View>
 
-        <View style={{ width: 10 }}></View>
+          <View style={{ width: 10 }}></View>
 
-        {/* CONTACT DETAILS  */}
-        <View style={{ paddingTop: 8, marginLeft: -8 }}>
-          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-            Dashboard
-          </Text>
-          <Text style={[{ color: "white", fontSize: 12 }]}>
-            UserType: {username}
-          </Text>
+          {/* CONTACT DETAILS  */}
+          <View style={{ paddingTop: 8, width: 120}}>
+            <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+              Dashboard
+            </Text>
+            <Text style={[{ color: "white", fontSize: 12 }]}>
+              UserType: {username}
+            </Text>
+          </View>
         </View>
       </ImageBackground>
-    </View>
   );
 }
 

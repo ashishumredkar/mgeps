@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 10,
     margin: 5,
-    paddingBottom: Platform.OS === "ios" ? 10 : 10,
+    paddingBottom: Platform.OS === "ios" ? 10 : 0,
     backgroundColor: AppColors.lightBlue50,
   },
   MainContainer: {

@@ -183,6 +183,15 @@ class HomeScreen extends React.Component {
             onCloseModal={this.closeModal}
           />
 
+        <TouchableOpacity style={homeStyles.facebookStyle} activeOpacity={0.5}>
+            <Image
+            source={require('../../Image/calendar.png')}
+            style={homeStyles.imageIconStyle}
+            />
+            <View style={homeStyles.iconSeparatorStyle} />
+            <Text style={homeStyles.textStyle}> BID EVENT CALENDAR </Text>
+        </TouchableOpacity>
+
           <FlatList
             style={homeStyles.list}
             contentContainerStyle={homeStyles.listContainer}

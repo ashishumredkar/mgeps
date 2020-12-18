@@ -131,12 +131,19 @@ export default class ContactUs extends Component {
               <Icon name="email" type="Zocial" color="white" />
             </View>
 
-            <View
-              style={styles.circle}
-              underlayColor="#ccc"
-              onPress={() => alert("Yaay!")}
-            >
-              <Icon name="call" type="Zocial" color="white" />
+            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="email" type="Zocial" color="white" />
+                </View>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="call" type="Zocial" color="white" />
+                </View>
             </View>
           </View>
           <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>

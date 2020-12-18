@@ -73,16 +73,15 @@ class HomeScreen extends React.Component {
   readData = async () => {
     try {
       const userData = await AsyncStorage.getItem(STORAGE_KEY);
+      const mData = JSON.parse(userData);
 
       const token = await AsyncStorage.getItem("auth_token");
-
       const tncFlag = await AsyncStorage.getItem("tnc");
 
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });
       }
 
-      const mData = JSON.parse(userData);
       console.log("userData", token);
       console.log("userData", mData.userType);
 

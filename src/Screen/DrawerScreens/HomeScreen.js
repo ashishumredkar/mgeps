@@ -146,7 +146,7 @@ class HomeScreen extends React.Component {
     return (
       // Flat List Item
 
-      <Pressable style={[homeStyles.container2]} onPress={this.fetchUsers}>
+      <Pressable style={[homeStyles.container2]} onPress={this.getMenuItems(this.state.userId,this.state.userType,this.state.authToken)}>
         <Image
           style={homeStyles.cardImage2}
           source={{
@@ -155,7 +155,7 @@ class HomeScreen extends React.Component {
           }}
         />
         <Text style={homeStyles.welcome}> No Records Found </Text>
-        <Button title="tap to retry" onPress={this.fetchUsers} />
+        <Button title="tap to retry" onPress={this.getMenuItems(this.state.userId,this.state.userType,this.state.authToken)} />
       </Pressable>
     );
   };

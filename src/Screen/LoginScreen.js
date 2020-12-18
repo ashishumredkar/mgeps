@@ -41,6 +41,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 import BottomView from "./BottomView";
 import { Modal } from "react-native-paper";
+import { LOGIN_URL,LOGIN_TYPE_URL } from "./Utils";
 // import Loader from './Components/Loader'
 
 //import {Notifications} from 'react-native-notifications';
@@ -70,13 +71,63 @@ const LoginScreen = ({ navigation }) => {
   const passwordInputRef = createRef();
 
   useEffect(() => {
+    getFcm();
     fetchUserType();
   }, []);
+
+  const getFcm = () =>{
+    PushNotification.configure({
+      //(optional) Called when Token is generated (iOS and Android)
+      onRegister: function(token) {
+                    console.log('TOKEN:', token);
+                    setfcmId(token);
+                  },
+
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function(notification) {
+        console.log('NotificationHandler:', notification);
+      },
+
+      // (optional) Called when Action is pressed (Android)
+      onAction: function(notification) {
+        console.log ('Notification action received:');
+        console.log(notification.action);
+        console.log(notification);
+
+        if(notification.action === 'Yes') {
+          PushNotification.invokeApp(notification);
+        }
+      },
+
+      // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+      onRegistrationError: function(err) {
+        console.log("onRegistrationError: ",err);
+      },
+
+      // IOS ONLY (optional): default: all - Permissions to register.
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      // Should the initial notification be popped automatically
+      // default: true
+      popInitialNotification: true,
+
+      /**
+       * (optional) default: true
+       * - Specified if permissions (ios) and token (android and ios) will requested or not,
+       * - if not, you must call PushNotificationsHandler.requestPermissions() later
+       */
+      requestPermissions: true,
+    });
+  }
 
   const fetchUserType = async () => {
     setLoading(true);
     // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
-    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/loginType") // Pune office UAT
+    fetch(LOGIN_TYPE_URL) // Pune office UAT
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -99,52 +150,7 @@ const LoginScreen = ({ navigation }) => {
 
         //PushNotification.checkPermissions(PushNotification.requestPermissions());
 
-        PushNotification.configure({
-          //(optional) Called when Token is generated (iOS and Android)
-          onRegister: function(token) {
-                        console.log('TOKEN:', token);
-                        setfcmId(token);
-                      },
-
-          // (required) Called when a remote or local notification is opened or received
-          onNotification: function(notification) {
-            console.log('NotificationHandler:', notification);
-          },
-
-          // (optional) Called when Action is pressed (Android)
-          onAction: function(notification) {
-            console.log ('Notification action received:');
-            console.log(notification.action);
-            console.log(notification);
-
-            if(notification.action === 'Yes') {
-              PushNotification.invokeApp(notification);
-            }
-          },
-
-          // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-          onRegistrationError: function(err) {
-            console.log("onRegistrationError: ",err);
-          },
-
-          // IOS ONLY (optional): default: all - Permissions to register.
-          permissions: {
-            alert: true,
-            badge: true,
-            sound: true,
-          },
-
-          // Should the initial notification be popped automatically
-          // default: true
-          popInitialNotification: true,
-
-          /**
-           * (optional) default: true
-           * - Specified if permissions (ios) and token (android and ios) will requested or not,
-           * - if not, you must call PushNotificationsHandler.requestPermissions() later
-           */
-          requestPermissions: true,
-        });
+       
       })
       .catch((error) => {
         setModalVisible(true);
@@ -177,7 +183,7 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/getToken", { // Pune UAT
+    fetch(LOGIN_URL, { // Pune UAT
     // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", { // Live UAT
       method: "POST",
       body: JSON.stringify({
@@ -224,12 +230,14 @@ const LoginScreen = ({ navigation }) => {
 
           navigation.replace("DrawerNavigationRoutes");
         } else {
+          setModalVisible(true);
           setErrortext("Please check your email id or password");
           console.log("Please check your email id or password");
         }
       })
       .catch((error) => {
         //Hide Loader
+        setModalVisible(true);
         setLoading(false);
         console.error(error);
       });

@@ -23,6 +23,7 @@
     "native-base": "^2.13.15",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-datepicker": "^1.7.2",
     "react-native-dropdown-picker": "^3.7.1",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "^1.7.0",

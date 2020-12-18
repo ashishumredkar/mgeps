@@ -50,16 +50,7 @@ export const Divider = () => {
 };
 
 export default class Details extends Component {
-  // static navigationOptions = {
-  //   title: "Home",
-  //   headerStyle: {
-  //     backgroundColor: "#f4511e",
-  //   },
-  //   headerTintColor: "#fff",
-  //   headerTitleStyle: {
-  //     fontWeight: "bold",
-  //   },
-  // };
+ 
   constructor(props) {
     super(props);
 
@@ -81,26 +72,18 @@ export default class Details extends Component {
 
   readData = async () => {
     try {
-      //const userData = await AsyncStorage.getItem('@user_data');
-      // console.log("userData",userData);
+     
       const token = await AsyncStorage.getItem("auth_token");
 
-      // const mData = JSON.parse(userData);
-
-      // if (token) {
-      //   setAuthToken(token);
-      // }
+      
       if (token) {
         this.setState({
-          // userId: mData.id,
-          // userType: mData.userType,
           authToken: token,
         });
         this.fetchData();
       }
     } catch (e) {
       console.log("catch ", e);
-      alert("Failed to fetch the data from storage" + e);
     }
   };
 
@@ -119,10 +102,7 @@ export default class Details extends Component {
     console.log("url ", abc);
 
     try {
-      //   const res = await fetch(`${url}`);
-      //   const { results: users } = await res.json();
-      //   if (this.state.page === 1) this.setState({ users });
-      //   else this.setState({ users: [...this.state.users, ...users] });
+     
       fetch(url, {
         method: "GET",
         headers: {

@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { gStyles } from "../style/appStyles";
 import { viewDetailStyles } from "../style/viewDetailStyles";
 import { AppColors } from "../style/AppColors";
+import { READ_NOTIFICATION_URL } from "./Utils";
 
 export const Divider = () => {
   return (
@@ -116,7 +117,7 @@ export default class FinalDetailsPage extends Component {
     };
     this.setState({ loading: true });
 
-    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/readNotifcationApi"; // Pune UAT
+    var url = READ_NOTIFICATION_URL; // Pune UAT
     // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi"; // LIVE UAt
     fetch(url, {
         method: "POST",

@@ -3,19 +3,16 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  FlatList,
-  Pressable,
-  Modal,
-  Button,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import { Icon } from "react-native-elements";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import BottomView from "../BottomView";
+import { CONTACT_US } from "../Utils";
+const STORAGE_KEY = "@user_data";
+
 export default class ContactUs extends Component {
   constructor(props) {
     super(props);
@@ -37,8 +34,51 @@ export default class ContactUs extends Component {
       ],
       isVisible: false,
       checked: true,
+      Address:'',
+      EmailId:'',
+      PhoneNo:'',
     };
   }
+
+  async componentDidMount (){
+    const userData = await AsyncStorage.getItem(STORAGE_KEY);
+    const mData = JSON.parse(userData);
+    const token = await AsyncStorage.getItem("auth_token");
+    // const userType = await AsyncStorage.getItem("userType");
+    this.getContactUsData(mData.id,mData.userType,token);
+  }
+
+  getContactUsData = async (id, muserType, token) => {
+    const data = {
+      id: id,
+      userType: muserType,
+    };
+    console.log("authToken5 ", token);
+
+    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
+    fetch(CONTACT_US, { //Pune office UAT
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        //Hide Loader
+        //setLoading(false);
+        if(res){
+          this.setState({Address:res.Address,EmailId:res.EmailId,PhoneNo:res.PhoneNo})
+        }
+      })
+      .catch((error) => {
+        //Hide Loader
+        //setLoading(false);
+        console.error("qwerty  ", error);
+      });
+  };
 
   renderMap = () => {
     return (
@@ -68,20 +108,20 @@ export default class ContactUs extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 24, padding: 10, color: "Orange" ,fontWeights:'bold'}}>
+          <Text style={{ fontSize: 24, padding: 10,}}>
             Nextenders (India) Private Limited
           </Text>
 
           <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-            Yuchit, Juhu Tara Rd,
+          {this.state.Address}
           </Text>
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
+          {/* <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
             Mumbai,Maharashtra 400049,
-          </Text>
+          </Text> */}
 
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-              info@nextenders.com
+            {this.state.EmailId}
             </Text>
             <View
               style={styles.circle}
@@ -100,7 +140,7 @@ export default class ContactUs extends Component {
             </View>
           </View>
           <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-            91 - 22 - 1661 1117
+           {this.state.PhoneNo}
           </Text>
         </View>
 

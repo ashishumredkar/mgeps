@@ -14,140 +14,157 @@ import {
 } from "react-native";
 import RadioButton from "../Components/RadioButton";
 import { CheckBox } from "react-native-elements";
-
-const PROP = [
+import DatePicker from "react-native-datepicker";
+import { TouchableHighlight } from "react-native-gesture-handler";
+import { AppColors } from "../../style/AppColors";
+const DATA = [
   {
-    key: "8 Hours",
-    text: "8 Hours",
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
   },
   {
-    key: "1 Week",
-    text: "1 Week",
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
   },
   {
-    key: "1 Year",
-    text: "1 Year",
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
   },
 ];
+
 export default class BidEventCalndar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      calls: [
-        {
-          id: 1,
-          name: "Profile",
-          type: "profile",
-          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
-        },
-        {
-          id: 2,
-          name: "Mute Notification",
-          type: "notification",
-          image:
-            "https://cdn.iconscout.com/icon/free/png-64/notifications-1780874-1514189.png",
-        },
-      ],
       isVisible: false,
       checked: true,
+      date: new Date(),
+      modalVisible: false,
     };
   }
 
-  renderItem = ({ item }) => {
-    return (
-      <Pressable
-        onPress={() => {
-          if (item.type === "profile") {
-            this.props.navigation.navigate("profile");
-          } else {
-            //this.props.navigation.navigate("settingScreenStack")
+  async componentDidMount() {
+    this.datePickerRef.onPressDate();
+    this.setState({ isVisible: true });
+  }
 
-            this.setState({ isVisible: true });
-          }
-        }}
-      >
-        <View style={styles.row}>
-          <Image source={{ uri: item.image }} style={styles.pic} />
-          <View>
-            <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>{item.name}</Text>
-            </View>
-            {/* <View style={styles.end}>
-              <Image style={[styles.icon, {marginLeft:15, marginRight:5, width:14, height:14}]}
-               source={require('../../Image/arrow_icon.png')}
-               />
-              <Text style={styles.time}>{item.date} {item.time}</Text>
-            </View> */}
-          </View>
-          <Image
-            style={[styles.icon, { marginRight: 50 }]}
-            source={require("../../Image/arrow_icon.png")}
-          />
-        </View>
-      </Pressable>
-    );
-  };
+  renderItem = ({ item }) => (
+    <View
+      key={item.key}
+      style={{
+        marginTop: 20,
+        borderRadius: 16,
+        backgroundColor: AppColors.red300,
+      }}
+    >
+      <Text>{item.title}</Text>
+    </View>
+  );
 
   render() {
+    const { modalVisible } = this.state;
+
     return (
       <View style={styles.container}>
+        <DatePicker
+          ref={(ref) => (this.datePickerRef = ref)}
+          style={{ width: 200 }}
+          date={this.state.date}
+          mode="date"
+          placeholder="select date"
+          format="YYYY-MM-DD"
+          // minDate="2016-05-01"
+          // maxDate="2016-06-01"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: "absolute",
+              left: 0,
+              top: 4,
+              marginLeft: 0,
+            },
+            dateInput: {
+              marginLeft: 36,
+            },
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(date) => {
+            // alert(date)
+            this.setState({ modalVisible: true });
+          }}
+          visible={false}
+        />
+
         <Modal
-          style={styles.modal}
-          animationType={"fade"}
-          transparent={false}
-          visible={this.state.isVisible}
+          transparent={true}
+          animationType={"none"}
+          visible={modalVisible}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            backgroundColor: "#00000040",
+          }}
+          //   onRequestClose={() => {
+          //     console.log("Modal has been closed.");
+          //   }}
           onRequestClose={() => {
-            console.log("Modal has been closed.");
+            // setShowModal(false);
+            props.onCloseModal();
           }}
         >
-          {/*All views of Modal*/}
-          <View style={styles.modal}>
-            <Text style={styles.text}>Mute notification for...!</Text>
-            <Text style={styles.text}>
-              choose any one from following options
-            </Text>
-            <RadioButton PROP={PROP} />
-            
-            <CheckBox
-              title="Show Notifications"
-              checked={this.state.checked}
-              onPress={() => this.setState({ checked: !this.state.checked })}
-            />
+          <View style={styles.modalBackground}>
+            <View style={styles.activityIndicatorWrapper}>
+              <View
+                style={{
+                  flex: 0.4,
+                  width: "100%",
+                  alignSelf: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={require("../../Image/logo_192.png")}
+                  style={[styles.image]}
+                />
+                <Text style={styles.hyperLinkText}>
+                  Bid event Calendar Menus
+                </Text>
+              </View>
 
-            <View style={{ flexDirection: "row", margin: 10 }}>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="OK"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                {" "}
-                OK
-              </Text>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="CANCEL"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                CANCEL
-              </Text>
+              <View style={{ backgroundColor: "white", flex: 1, marginTop: 15 }}>
+                <FlatList
+                  data={DATA}
+                  renderItem={this.renderItem}
+                  keyExtractor={(item) => item.id}
+                />
+                {/* <Button
+              title="RETRY"
+              buttonStyle={{
+                marginTop: 20,
+                borderRadius: 16,
+                backgroundColor: AppColors.red300,
+              }}
+              onPress={() => props.onRety()}
+            /> */}
+
+                <Button
+                  title="CLOSE"
+                  buttonStyle={{
+                    width:400,
+                    flex:1,
+                    marginTop: 20,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.red300,
+                  }}
+                  onPress={() => props.onCloseModal()}
+                />
+              </View>
             </View>
           </View>
-          <View
-            style={{ height: 1, width: "100%", backgroundColor: "white" }}
-          />
         </Modal>
-        <FlatList
-          extraData={this.state}
-          data={this.state.calls}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          renderItem={this.renderItem}
-        />
       </View>
     );
   }
@@ -156,68 +173,47 @@ export default class BidEventCalndar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+
     backgroundColor: "#ecf0f1",
   },
 
-  modal: {
+  modalBackground: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    backgroundColor: "#00000040",
+  },
+  activityIndicatorWrapper: {
+    backgroundColor: "#FFFFFF",
+    height: "40%",
+    width: "60%",
+    borderRadius: 2,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  activityIndicator: {
+    alignItems: "center",
+    height: 80,
+  },
+  paragraph: {
+    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+    fontStyle: "normal",
+    fontSize: 20,
+  },
+  image: {
+    width: 80,
+    height: 80,
+    resizeMode: "cover",
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    height: "60%",
-    width: "80%",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#fff",
-    marginTop: 80,
-    marginLeft: 40,
   },
-  text: {
-    color: "#3f2949",
-    marginTop: 10,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#dcdcdc",
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    padding: 10,
-    justifyContent: "space-between",
-  },
-  pic: {
-    borderRadius: 25,
-    width: 50,
-    height: 50,
-  },
-  nameContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: 270,
-  },
-  nameTxt: {
-    marginLeft: 15,
-    fontWeight: "600",
-    color: "#222",
-    fontSize: 15,
-  },
-  mblTxt: {
-    fontWeight: "200",
-    color: "#777",
-    fontSize: 13,
-  },
-  end: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  time: {
-    fontWeight: "400",
-    color: "#666",
-    fontSize: 12,
-  },
-  icon: {
-    height: 28,
-    width: 28,
+  hyperLinkText: {
+    color: AppColors.colorPrimary,
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });

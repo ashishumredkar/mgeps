@@ -20,6 +20,7 @@ import BottomView from "./BottomView";
 import { homeStyles } from "../style/homeStyles";
 import { gStyles } from "../style/appStyles";
 import { AppColors } from "../style/AppColors";
+import { DASHBOARD_URL } from "./Utils";
 
 const STORAGE_KEY = "@user_data";
 
@@ -122,7 +123,7 @@ class SubMenues extends React.Component {
     console.log("authToken5 ", token);
 
     // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
-    fetch("https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard", { //Pune office UAT
+    fetch(DASHBOARD_URL, { //Pune office UAT
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,

@@ -3,7 +3,14 @@
 
 // Import React
 import React, { useEffect, useState } from "react";
-import { Text, View, Image, useWindowDimensions, Platform, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  useWindowDimensions,
+  Platform,
+  ImageBackground,
+} from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
@@ -26,11 +33,13 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { RippleButton } from "./Components/RippleButton";
 
 import { gStyles } from "../../src/style/appStyles";
-import ContactUs  from "./DrawerScreens/ContactUs";
+import ContactUs from "./DrawerScreens/ContactUs";
+
+import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
+const STORAGE_KEY = "@user_data";
 const homeScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator initialRouteName="HomeScreen">
@@ -113,42 +122,90 @@ export function LogoTitle(props) {
   };
 
   return (
-      <ImageBackground resizeMode='stretch' source={require("../Image/world_map.png")}
-        style={{ flex:1, width: "100%"}}>
-        <View style={{ flexDirection: "row", marginTop: (Platform.OS == 'ios') ? -5 : 0 }}>
-          <View style={[gStyles.userAvatarStyle]}>
-            <Image
-              style={{ width: 35, height: 35 }}
-              source={require("../Image/menu_logo.png")}
-            />
-          </View>
-
-          <View style={{ width: 10 }}></View>
-
-          {/* CONTACT DETAILS  */}
-          <View style={{ paddingTop: 8, width: 120}}>
-            <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-              Dashboard
-            </Text>
-            <Text style={[{ color: "white", fontSize: 12 }]}>
-              UserType: {username}
-            </Text>
-          </View>
+    <ImageBackground
+      resizeMode="stretch"
+      source={require("../Image/world_map.png")}
+      style={{ flex: 1, width: "100%" }}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: Platform.OS == "ios" ? -5 : 0,
+        }}
+      >
+        <View style={[gStyles.userAvatarStyle]}>
+          <Image
+            style={{ width: 35, height: 35 }}
+            source={require("../Image/menu_logo.png")}
+          />
         </View>
-      </ImageBackground>
+
+        <View style={{ width: 10 }}></View>
+
+        {/* CONTACT DETAILS  */}
+        <View style={{ paddingTop: 8, width: 120 }}>
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+            Dashboard
+          </Text>
+          <Text style={[{ color: "white", fontSize: 12 }]}>
+            UserType: {username}
+          </Text>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }
 
 export function NotificationView() {
   const navigation = useNavigation();
-  return (
-    <RippleButton
+
+  const [notificationCount,setNotificationCount]=useState(0)
+
+  const [authToken,setauthToken]=useState('')
+
+   // Similar to componentDidMount and componentDidUpdate:
+   useEffect(() => {
+    //fetch('') // Pune office UAT
+    getNotificationCount()
+    
+  },[notificationCount]);
+
+   const getNotificationCount = async()=>{
+    const userData = await AsyncStorage.getItem(STORAGE_KEY);
+    const mData = JSON.parse(userData);
+    const token = await AsyncStorage.getItem("auth_token");
+    const userType = await AsyncStorage.getItem("userType");
+    //console.log("getNotificationCount",token)
+    fetch('https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/'+userType+"/"+mData.id, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " +token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      //body: formdata,
+    }) .then((response) => response.json())
+    .then((json) => {
+       if(json){
+        setNotificationCount(json.notificationCount)
+       }
+      console.log("mData", json.notificationCount);
+     
+    })
+    .catch((error) => {
+     
+      console.error(error);
+    })
+    .finally(() => {});
+   }  
+   
+   return (
+    <View>
+    {notificationCount > 0 ?     <RippleButton
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
-      rippleStyle={{ marginRight: 16 }}
-    >
-      <View>
-        {/* <Badge size={10} style={{width:40,height:40}} /> */}
+      rippleStyle={{ marginRight: 16 }}>
+     
         <Image
           style={{
             width: Platform.OS == "ios" ? 30 : 40,
@@ -157,10 +214,9 @@ export function NotificationView() {
           }}
           source={require("../Image/notification.png")}
         />
-
-        <Badge
+       <Badge
           status="error"
-          value="99+"
+          value={notificationCount}
           containerStyle={{
             position: "absolute",
             top: 2,
@@ -169,27 +225,16 @@ export function NotificationView() {
             fontSize: 14,
           }}
         />
+     
 
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
         {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */}
-      </View>
-    </RippleButton>
+     
+    </RippleButton> : null }
+    </View>
   );
 }
-// export const NearByStack = () => {
-//   return (
-//     <Stack.Navigator initialRouteName="Nearby">
-//       <Stack.Screen
-//         name="Nearby"
-//         component={Nearby}
-//         options={{
-//           headerTitle: (props) => <LogoTitle {...props} />,
-//           headerRight: (props) => <NotificationView />,
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
+
 const profileScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator
@@ -305,7 +350,33 @@ const contactUsStack = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
-
+const bidEventStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator
+      initialRouteName="BidEventCalndar"
+      screenOptions={{
+        headerLeft: () => (
+          <NavigationDrawerHeader navigationProps={navigation} />
+        ),
+        headerStyle: {
+          backgroundColor: "#307ecc", //Set Header color
+        },
+        headerTintColor: "#fff", //Set Header text color
+        headerTitleStyle: {
+          fontWeight: "bold", //Set Header text style
+        },
+      }}
+    >
+      <Stack.Screen
+        name="BidEventCalndar"
+        component={BidEventCalndar}
+        options={{
+          title: "BidEventCalndar", //Set Header Title
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 const DrawerNavigatorRoutes = (props) => {
   const [username, setUserName] = useState("ashish");
   const [profileImage, setProfileImage] = useState("");
@@ -320,7 +391,7 @@ const DrawerNavigatorRoutes = (props) => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
       const value = JSON.parse(userData);
-      console.log("setAnimatingabc " , value);
+      console.log("setAnimatingabc ", value);
 
       setUserName(value.username);
       setProfileData(value);
@@ -329,7 +400,6 @@ const DrawerNavigatorRoutes = (props) => {
     }
   };
 
-  
   function DashboardMenu(props) {
     return (
       <View style={gStyles.drawerMenu}>
@@ -338,6 +408,18 @@ const DrawerNavigatorRoutes = (props) => {
           source={require("../Image/dashboard.png")}
         />
         <Text style={gStyles.drawerText}>Dashboard</Text>
+      </View>
+    );
+  }
+
+  function BidEventCalendarMenu(props) {
+    return (
+      <View style={gStyles.drawerMenu}>
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/dashboard.png")}
+        />
+        <Text style={gStyles.drawerText}>Bid Event Calendar</Text>
       </View>
     );
   }
@@ -396,7 +478,7 @@ const DrawerNavigatorRoutes = (props) => {
         <Image
           style={{ width: 25, height: 25 }}
           source={require("../Image/profile.png")}
-        />        
+        />
         <Text style={gStyles.drawerText}>View Organization</Text>
       </View>
     );
@@ -418,7 +500,6 @@ const DrawerNavigatorRoutes = (props) => {
       drawerContent={(props) => (
         <CustomSidebarMenu {...{ employeename: username, ...props }} />
       )}
-     
     >
       <Drawer.Screen
         name="homeScreenStack"
@@ -430,6 +511,16 @@ const DrawerNavigatorRoutes = (props) => {
           ),
         }}
         component={homeScreenStack}
+      />
+
+      <Drawer.Screen
+        name="bidEventStack"
+        options={{
+          drawerLabel: (props) => (
+            <BidEventCalendarMenu {...{ employeename: username, ...props }} />
+          ),
+        }}
+        component={bidEventStack}
       />
 
       <Drawer.Screen
@@ -456,7 +547,7 @@ const DrawerNavigatorRoutes = (props) => {
         component={profileScreenStack}
       />
 
-    <Drawer.Screen
+      <Drawer.Screen
         name="contactUsStack"
         options={{
           drawerLabel: (props) => (

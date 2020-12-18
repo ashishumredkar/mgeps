@@ -246,7 +246,7 @@ export function NotificationView(props) {
    
    return (
     <View>
-    {notificationCount > 0 ?     <RippleButton
+     <RippleButton
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
       rippleStyle={{ marginRight: 16 }}>
@@ -275,7 +275,7 @@ export function NotificationView(props) {
         {/* <MaterialCommunityIcons size={30} name={"bell-outline"} /> */}
         {/* <Avatar.Image height={10} style={{ color: "#f80" }}  source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }} /> */}
      
-    </RippleButton> : null }
+    </RippleButton>
     </View>
   );
 }

@@ -137,11 +137,11 @@ class ViewOrganizationProfileScreen extends React.Component {
     }));
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-        <GeneralStatusBarColor
+      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
+        {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           title={"View Organization"}

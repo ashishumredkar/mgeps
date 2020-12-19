@@ -55,7 +55,7 @@ export default class FinalDetailsPage extends Component {
 
     const userType = await AsyncStorage.getItem("userType");
 
-    
+
 
 
     this.setState({
@@ -159,10 +159,10 @@ export default class FinalDetailsPage extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        <GeneralStatusBarColor
+        {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}

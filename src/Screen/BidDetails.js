@@ -50,7 +50,7 @@ export const Divider = () => {
 };
 
 export default class BidDetails extends Component {
- 
+
   constructor(props) {
     super(props);
 
@@ -73,10 +73,10 @@ export default class BidDetails extends Component {
 
   readData = async () => {
     try {
-     
+
       const token = await AsyncStorage.getItem("auth_token");
 
-      
+
       if (token) {
         this.setState({
           authToken: token,
@@ -104,7 +104,7 @@ export default class BidDetails extends Component {
     console.log("url ", abc);
 
     try {
-     
+
       fetch(url, {
         method: "GET",
         headers: {
@@ -184,10 +184,10 @@ export default class BidDetails extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        <GeneralStatusBarColor
+        {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -245,7 +245,7 @@ export default class BidDetails extends Component {
                           style={[listStyles.title, {fontWeight: item.isAcknowledge === 0 ? "bold" : "normal"}]}>
                           {index + 1 + ". " + item.noticeTitle}
                         </Text>
-                        
+
                         <View style={listStyles.notificationIconView}>
                           {item.isAcknowledge === 1 ? (
                             <Image
@@ -259,7 +259,7 @@ export default class BidDetails extends Component {
                             />
                           )}
                         </View>
-                        
+
                       </View>
                       <Text>ControlNumber: {item.controlNumber}</Text>
                         <Text>BidNotice Id: {item.BidNoticeId}</Text>

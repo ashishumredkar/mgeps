@@ -96,10 +96,10 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
 
-      <GeneralStatusBarColor
+      {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+      /> */}
 
       <CustomToolbar
         title={"Profile"}

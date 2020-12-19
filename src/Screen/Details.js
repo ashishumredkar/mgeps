@@ -50,7 +50,7 @@ export const Divider = () => {
 };
 
 export default class Details extends Component {
- 
+
   constructor(props) {
     super(props);
 
@@ -72,10 +72,10 @@ export default class Details extends Component {
 
   readData = async () => {
     try {
-     
+
       const token = await AsyncStorage.getItem("auth_token");
 
-      
+
       if (token) {
         this.setState({
           authToken: token,
@@ -102,7 +102,7 @@ export default class Details extends Component {
     console.log("url ", abc);
 
     try {
-     
+
       fetch(url, {
         method: "GET",
         headers: {
@@ -182,10 +182,10 @@ export default class Details extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        <GeneralStatusBarColor
+        {/* <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        />
+        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}

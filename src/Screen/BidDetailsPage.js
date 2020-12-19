@@ -54,102 +54,23 @@ export default class FinalDetailsPage extends Component {
     const token = await AsyncStorage.getItem("auth_token");
 
     const userType = await AsyncStorage.getItem("userType");
-
-    
-
+    console.log("componentDidMount ",mData)
 
     this.setState({
       authToken: token,
       userSelected: [],
-      pageTitle: mData.activityType,
+      pageTitle: mData.noticeTitle,
       userType: userType,
       urlParameter: mData.urlParameter,
       apiUrl: mData.detailsUrl,
       title: this.props.route.params.pageTitle,
     });
 
-    this.getDetails(token, mData.urlParameter, mData.detailsUrl);
+    this.setState({ userSelected: mData });
+
+   
   }
 
-  getDetails = async (token, urlParams, url) => {
-    this.setState({ loading: true });
-    console.log("urlParams ", urlParams);
-    const data = urlParams;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //Hide Loader
-
-        if (responseJson) {
-          this.setState({ loading: false, userSelected: responseJson });
-          this.setState({ loading: false });
-          this.sendAckForRead(
-            this.state.authToken,
-            responseJson.notificationId,
-            responseJson.moduleName
-          );
-        }
-
-        console.log("getDetails ", responseJson);
-      })
-      .catch((error) => {
-        //Hide Loader
-        //setLoading(false);
-        console.log("getDetails ", error);
-        this.setState({ loading: false });
-
-        console.error("qwerty  ", error);
-      })
-      .finally(() => this.setState({ loading: false }));
-  };
-
-  sendAckForRead = async (token, notificationId, moduleName) => {
-    const data = {
-      moduleName: moduleName,
-      notificationId: notificationId,
-    };
-    this.setState({ loading: true });
-
-    var url = READ_NOTIFICATION_URL; // Pune UAT
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi"; // LIVE UAt
-    fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log("sendAckForRead ", responseJson);
-      })
-      .catch((error) => {
-        //Hide Loader
-        console.error("qwerty  ", error);
-      })
-      .finally(() => this.setState({ loading: false }));
-  };
-
-  clickEventListener = (item) => {
-    this.setState({ userSelected: item }, () => {
-      this.setModalVisible(true);
-    });
-  };
-
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
 
   render() {
     const { userSelected, userType, urlParameter } = this.state;
@@ -166,7 +87,7 @@ export default class FinalDetailsPage extends Component {
 
         <CustomToolbar
           navigation={this.props.navigation}
-          title={this.state.pageTitle}
+          title={this.state.title}
           userType={userType}
           backgroundColor="#3775f0"
         />
@@ -179,7 +100,7 @@ export default class FinalDetailsPage extends Component {
                 { color: "grey", fontSize: 14, marginTop: 5 },
               ]}
             >
-              {this.state.title}
+              {this.state.title} /{this.state.pageTitle}
             </Text>
           </View>
 

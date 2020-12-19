@@ -36,6 +36,9 @@ import { gStyles } from "../../src/style/appStyles";
 import ContactUs from "./DrawerScreens/ContactUs";
 
 import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
+import BidDetails from './BidDetails';
+import BidDetailsPage from './BidDetailsPage';
+
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -173,7 +176,11 @@ export function NotificationView(props) {
 
       console.log("som Navigation ::  ", objUserData);
 
-      var url = "https://mgeps-uat-pune.etenders.in/api/Calendars/getCountMobileNotification/" + objUserData.id + "/" + objUserData.userType; // Pune UAT
+      var url =
+        "https://mgeps-uat-pune.etenders.in/api/Calendars/getCountMobileNotification/" +
+        objUserData.id +
+        "/" +
+        objUserData.userType; // Pune UAT
       // var url = "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" + objUserData.id + "/" + objUserData.userType; // Live UAT
 
       console.log("URL Count :: " + url);
@@ -196,7 +203,7 @@ export function NotificationView(props) {
         .catch((error) => {
           //Hide Loader
           console.error("qwerty  ", error);
-        })
+        });
     } catch (e) {
       console.log("catch ", e);
     }
@@ -204,52 +211,56 @@ export function NotificationView(props) {
 
   const navigation = useNavigation();
 
-  const [notificationCount,setNotificationCount]=useState(0)
+  const [notificationCount, setNotificationCount] = useState(0);
 
-  const [authToken,setauthToken]=useState('')
+  const [authToken, setauthToken] = useState("");
 
-   // Similar to componentDidMount and componentDidUpdate:
-   useEffect(() => {
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
     //fetch('') // Pune office UAT
-    getNotificationCount()
-    
-  },[notificationCount]);
+    getNotificationCount();
+  }, [notificationCount]);
 
-   const getNotificationCount = async()=>{
+  const getNotificationCount = async () => {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     const userType = await AsyncStorage.getItem("userType");
     //console.log("getNotificationCount",token)
-    fetch('https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/'+userType+"/"+mData.id, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " +token,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      //body: formdata,
-    }) .then((response) => response.json())
-    .then((json) => {
-       if(json){
-        setNotificationCount(json.notificationCount)
-       }
-      console.log("mData", json.notificationCount);
-     
-    })
-    .catch((error) => {
-     
-      console.error(error);
-    })
-    .finally(() => {});
-   }  
-   
-   return (
-   
-     <RippleButton
+    fetch(
+      "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" +
+        userType +
+        "/" +
+        mData.id,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        //body: formdata,
+      }
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        if (json) {
+          setNotificationCount(json.notificationCount);
+        }
+        console.log("mData", json.notificationCount);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {});
+  };
+
+  return (
+    <RippleButton
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
-      rippleStyle={{ marginRight: 16 }}>
+      rippleStyle={{ marginRight: 16 }}
+    >
       <View>
         <Image
           style={{
@@ -259,7 +270,7 @@ export function NotificationView(props) {
           }}
           source={require("../Image/notification.png")}
         />
-       <Badge
+        <Badge
           status="error"
           value={notificationCount}
           containerStyle={{
@@ -270,9 +281,8 @@ export function NotificationView(props) {
             fontSize: 14,
           }}
         />
-         </View>
+      </View>
     </RippleButton>
-   
   );
 }
 
@@ -414,6 +424,19 @@ const bidEventStack = ({ navigation }) => {
         options={{
           title: "BidEventCalndar", //Set Header Title
         }}
+      />
+       <Stack.Screen
+        name="BidDetails"
+        component={BidDetails}
+        // options={{
+        //   title: "Details", //Set Header Title
+        // }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BidDetailsPage"
+        component={BidDetailsPage}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

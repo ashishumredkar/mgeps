@@ -18,11 +18,12 @@ import {
   ImageBackground,
   Linking,
   Button,
+  SafeAreaView,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification from 'react-native-push-notification';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 import Loader from "./Components/Loader";
 import AlertModal from "./Components/AlertModal";
 
@@ -41,7 +42,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 import BottomView from "./BottomView";
 import { Modal } from "react-native-paper";
-import { LOGIN_URL,LOGIN_TYPE_URL } from "./Utils";
+import { LOGIN_URL, LOGIN_TYPE_URL } from "./Utils";
 // import Loader from './Components/Loader'
 
 //import {Notifications} from 'react-native-notifications';
@@ -64,6 +65,15 @@ const LoginScreen = ({ navigation }) => {
     // { label: "Merchant", value: "Merchant" },
   ]);
 
+  const userNameInputRef = createRef();
+  const userEmailInputRef = createRef();
+  const userAgeInputRef = createRef();
+  const useraddressInputRef = createRef();
+
+  const userRegisterFunction = () => {
+    alert("User Registered");
+  };
+
   const [fcmId, setfcmId] = useState(
     "sdlfksdlflsdf987987s9d89f7sd987f987sd89f798s7df"
   );
@@ -75,33 +85,33 @@ const LoginScreen = ({ navigation }) => {
     fetchUserType();
   }, []);
 
-  const getFcm = () =>{
+  const getFcm = () => {
     PushNotification.configure({
       //(optional) Called when Token is generated (iOS and Android)
-      onRegister: function(token) {
-                    console.log('TOKEN:', token);
-                    setfcmId(token.token);
-                  },
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+        setfcmId(token.token);
+      },
 
       // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
-        console.log('NotificationHandler:', notification);
+      onNotification: function (notification) {
+        console.log("NotificationHandler:", notification);
       },
 
       // (optional) Called when Action is pressed (Android)
-      onAction: function(notification) {
-        console.log ('Notification action received:');
+      onAction: function (notification) {
+        console.log("Notification action received:");
         console.log(notification.action);
         console.log(notification);
 
-        if(notification.action === 'Yes') {
+        if (notification.action === "Yes") {
           PushNotification.invokeApp(notification);
         }
       },
 
       // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-      onRegistrationError: function(err) {
-        console.log("onRegistrationError: ",err);
+      onRegistrationError: function (err) {
+        console.log("onRegistrationError: ", err);
       },
 
       // IOS ONLY (optional): default: all - Permissions to register.
@@ -122,7 +132,7 @@ const LoginScreen = ({ navigation }) => {
        */
       requestPermissions: true,
     });
-  }
+  };
 
   const fetchUserType = async () => {
     setLoading(true);
@@ -149,8 +159,6 @@ const LoginScreen = ({ navigation }) => {
         setLoginCollection(mData);
 
         //PushNotification.checkPermissions(PushNotification.requestPermissions());
-
-
       })
       .catch((error) => {
         setModalVisible(true);
@@ -158,8 +166,6 @@ const LoginScreen = ({ navigation }) => {
       })
       .finally(() => setLoading(false));
   };
-
-
 
   const handleSubmitPress = () => {
     setErrortext("");
@@ -183,8 +189,9 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    fetch(LOGIN_URL, { // Pune UAT
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", { // Live UAT
+    fetch(LOGIN_URL, {
+      // Pune UAT
+      // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", { // Live UAT
       method: "POST",
       body: JSON.stringify({
         username: userEmail,
@@ -420,23 +427,6 @@ const LoginScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      {/* <Modal
-            animationType = {"slide"}
-            transparent={false}
-            visible={isModalVisible}
-            onRequestClose={() => {
-              Alert.alert('Modal has now been closed.');
-            }}>
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-            <Image
-              source={require('../Image/menu_logo.png')}
-              style = { styles.image }/>
-              <Text style = { styles.text }>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Maecenas eget tempus augue, a convallis velit.</Text>
-                  </View>
-          </Modal> */}
     </KeyboardAvoidingView>
   );
 };

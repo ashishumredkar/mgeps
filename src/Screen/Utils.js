@@ -1,8 +1,11 @@
-const GLOBAL_LINK = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers";
+// const URL = "https://mgeps-uat-pune.etenders.in"; // Pune UAT
+const URL = "https://mgeps-uat.philgeps.gov.ph"; // Live UAT
+const GLOBAL_LINK = URL + "/api/BuyerUsers";
 export const LOGIN_TYPE_URL = GLOBAL_LINK + "/loginType";
 export const LOGIN_URL = GLOBAL_LINK + "/getToken";
 export const DASHBOARD_URL = GLOBAL_LINK + "/dashboard";
 export const READ_NOTIFICATION_URL = GLOBAL_LINK + "/readNotifcationApi";
 export const CONTACT_US = GLOBAL_LINK + "/contactUs";
-export const BID_EVENT_CAL_URL = "https://mgeps-uat-pune.etenders.in/api/Calendars/getOpportunityCountOnDate";
+export const BID_EVENT_CAL_URL = URL + "/api/Calendars/getOpportunityCountOnDate";
+export const FAQ_URL = URL + "/CmsHomePages/view_faq";
 export const STORAGE_KEY = "@user_data";

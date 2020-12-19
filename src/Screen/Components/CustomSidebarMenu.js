@@ -24,6 +24,7 @@ import { Divider } from "react-native-elements";
 
 import AsyncStorage from "@react-native-community/async-storage";
 import { AppColors } from "../../style/AppColors";
+import { FAQ_URL } from "../Utils";
 
 const CustomSidebarMenu = (props) => {
   console.log("CustomSidebarMenu ", props.employeename);
@@ -38,7 +39,6 @@ const CustomSidebarMenu = (props) => {
         <View style={stylesSidebar.profileHeader}>
           <Image
             source={require("../../Image/logo_192.png")}
-            // source={{ uri: "http://loremflickr.com/g/50/50/paris" }}
             style={{
               width: 60,
               height: 60,
@@ -86,7 +86,7 @@ const CustomSidebarMenu = (props) => {
           )}
           onPress={() => {
             props.navigation.toggleDrawer();
-            Linking.openURL('https://mgeps-uat.philgeps.gov.ph/CmsHomePages/view_faq') 
+            Linking.openURL(FAQ_URL) 
            
           }}
         />

@@ -3,6 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
+  Linking,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -55,7 +57,6 @@ export default class ContactUs extends Component {
     };
     console.log("authToken5 ", token);
 
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
     fetch(CONTACT_US, { //Pune office UAT
       method: "POST",
       headers: {
@@ -107,52 +108,48 @@ export default class ContactUs extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ margin: 20 }}>
-          <Text style={{ fontSize: 24, padding: 10,}}>
+        <View style={{ margin: 20, flex: 0.90 }}>
+          {/* <Text style={{ fontSize: 24, padding: 10,}}>
             Nextenders (India) Private Limited
-          </Text>
-
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-          {this.state.Address}
-          </Text>
-          {/* <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-            Mumbai,Maharashtra 400049,
           </Text> */}
 
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-            {this.state.EmailId}
-            </Text>
-            <View
-              style={styles.circle}
-              underlayColor="#ccc"
-              onPress={() => alert("Yaay!")}
-            >
-              <Icon name="email" type="Zocial" color="white" />
-            </View>
-
-            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-                <View
-                  style={styles.circle}
-                  underlayColor="#ccc"
-                  onPress={() => alert("Yaay!")}>
-                  <Icon name="email" type="Zocial" color="white" />
-                </View>
-                <View
-                  style={styles.circle}
-                  underlayColor="#ccc"
-                  onPress={() => alert("Yaay!")}>
-                  <Icon name="call" type="Zocial" color="white" />
-                </View>
-            </View>
-          </View>
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }}>
-           {this.state.PhoneNo}
+          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }} selectable={true}>
+            {this.state.Address.replace(/, /g, ',\n')}
           </Text>
+
+          <View style={{ flexDirection: "row", marginTop: 20 }}>
+            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+              {this.state.EmailId}
+            </Text>
+
+          </View>
+          <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+            {this.state.PhoneNo}
+          </Text>
+
+          <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+            <TouchableOpacity onPress={() => Linking.openURL('mailto:' + this.state.EmailId + '?subject=Contact Us&body=Hi Team,\n') }>
+              <View
+                style={styles.circle}
+                underlayColor="#ccc"
+                onPress={() => alert("Yaay!")}>
+                <Icon name="email" type="Zocial" color="white" />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => Linking.openURL('tel:' + this.state.PhoneNo) }>
+              <View
+                style={styles.circle}
+                underlayColor="#ccc"
+                onPress={() => alert("Yaay!")}>
+                <Icon name="call" type="Zocial" color="white" />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View>
-        <View style={{ flex: 0.2, alignSelf: "auto" }}>
+        {/* <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View> */}
+        <View style={{ flex: 0.10, alignSelf: "auto" }}>
           <BottomView />
         </View>
       </View>

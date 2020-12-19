@@ -55,9 +55,6 @@ export default class FinalDetailsPage extends Component {
 
     const userType = await AsyncStorage.getItem("userType");
 
-
-
-
     this.setState({
       authToken: token,
       userSelected: [],

@@ -518,7 +518,7 @@ const DrawerNavigatorRoutes = (props) => {
           style={{ width: 25, height: 25 }}
           source={require("../Image/profile.png")}
         />
-        <Text style={gStyles.drawerText}>View Organization</Text>
+        <Text style={gStyles.drawerText}>My Organization Profile</Text>
       </View>
     );
   }
@@ -543,7 +543,7 @@ const DrawerNavigatorRoutes = (props) => {
           style={{ width: 25, height: 25 }}
           source={require("../Image/profile.png")}
         />
-        <Text style={gStyles.drawerText}>View Organization</Text>
+        <Text style={gStyles.drawerText}>My Organization Profile</Text>
       </View>
     );
   }

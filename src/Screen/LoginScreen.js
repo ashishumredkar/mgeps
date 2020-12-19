@@ -78,52 +78,52 @@ const LoginScreen = ({ navigation }) => {
   }, []);
 
   const getFcm = () =>{
-    PushNotification.configure({
-      //(optional) Called when Token is generated (iOS and Android)
-      onRegister: function(token) {
-                    console.log('TOKEN:', token);
-                    setfcmId(token.token);
-                  },
+    // PushNotification.configure({
+    //   //(optional) Called when Token is generated (iOS and Android)
+    //   onRegister: function(token) {
+    //                 console.log('TOKEN:', token);
+    //                 setfcmId(token.token);
+    //               },
 
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function(notification) {
-        console.log('NotificationHandler:', notification);
-      },
+    //   // (required) Called when a remote or local notification is opened or received
+    //   onNotification: function(notification) {
+    //     console.log('NotificationHandler:', notification);
+    //   },
 
-      // (optional) Called when Action is pressed (Android)
-      onAction: function(notification) {
-        console.log ('Notification action received:');
-        console.log(notification.action);
-        console.log(notification);
+    //   // (optional) Called when Action is pressed (Android)
+    //   onAction: function(notification) {
+    //     console.log ('Notification action received:');
+    //     console.log(notification.action);
+    //     console.log(notification);
 
-        if(notification.action === 'Yes') {
-          PushNotification.invokeApp(notification);
-        }
-      },
+    //     if(notification.action === 'Yes') {
+    //       PushNotification.invokeApp(notification);
+    //     }
+    //   },
 
-      // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
-      onRegistrationError: function(err) {
-        console.log("onRegistrationError: ",err);
-      },
+    //   // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+    //   onRegistrationError: function(err) {
+    //     console.log("onRegistrationError: ",err);
+    //   },
 
-      // IOS ONLY (optional): default: all - Permissions to register.
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
+    //   // IOS ONLY (optional): default: all - Permissions to register.
+    //   permissions: {
+    //     alert: true,
+    //     badge: true,
+    //     sound: true,
+    //   },
 
-      // Should the initial notification be popped automatically
-      // default: true
-      popInitialNotification: true,
+    //   // Should the initial notification be popped automatically
+    //   // default: true
+    //   popInitialNotification: true,
 
-      /**
-       * (optional) default: true
-       * - Specified if permissions (ios) and token (android and ios) will requested or not,
-       * - if not, you must call PushNotificationsHandler.requestPermissions() later
-       */
-      requestPermissions: true,
-    });
+    //   /**
+    //    * (optional) default: true
+    //    * - Specified if permissions (ios) and token (android and ios) will requested or not,
+    //    * - if not, you must call PushNotificationsHandler.requestPermissions() later
+    //    */
+    //   requestPermissions: true,
+    // });
   }
 
   const fetchUserType = async () => {

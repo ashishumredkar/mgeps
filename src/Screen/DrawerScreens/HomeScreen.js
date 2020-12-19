@@ -24,6 +24,7 @@ import { homeStyles } from "../../style/homeStyles";
 import BottomView from "../BottomView";
 import { Dialog, ConfirmDialog } from "react-native-simple-dialogs";
 import Tnc from "../Components/Tnc";
+import { DASHBOARD_URL } from "../Utils";
 
 const colors = [
   "#29B6F6",
@@ -50,8 +51,10 @@ const imagesArray = [
   require("../../Image/kpms.png"),
   require("../../Image/kpms.png"),
   require("../../Image/auction.png"),
-  "https://img.icons8.com/color/70/000000/to-do.png",
-  "https://img.icons8.com/color/70/000000/basketball.png",
+  require("../../Image/to-do.png"),
+  require("../../Image/basketball.png"),
+  require("../../Image/ic_expand_arrow.png"),
+  require("../../Image/ic_organization.png"),
 ];
 
 class HomeScreen extends React.Component {
@@ -110,10 +113,7 @@ class HomeScreen extends React.Component {
     };
     this.setState({ loading: true });
 
-    var url = "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/dashboard"; // Pune UAT
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard"; // Live UAT
-
-    fetch(url, {
+    fetch(DASHBOARD_URL, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + this.state.authToken,

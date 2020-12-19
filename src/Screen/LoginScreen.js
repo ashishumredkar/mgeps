@@ -43,7 +43,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 
 import BottomView from "./BottomView";
 import { Modal } from "react-native-paper";
-import { LOGIN_URL,LOGIN_TYPE_URL } from "./Utils";
+import { LOGIN_URL, LOGIN_TYPE_URL } from "./Utils";
 // import Loader from './Components/Loader'
 
 //import {Notifications} from 'react-native-notifications';
@@ -128,8 +128,7 @@ const LoginScreen = ({ navigation }) => {
 
   const fetchUserType = async () => {
     setLoading(true);
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/loginType") //Live UAT
-    fetch(LOGIN_TYPE_URL) // Pune office UAT
+    fetch(LOGIN_TYPE_URL)
       .then((response) => response.json())
       .then((json) => {
         setForgotPassword(json.forgetPassword);
@@ -185,8 +184,10 @@ const LoginScreen = ({ navigation }) => {
     };
     console.log("dataToSend ", dataToSend);
 
-    fetch(LOGIN_URL, { // Pune UAT
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/getToken", { // Live UAT
+    console.log("\n\n\n");
+    console.log("Login Url :: ", LOGIN_URL);
+
+    fetch(LOGIN_URL, {
       method: "POST",
       body: JSON.stringify({
         username: userEmail,

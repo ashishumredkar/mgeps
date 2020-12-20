@@ -197,7 +197,7 @@ class HomeScreen extends React.Component {
             onCloseModal={this.closeModal}
           />
 
-          {userType != "Agency" ? (
+          {userType === "Agency" ? (
             <TouchableOpacity
               style={homeStyles.facebookStyle}
               activeOpacity={0.5}

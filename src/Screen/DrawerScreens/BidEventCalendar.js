@@ -6,7 +6,8 @@ import {
   Image,
   FlatList,
   Modal,
-  Button,TouchableOpacity
+  Button,
+  TouchableOpacity,
 } from "react-native";
 
 import DatePicker from "react-native-datepicker";
@@ -44,6 +45,9 @@ export default class BidEventCalndar extends Component {
       bidEvent: [],
     };
   }
+  componentWillUnmount(){
+    this.datePickerRef=null;
+  }
 
   async componentDidMount() {
     this.datePickerRef.onPressDate();
@@ -67,6 +71,8 @@ export default class BidEventCalndar extends Component {
       userType: this.state.userTypeId,
       date: date,
     };
+
+   
 
     // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
     fetch(BID_EVENT_CAL_URL, {
@@ -95,49 +101,65 @@ export default class BidEventCalndar extends Component {
       });
   };
 
-  renderItem = ({ item, index }) => (
-   (index===0 ?
-       (
-        <TouchableOpacity
+  renderItem = ({ item, index }) =>
+    index === 0 ? (
+      <TouchableOpacity
         onPress={() => {
           this.props.navigation.navigate("BidDetails", {
             link: item.bidNoticeToBeSubmitted.link,
             title: "Bid Event Calendar",
-            subTitle:item.bidNoticeToBeSubmitted.label
+            subTitle: item.bidNoticeToBeSubmitted.label,
           });
           this.setState({ modalVisible: false });
-        }
-        }
+        }}
         key={item.key}
-        style={[styles.RectangleShapeView,{backgroundColor:AppColors.colorPrimary}]}
-
+        style={[
+          styles.RectangleShapeView,
+          { backgroundColor: AppColors.colorPrimary },
+        ]}
       >
-        <Text style={{alignContent:'center',alignItems:'center',alignSelf:'center',padding:10,fontSize:16}}>
-          {item.bidNoticeToBeSubmitted.label } ({item.bidNoticeToBeSubmitted.count})
+        <Text
+          style={{
+            alignContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            padding: 10,
+            fontSize: 16,
+          }}
+        >
+          {item.bidNoticeToBeSubmitted.label} (
+          {item.bidNoticeToBeSubmitted.count})
         </Text>
       </TouchableOpacity>
-      )
-     : (
-      <TouchableOpacity 
-      onPress={() => {
-        this.props.navigation.navigate("BidDetails", {
-          link: item.bidNoticeToBeOpen.link,
-          title: "Bid Event Calendar",
-          subTitle:item.bidNoticeToBeSubmitted.label
-        });
-        this.setState({ modalVisible: false });
-      }
-      }
-      key={item.key}
-      style={[styles.RectangleShapeView,{backgroundColor:AppColors.AppOrange}]}
-    >
-      <Text style={{alignContent:'center',alignItems:'center',alignSelf:'center',padding:10,fontSize:16}}>
-        {item.bidNoticeToBeOpen.label} ({item.bidNoticeToBeOpen.count})
-      </Text>
-    </TouchableOpacity>
-    ))
-   
-  );
+    ) : (
+      <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate("BidDetails", {
+            link: item.bidNoticeToBeOpen.link,
+            title: "Bid Event Calendar",
+            subTitle: item.bidNoticeToBeSubmitted.label,
+          });
+          this.setState({ modalVisible: false });
+        }}
+        key={item.key}
+        style={[
+          styles.RectangleShapeView,
+          { backgroundColor: AppColors.AppOrange },
+        ]}
+      >
+        <Text
+          style={{
+            alignContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            padding: 10,
+            fontSize: 16,
+          }}
+        >
+          {item.bidNoticeToBeOpen.label} ({item.bidNoticeToBeOpen.count})
+        </Text>
+      </TouchableOpacity>
+    );
 
   render() {
     const { modalVisible } = this.state;
@@ -146,7 +168,7 @@ export default class BidEventCalndar extends Component {
       <View style={styles.container}>
         <DatePicker
           ref={(ref) => (this.datePickerRef = ref)}
-          style={{ width: 200 }}
+          style={{ width: null,height:1 }}
           date={this.state.date}
           mode="date"
           placeholder="select date"
@@ -189,8 +211,7 @@ export default class BidEventCalndar extends Component {
           //     console.log("Modal has been closed.");
           //   }}
           onRequestClose={() => {
-            
-            this.props.navigation.navigate("HomeScreen")
+            this.props.navigation.navigate("HomeScreen");
             this.setState({ modalVisible: false });
           }}
         >
@@ -198,7 +219,7 @@ export default class BidEventCalndar extends Component {
             <View style={styles.activityIndicatorWrapper}>
               <View
                 style={{
-                  flex: 0.4,
+                  flex: 0.5,
                   width: "100%",
                   alignSelf: "center",
                   alignItems: "center",
@@ -213,28 +234,12 @@ export default class BidEventCalndar extends Component {
                 </Text>
               </View>
 
-              <View
-                style={{ backgroundColor: "white", flex: 1, marginTop: 15 }} >
-                {/* <View style={styles.RectangleShapeView}>
-                  <Text>
-                    {this.state.bidEvent[0].bidNoticeToBeSubmitted.label} ({" "}
-                    {this.state.bidEvent[0].bidNoticeToBeSubmitted.count} )
-                  </Text>
-                </View> */}
+              <View style={{ backgroundColor: "white", flex: 1, marginTop: 8 }}>
                 <FlatList
                   data={this.state.bidEvent}
                   renderItem={this.renderItem}
-                  keyExtractor={(item) => item.id}
+                  keyExtractor={(item, index) => index.toString}
                 />
-                {/* <Button
-              title="RETRY"
-              buttonStyle={{
-                marginTop: 20,
-                borderRadius: 16,
-                backgroundColor: AppColors.red300,
-              }}
-              onPress={() => props.onRety()}
-            /> */}
 
                 <Button
                   title="CLOSE"
@@ -246,10 +251,9 @@ export default class BidEventCalndar extends Component {
                     backgroundColor: AppColors.red300,
                   }}
                   onPress={() => {
-                    this.setState({ modalVisible: false })
-                    this.props.navigation.navigate("HomeScreen")
-                  }
-                  }
+                    this.setState({ modalVisible: false });
+                    this.props.navigation.navigate("HomeScreen");
+                  }}
                 />
               </View>
             </View>
@@ -263,7 +267,9 @@ export default class BidEventCalndar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    alignSelf: "center",
+    alignItems: "center",
+    alignContent: "center",
     backgroundColor: "#ecf0f1",
   },
 

@@ -89,6 +89,7 @@ const LoginScreen = ({ navigation }) => {
   const getFcm = () => {
     PushNotification.configure({
       //(optional) Called when Token is generated (iOS and Android)
+      requestPermissions: Platform.OS === 'ios',
       onRegister: function (token) {
         console.log("TOKEN:", token);
         setfcmId(token.token);
@@ -144,8 +145,7 @@ const LoginScreen = ({ navigation }) => {
         var points = [json.LoginTypes];
 
         var mData = []; // Good
-        console.log("data ", points);
-        console.log("data ", points.length);
+      ;
 
         if (points[0].Agency) {
           mData = mData.concat({ label: "Agency", value: "Agency" });
@@ -223,6 +223,8 @@ const LoginScreen = ({ navigation }) => {
 
           //const log=JSON.stringify(responseJson.userData)
 
+          console.log("LOGIN RESPONSE",JSON.stringify(responseJson.userData))
+
           AsyncStorage.setItem("user_id", "" + responseJson.userData.id);
           AsyncStorage.setItem("userType", loginType);
 
@@ -234,6 +236,7 @@ const LoginScreen = ({ navigation }) => {
           navigation.replace("DrawerNavigationRoutes");
         } else {
           setModalVisible(true);
+          setLoading(false);
           setErrortext("Please check your email id or password");
           console.log("Please check your email id or password");
         }

@@ -58,6 +58,11 @@ const imagesArray = [
 ];
 
 class HomeScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      drawerLabel: () => null,
+    };
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -69,7 +74,7 @@ class HomeScreen extends React.Component {
       isConditionAccepted: false,
     };
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.readData();
   }
 
@@ -84,13 +89,6 @@ class HomeScreen extends React.Component {
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });
       }
-
-      console.log("userData", token);
-      console.log("userData", mData.userType);
-
-      // if (token) {
-      //   setAuthToken(token);
-      // }
       if (userData) {
         this.setState({
           userId: mData.id,
@@ -102,7 +100,6 @@ class HomeScreen extends React.Component {
       }
     } catch (e) {
       console.log("catch ", e);
-      alert("Failed to fetch the data from storage" + e);
     }
   };
 
@@ -145,7 +142,16 @@ class HomeScreen extends React.Component {
     return (
       // Flat List Item
 
-      <Pressable style={[homeStyles.container2]} onPress={this.getMenuItems(this.state.userId,this.state.userType,this.state.authToken)}>
+      <Pressable
+        style={[homeStyles.container2]}
+        onPress={() =>
+          this.getMenuItems(
+            this.state.userId,
+            this.state.userType,
+            this.state.authToken
+          )
+        }
+      >
         <Image
           style={homeStyles.cardImage2}
           source={{
@@ -154,7 +160,16 @@ class HomeScreen extends React.Component {
           }}
         />
         <Text style={homeStyles.welcome}> No Records Found </Text>
-        <Button title="tap to retry" onPress={this.getMenuItems(this.state.userId,this.state.userType,this.state.authToken)} />
+        <Button
+          title="tap to retry"
+          onPress={() =>
+            this.getMenuItems(
+              this.state.userId,
+              this.state.userType,
+              this.state.authToken
+            )
+          }
+        />
       </Pressable>
     );
   };
@@ -169,9 +184,9 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    if (this.state.loading) return <Loader loading={this.state.loading} />;
+    // if (this.state.loading) return <Loader loading={this.state.loading} />;
 
-    const { isConditionAccepted } = this.state;
+    const { isConditionAccepted, userType } = this.state;
 
     return (
       <View style={{ flex: 1 }}>
@@ -182,14 +197,24 @@ class HomeScreen extends React.Component {
             onCloseModal={this.closeModal}
           />
 
-        <TouchableOpacity style={homeStyles.facebookStyle} activeOpacity={0.5}>
-            <Image
-            source={require('../../Image/calendar.png')}
-            style={homeStyles.imageIconStyle}
-            />
-            <View style={homeStyles.iconSeparatorStyle} />
-            <Text style={homeStyles.textStyle}> BID EVENT CALENDAR </Text>
-        </TouchableOpacity>
+          {userType != "Agency" ? (
+            <TouchableOpacity
+              style={homeStyles.facebookStyle}
+              activeOpacity={0.5}
+              onPress={() => {
+                this.props.navigation.navigate("bidEventStack",{
+                  screen :"BidEventCalndar"
+                })
+              }}
+            >
+              <Image
+                source={require("../../Image/calendar.png")}
+                style={homeStyles.imageIconStyle}
+              />
+              <View style={homeStyles.iconSeparatorStyle} />
+              <Text style={homeStyles.textStyle}> BID EVENT CALENDAR </Text>
+            </TouchableOpacity>
+          ) : null}
 
           <FlatList
             style={homeStyles.list}

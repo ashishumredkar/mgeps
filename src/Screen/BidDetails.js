@@ -119,6 +119,11 @@ export default class BidDetails extends Component {
           console.log("responseJson", responseJson);
           const mData = responseJson;
           if (mData) {
+              if(mData.error){
+                this.setState({
+                    isLoading: false,
+                  });  
+              }
             this.state.page === 1
               ? this.setState({ users: [...mData] })
               : this.setState({
@@ -131,7 +136,6 @@ export default class BidDetails extends Component {
           } else {
             this.setState({
               isLoading: false,
-              totalCount: mData.totalRows,
             });
           }
         })

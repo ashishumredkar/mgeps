@@ -27,8 +27,18 @@ import { AppColors } from "../../style/AppColors";
 import { FAQ_URL } from "../Utils";
 
 const CustomSidebarMenu = (props) => {
-  console.log("CustomSidebarMenu ", props.employeename);
 
+  const { state, ...rest } = props;
+    const newState = { ...state };
+
+    if(props.userType ==='Agency'){
+      newState.routes = newState.routes.filter(
+      
+        (item) => item.name !== 'bidEventStack' ,
+      );
+  
+    }
+    
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <ImageBackground
@@ -58,12 +68,12 @@ const CustomSidebarMenu = (props) => {
       <View style={stylesSidebar.profileHeaderLine} />
 
       <DrawerContentScrollView
-        {...props}
+        state={newState} {...rest}
         style={{ backgroundColor: "white", color: "black" }}
       >
         {/* { renderLogoutConfirmationModal } */}
 
-        <DrawerItemList {...props} labelStyle={{ color: "black" }} />
+        <DrawerItemList state={newState} {...rest} labelStyle={{ color: "black" }} />
 
         <View>
           <View style={{ marginTop: "2%" }}>
@@ -76,12 +86,12 @@ const CustomSidebarMenu = (props) => {
         </View>
         <DrawerItem
           label={({ color }) => (
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row",height:40,marginTop:-5  }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
-                source={require("../../Image/logout.png")}
+                source={require("../../Image/faq.png")}
               />
-              <Text style={{ color: "black", marginTop: 5 }}>FAQ</Text>
+              <Text style={{ color: "black", marginTop: 5 ,marginLeft:5}}>FAQ</Text>
             </View>
           )}
           onPress={() => {
@@ -92,12 +102,12 @@ const CustomSidebarMenu = (props) => {
         />
         <DrawerItem
           label={({ color }) => (
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row",height:40,marginTop:-15 }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/logout.png")}
               />
-              <Text style={{ color: "black", marginTop: 5 }}>Logout</Text>
+              <Text style={{ color: "black", marginTop: 5,marginLeft:5 }}>Logout</Text>
             </View>
           )}
           onPress={() => {

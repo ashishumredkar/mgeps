@@ -14,7 +14,6 @@ import {
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 
 // Import Screens
@@ -38,7 +37,11 @@ import ContactUs from "./DrawerScreens/ContactUs";
 import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 import BidDetails from './BidDetails';
 import BidDetailsPage from './BidDetailsPage';
-
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -160,55 +163,8 @@ export function LogoTitle(props) {
 }
 
 export function NotificationView(props) {
+
   const [username, setUserName] = useState("");
-
-  useEffect(() => {
-    // Update the document title using the browser API
-    readData();
-  }, []);
-
-  const readData = async () => {
-    try {
-      const userData = await AsyncStorage.getItem("@user_data");
-      const objUserData = JSON.parse(userData);
-      const token = await AsyncStorage.getItem("auth_token");
-      this.setState({ notificationCount: 0 });
-
-      console.log("som Navigation ::  ", objUserData);
-
-      var url =
-        "https://mgeps-uat-pune.etenders.in/api/Calendars/getCountMobileNotification/" +
-        objUserData.id +
-        "/" +
-        objUserData.userType; // Pune UAT
-      // var url = "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" + objUserData.id + "/" + objUserData.userType; // Live UAT
-
-      console.log("URL Count :: " + url);
-
-      fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((responseJson) => {
-          //Hide Loader
-          console.log("Response Data :: ", responseJson);
-          console.log("Count :: ", responseJson.notificationCount);
-          this.setState({ notificationCount: responseJson.notificationCount });
-        })
-        .catch((error) => {
-          //Hide Loader
-          console.error("qwerty  ", error);
-        });
-    } catch (e) {
-      console.log("catch ", e);
-    }
-  };
-
   const navigation = useNavigation();
 
   const [notificationCount, setNotificationCount] = useState(0);
@@ -442,8 +398,8 @@ const bidEventStack = ({ navigation }) => {
   );
 };
 const DrawerNavigatorRoutes = (props) => {
-  const [username, setUserName] = useState("ashish");
-  const [profileImage, setProfileImage] = useState("");
+  const [username, setUserName] = useState("");
+  const [userType, setuserType] = useState("");
   const [profileData, setProfileData] = useState();
 
   useEffect(() => {
@@ -455,8 +411,10 @@ const DrawerNavigatorRoutes = (props) => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
       const value = JSON.parse(userData);
-      console.log("setAnimatingabc ", value);
+      const userType = await AsyncStorage.getItem("userType");
+      console.log("setAnimatingabc ", userType);
 
+      setuserType(userType)
       setUserName(value.username);
       setProfileData(value);
     } catch (e) {
@@ -481,7 +439,7 @@ const DrawerNavigatorRoutes = (props) => {
       <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/dashboard.png")}
+          source={require("../Image/bid_event.png")}
         />
         <Text style={gStyles.drawerText}>Bid Event Calendar</Text>
       </View>
@@ -504,7 +462,7 @@ const DrawerNavigatorRoutes = (props) => {
         <Image
           style={{ width: 25, height: 25 }}
           //source={require("../Image/profile.png")}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar7.png" }}
+          source={require("../Image/profile.png")}
         />
         <Text style={gStyles.drawerText}>Profile Overview</Text>
       </View>
@@ -516,7 +474,7 @@ const DrawerNavigatorRoutes = (props) => {
       <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/profile.png")}
+          source={require("../Image/organisation.png")}
         />
         <Text style={gStyles.drawerText}>View Organization</Text>
       </View>
@@ -529,27 +487,16 @@ const DrawerNavigatorRoutes = (props) => {
         <Image
           style={{ width: 25, height: 25 }}
           //source={require("../Image/profile.png")}
-          source={{ uri: "https://bootdey.com/img/Content/avatar/avatar7.png" }}
+          source={require("../Image/contact_us.png")}
         />
         <Text style={gStyles.drawerText}>Contact Us</Text>
       </View>
     );
   }
 
-  function ViewOrganizationProfile(props) {
-    return (
-      <View style={gStyles.drawerMenu}>
-        <Image
-          style={{ width: 25, height: 25 }}
-          source={require("../Image/profile.png")}
-        />
-        <Text style={gStyles.drawerText}>View Organization</Text>
-      </View>
-    );
-  }
+ 
   const dimensions = useWindowDimensions();
-
-  const isLargeScreen = dimensions.width >= 768;
+  
   return (
     <Drawer.Navigator
       drawerContentOptions={{
@@ -562,9 +509,51 @@ const DrawerNavigatorRoutes = (props) => {
       }}
       screenOptions={{ headerShown: false }}
       drawerContent={(props) => (
-        <CustomSidebarMenu {...{ employeename: username, ...props }} />
+        <CustomSidebarMenu {...{ employeename: username, ...props,userType: userType }} />
       )}
-    >
+      
+
+      // drawerContent={(props) => {
+      //   const filteredProps = {
+      //     ...props,
+      //     state: {
+      //       ...props.state,
+
+      //       routeNames: props.state.routeNames.filter(
+      //         // To hide single option
+      //         // (routeName) => routeName !== 'HiddenPage1',
+      //         // To hide multiple options you can add & condition
+      //         (routeName) => {
+      //           routeName !== 'contactUsStack'
+      //           // && routeName !== 'viewOrganizationProfile';
+      //         },
+      //       ),
+      //       routes: props.state.routes.filter(
+      //         (route) =>{
+      //           bidEventStack
+      //           console.log("route",route.name)
+      //           route.name !== 'contactUsStack'
+      //         }
+      //         //console.log("route",route.name)
+      //           // route.name !== 'HomeScreen'
+      //           // && route.name !== 'viewOrganizationProfile',
+      //       ),
+            
+      //     },
+      //   };
+      //   console.log("routeNames",props.routeNames)
+      
+      //   return (
+         
+      //     <DrawerContentScrollView {...filteredProps}>
+      //       <CustomSidebarMenu {...{ employeename: username, ...props }} />
+
+      //       <DrawerItemList {...filteredProps} />
+      //     </DrawerContentScrollView>
+      //   );
+      // }}
+      >
+    
       <Drawer.Screen
         name="homeScreenStack"
         // options={{ drawerLabel: "Dashboard" }}

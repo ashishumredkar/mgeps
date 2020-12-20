@@ -23,47 +23,7 @@ import { viewDetailStyles } from "../../style/viewDetailStyles";
 import BottomView from "../BottomView";
 
 const ProfileScreen = (props) => {
-  const [profileData, setProfileData] = useState({
-    id: 23,
-    user_type: 11,
-    username: "kiranab",
-    salutation: "Mr",
-    fname: "kiran",
-    mname: "a",
-    lname: "bc",
-    email: " ",
-    designation: "dev",
-    gender: "Male",
-    hint_question_id: 3,
-    hint_answer: "45",
-    mobile: "435643564645645",
-    phone_country_code: 63,
-    phone_no: 456546546,
-    landline_extension_no: "4564",
-    area_code: "54645",
-    fax_number: "456456456",
-    fax_area_code: "45654",
-    fax_extension_no: "4564",
-    otp: 58155,
-    location: "local",
-    company_type: 3,
-    bussiness_reg_number: "",
-    organization_name: "ABCD",
-    old_organization_name: null,
-    bussiness_tax_number: "123123213123",
-    is_deleted: "N",
-    primary_user_id: 0,
-    is_primary_user: "Y",
-    primary_parent_id: 23,
-    reset_password_code: null,
-    fcm_id: 0,
-    mobile_country: null,
-    is_migration: "NO",
-    is_data_update: "YES",
-    old_user_id: 0,
-    modified: "2019-04-27T19:08:35+08:00",
-    created: "2019-04-27T19:08:35+08:00",
-  });
+  const [profileData, setProfileData] = useState();
   const [username, setUserName] = useState("");
 
   const [userData, setUserData] = useState();
@@ -78,6 +38,8 @@ const ProfileScreen = (props) => {
       const userType = await AsyncStorage.getItem("userType");
 
       const value = JSON.parse(userData);
+
+      console.log("userData",userData)
 
       setUserName(userType);
       setUserData(value);

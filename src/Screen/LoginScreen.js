@@ -135,7 +135,7 @@ const LoginScreen = ({ navigation }) => {
       requestPermissions: true,
     });
   };
-
+  
   const fetchUserType = async () => {
     setLoading(true);
     fetch(LOGIN_TYPE_URL)

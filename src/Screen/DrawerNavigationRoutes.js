@@ -476,7 +476,7 @@ const DrawerNavigatorRoutes = (props) => {
           style={{ width: 25, height: 25 }}
           source={require("../Image/organisation.png")}
         />
-        <Text style={gStyles.drawerText}>View Organization</Text>
+        <Text style={gStyles.drawerText}>My Organization Profile</Text>
       </View>
     );
   }
@@ -493,8 +493,17 @@ const DrawerNavigatorRoutes = (props) => {
       </View>
     );
   }
-
- 
+  function ViewOrganizationProfile(props) {
+    return (
+      <View style={gStyles.drawerMenu}>
+        <Image
+          style={{ width: 25, height: 25 }}
+          source={require("../Image/profile.png")}
+        />
+        <Text style={gStyles.drawerText}>My Organization Profile</Text>
+      </View>
+    );
+  }
   const dimensions = useWindowDimensions();
   
   return (

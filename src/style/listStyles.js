@@ -34,7 +34,9 @@ export const listStyles = StyleSheet.create({
     },
     notificationText: {
         color: "black", 
-        fontSize: 14
+        fontSize: 10,
+        marginLeft: 18,
+        marginTop: -4,
     },
     totalRowsView: {
         flex: 1,

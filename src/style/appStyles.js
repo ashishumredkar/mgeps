@@ -173,6 +173,16 @@ export const gStyles = StyleSheet.create({
     borderRadius: 50/2,
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: -100,
+  },
+  userProfileNameStyle: {
+    width: 50,
+    height: 50,
+    color: AppColors.AppGrey0015,
+    fontWeight: 'bold',
+    borderRadius: 50/2,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 0,
   },
   subMenuLinking: {

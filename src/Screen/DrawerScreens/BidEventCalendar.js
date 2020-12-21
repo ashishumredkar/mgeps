@@ -257,6 +257,10 @@ export default class BidEventCalndar extends Component {
             this.getBidEvent(mdate);
             this.setState({ data: mdate });
           }}
+          onCloseModal ={()=>{
+            this.setState({ modalVisible: false });
+            this.props.navigation.navigate("HomeScreen");
+          }}
           visible={false}
         />
       </View>

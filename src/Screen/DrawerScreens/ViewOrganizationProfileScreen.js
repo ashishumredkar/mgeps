@@ -22,6 +22,7 @@ import { homeStyles } from "../../style/homeStyles";
 import { viewDetailStyles } from "../../style/viewDetailStyles";
 import BottomView from "../BottomView";
 import Loader from "../Components/Loader";
+import { VIEW_ORGANIZATION_URL } from "../Utils";
 const STORAGE_KEY = "@user_data";
 
 class ViewOrganizationProfileScreen extends React.Component {
@@ -49,11 +50,8 @@ class ViewOrganizationProfileScreen extends React.Component {
   readData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
-
       const userType = await AsyncStorage.getItem("userType");
-
       const token = await AsyncStorage.getItem("auth_token");
-
       const mData = JSON.parse(userData);
 
       if (userData) {
@@ -66,17 +64,6 @@ class ViewOrganizationProfileScreen extends React.Component {
 
         this.getOrganizationDetails(mData.id, mData.userType, token);
       }
-
-      //this.setState({userData:value,userType:userType,authToken:token})
-
-      // const noticeDetails = Object.keys(value).map((key) => ({
-      //   [key]: value[key],
-      // }));
-      // console.log("setAnimatingabc ", noticeDetails);
-
-      // this.setState({profileData:noticeDetails})
-
-      // setProfileData(noticeDetails);
     } catch (e) {
       console.log("catch ", e);
     }
@@ -84,22 +71,15 @@ class ViewOrganizationProfileScreen extends React.Component {
 
   getOrganizationDetails = async (id, muserType, token) => {
     this.setState({ loading: true });
-
-    // const userData = await AsyncStorage.getItem(STORAGE_KEY);
-    // const mData = JSON.parse(userData);
-
-    // const token = await AsyncStorage.getItem("auth_token");
-
     const data = {
       userId: id,
       userType: muserType,
       authToken: token,
     };
 
-    var url =
-      "https://mgeps-uat-pune.etenders.in/api/BuyerUsers/viewOrganization"; // Pune UAT
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/viewOrganization"; // Live UAT
-    fetch(url, {
+    console.log("My Organization Profile :", VIEW_ORGANIZATION_URL);
+
+    fetch(VIEW_ORGANIZATION_URL, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -113,7 +93,8 @@ class ViewOrganizationProfileScreen extends React.Component {
         //Hide Loader
 
         this.setState({ loading: false, organizationDetails: responseJson });
-
+        
+        console.log("\n\n\n");
         console.log("getDetails ", responseJson);
       })
       .catch((error) => {
@@ -137,14 +118,14 @@ class ViewOrganizationProfileScreen extends React.Component {
     }));
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
-        {/* <GeneralStatusBarColor
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        /> */}
+        />
 
         <CustomToolbar
-          title={"View Organization"}
+          title={"My Organization Profile"}
           userType={userType}
           backgroundColor="#3775f0"
         />
@@ -203,7 +184,7 @@ class ViewOrganizationProfileScreen extends React.Component {
                         <Text
                           style={[
                             viewDetailStyles.name,
-                            { flex: 1, fontWeight: "normal" },
+                            { flex: 0.40, fontWeight: "normal", width: 80 },
                           ]}
                         >
                           {key
@@ -216,12 +197,10 @@ class ViewOrganizationProfileScreen extends React.Component {
                         </Text>
                         <Text
                           style={{
-                            flex: 1,
-                            width: "100%",
+                            flex: 0.60,
                             fontSize: 15,
                             marginLeft: 1,
-                            textAlign: "right",
-                            alignContent: "center",
+                            textAlign: "left",
                             fontWeight: "normal",
                             paddingLeft: 0,
                             color: AppColors.colorPrimary,

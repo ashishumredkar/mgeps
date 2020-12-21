@@ -9,7 +9,7 @@ import {
   Image,
   useWindowDimensions,
   Platform,
-  ImageBackground,
+  ImageBackground,Button,StyleSheet
 } from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
@@ -37,11 +37,15 @@ import ContactUs from "./DrawerScreens/ContactUs";
 import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 import BidDetails from './BidDetails';
 import BidDetailsPage from './BidDetailsPage';
+import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
+
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import OptionMenu from "./Components/OptionMenu";
+const myIcon = <Icon name="more-vert" size={30} color="white" />;
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -58,12 +62,17 @@ const homeScreenStack = ({ navigation }) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
-          headerRight: (props) => <NotificationView {...props} />,
+          headerRight: (props) => (
+            <NotificationView {...props} />
+          ),
+        //   headerRight: (props) => {
+        //   // <NotificationView {...props} />
+         
+        // // <Icon name="circle-notifications" size={30} color="#900" />
+       
+        //   },
           headerTitle: (props) => <LogoTitle {...props} />,
-          // options={{
-          //   headerTitle: (props) => <LogoTitle {...props} />,
-          //   headerRight: (props) => <NotificationView />,
-          // }}
+         
           headerStyle: {
             backgroundColor: "#307ecc", //Set Header color
           },
@@ -183,12 +192,7 @@ export function NotificationView(props) {
     const token = await AsyncStorage.getItem("auth_token");
     const userType = await AsyncStorage.getItem("userType");
     //console.log("getNotificationCount",token)
-    fetch(
-      "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" +
-        userType +
-        "/" +
-        mData.id,
-      {
+    fetch(NOTIFICATION_COUNT_URL + "/" + userType + "/" + mData.id, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -211,8 +215,14 @@ export function NotificationView(props) {
       .finally(() => {});
   };
 
+  const navSettings = () => {
+    navigation.navigate("settingScreenStack");
+  };
   return (
+    <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
+
     <RippleButton
+   
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
       rippleStyle={{ marginRight: 16 }}
@@ -239,6 +249,19 @@ export function NotificationView(props) {
         />
       </View>
     </RippleButton>
+
+    <View style={styles.rightContainer}>
+        <View style={styles.rightIcon}>
+          <OptionMenu
+            customButton={myIcon}
+            destructiveIndex={1}
+            options={["Settings", undefined]}
+            actions={[navSettings]}
+          />
+        </View>
+      </View>
+
+    </View>
   );
 }
 
@@ -322,9 +345,7 @@ const settingScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
-        options={{
-          title: "Settings", //Set Header Title
-        }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -350,9 +371,7 @@ const contactUsStack = ({ navigation }) => {
       <Stack.Screen
         name="ContactUs"
         component={ContactUs}
-        options={{
-          title: "Contact Us", //Set Header Title
-        }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -632,3 +651,41 @@ const DrawerNavigatorRoutes = (props) => {
 };
 
 export default DrawerNavigatorRoutes;
+const styles = StyleSheet.create({
+  navBar: {
+    height: 54,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    borderBottomWidth: 0,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 4,
+    // elevation: 1,
+  },
+  leftContainer: {
+    justifyContent: "flex-start",
+    width: 65,
+    marginLeft: -12
+  },
+  middleContainer: {
+    flex: 2,
+    color: "white",
+    flexDirection: "row",
+    fontSize: 18,
+    marginLeft: -10,
+    marginRight: 10,
+  },
+  rightContainer: {
+    flex: 0.4,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  rightIcon: {
+    paddingHorizontal: 20,
+    resizeMode: "contain",
+    //   backgroundColor: 'white',
+  },
+});

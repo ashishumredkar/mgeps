@@ -45,9 +45,11 @@ const CustomToolbar = (props) => {
                 ? `${props.title}`
                 : `${props.title.substring(0, 25)}...`}
             </Text>
-            <Text style={[{ color: "white", fontSize: 14 }]}>
-              UserType: {props.userType}
-            </Text>
+            {props.userType != "" ? (
+              <Text style={[{ color: "white", fontSize: 14 }]}>
+                UserType: {props.userType}
+              </Text>
+            ) : null}
           </View>
         </View>
       </Text>

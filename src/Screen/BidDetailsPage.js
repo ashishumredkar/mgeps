@@ -67,8 +67,6 @@ export default class FinalDetailsPage extends Component {
     });
 
     this.setState({ userSelected: mData });
-
-
   }
 
 

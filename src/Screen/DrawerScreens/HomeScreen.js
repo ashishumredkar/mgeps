@@ -25,6 +25,7 @@ import BottomView from "../BottomView";
 import { Dialog, ConfirmDialog } from "react-native-simple-dialogs";
 import Tnc from "../Components/Tnc";
 import { DASHBOARD_URL } from "../Utils";
+import CustomToolbar from "../Components/CustomToolbar";
 
 const colors = [
   "#29B6F6",
@@ -197,12 +198,20 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={{ flex: 1 }}>
+
+{/* <CustomToolbar
+        title={"Dashboard"}
+        userType={"username"}
+        backgroundColor="#3775f0"
+      /> */}
         <View style={{ flex: 0.9, margin: 5 }}>
           <Tnc
             loading={isConditionAccepted}
             onResponse={this.onResponse}
             onCloseModal={this.closeModal}
           />
+
+
 
           {userType != "Agency" ? (
             <TouchableOpacity

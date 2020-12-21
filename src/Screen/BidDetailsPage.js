@@ -110,7 +110,7 @@ export default class FinalDetailsPage extends Component {
               marginTop: 5,
             }}
           />
-          <View style={{ flex: 0.9, margin: 8 }}>
+          <View style={{ flex: 0.9, margin: 8, zIndex: 0 }}>
             <View
               style={{
                 height: 32,
@@ -188,7 +188,7 @@ export default class FinalDetailsPage extends Component {
               <ActivityIndicator size="large" color="#ff6a00" />
             </View>
           )}
-          <View style={{ flex: 0.1 }}>
+          <View style={{ flex: 0.1, zIndex: 999 }}>
             <BottomView />
           </View>
         </View>

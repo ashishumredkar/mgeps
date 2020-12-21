@@ -159,10 +159,10 @@ export default class FinalDetailsPage extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
+        {Platform.OS != "ios" ? (<GeneralStatusBarColor
           backgroundColor={AppColors.colorPrimary}
           barStyle="light-content"
-        /> */}
+        />) : null}
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -171,105 +171,107 @@ export default class FinalDetailsPage extends Component {
           backgroundColor="#3775f0"
         />
         <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
-          <View style={{ paddingTop: 8, paddingLeft: 8 }}>
-            <Text
-              numberOfLines={1}
-              style={[
-                gStyles.contactStyle,
-                { color: "grey", fontSize: 14, marginTop: 5 },
-              ]}
-            >
-              {this.state.title}
-            </Text>
-          </View>
-
-          <Text
-            style={{
-              height: 2,
-              backgroundColor: "blue",
-              width: "100%",
-              marginTop: 5,
-            }}
-          />
-          <View style={{ flex: 0.9, margin: 8 }}>
-            <View
-              style={{
-                height: 32,
-                width: "100%",
-                backgroundColor: "#3775f0",
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-                borderBottomLeftRadius: 2,
-              }}
-            >
-              <Text style={viewDetailStyles.cardTitle}>Details</Text>
+          <View style={{ flex: 0.9, zIndex: 0 }}>
+            <View style={{ paddingTop: 8, paddingLeft: 8 }}>
+              <Text
+                numberOfLines={1}
+                style={[
+                  gStyles.contactStyle,
+                  { color: "grey", fontSize: 14, marginTop: 5 },
+                ]}
+              >
+                {this.state.title}
+              </Text>
             </View>
-            <View style={viewDetailStyles.card}>
-              <View style={viewDetailStyles.cardContent} />
 
+            <Text
+              style={{
+                height: 2,
+                backgroundColor: "blue",
+                width: "100%",
+                marginTop: 5,
+              }}
+            />
+            <View style={{ margin: 8 }}>
               <View
                 style={{
+                  height: 32,
                   width: "100%",
-                  // height: "70%",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  alignContent: "flex-start",
+                  backgroundColor: "#3775f0",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                  borderBottomLeftRadius: 2,
                 }}
               >
-                <FlatList
-                  data={noticeDetails}
-                  showsVerticalScrollIndicator ={false}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item, index }) => {
-                    //console.log("item ", item);
-                    const keyValue = Object.keys(item).map((key) => [
-                      key,
-                      item[key],
-                    ]);
-                    console.log(
-                      "Key Value :: ",
-                      keyValue + " Type :: " + typeof keyValue[0][1]
-                    );
+                <Text style={viewDetailStyles.cardTitle}>Details</Text>
+              </View>
+              <View style={viewDetailStyles.card}>
+                <View style={viewDetailStyles.cardContent} />
 
-                    if (
-                      typeof keyValue[0][1] === "string" ||
-                      typeof keyValue[0][1] === "number"
-                    ) {
-                      var key = keyValue[0][0];
-                      var value = keyValue[0][1];
-                      return (
-                        <View>
-                          <View style={viewDetailStyles.notificationLabel}>
-                            <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
-                            <Text style={viewDetailStyles.notificationValue}>
-                              {value}
-                            </Text>
-                          </View>
-                          <View
-                              style={{
-                                height: 1,
-                                width: "100%",
-                                backgroundColor: AppColors.AppGrey001,
-                                marginTop: 8,
-                              }}
-                            />
-                        </View>
-                      );
-                    }
+                <View
+                  style={{
+                    width: "100%",
+                    height: "93%",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    alignContent: "flex-start",
                   }}
-                  //Setting the number of column
-                  numColumns={1}
-                  keyExtractor={(item, index) => "" + index}
-                />
+                >
+                  <FlatList
+                    data={noticeDetails}
+                    showsVerticalScrollIndicator ={false}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item, index }) => {
+                      //console.log("item ", item);
+                      const keyValue = Object.keys(item).map((key) => [
+                        key,
+                        item[key],
+                      ]);
+                      console.log(
+                        "Key Value :: ",
+                        keyValue + " Type :: " + typeof keyValue[0][1]
+                      );
+
+                      if (
+                        typeof keyValue[0][1] === "string" ||
+                        typeof keyValue[0][1] === "number"
+                      ) {
+                        var key = keyValue[0][0];
+                        var value = keyValue[0][1];
+                        return (
+                          <View>
+                            <View style={viewDetailStyles.notificationLabel}>
+                              <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                              <Text style={viewDetailStyles.notificationValue}>
+                                {value}
+                              </Text>
+                            </View>
+                            <View
+                                style={{
+                                  height: 1,
+                                  width: "100%",
+                                  backgroundColor: AppColors.AppGrey001,
+                                  marginTop: 8,
+                                }}
+                              />
+                          </View>
+                        );
+                      }
+                    }}
+                    //Setting the number of column
+                    numColumns={1}
+                    keyExtractor={(item, index) => "" + index}
+                  />
+                </View>
               </View>
             </View>
+            {this.state.isLoading && (
+              <View style={{ flex: 1, alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#ff6a00" />
+              </View>
+            )}
           </View>
-          {this.state.isLoading && (
-            <View style={{ flex: 1, alignItems: "center" }}>
-              <ActivityIndicator size="large" color="#ff6a00" />
-            </View>
-          )}
-          <View style={{ flex: 0.1 }}>
+          <View style={{ flex: 0.1, zIndex: 999 }}>
             <BottomView />
           </View>
         </View>

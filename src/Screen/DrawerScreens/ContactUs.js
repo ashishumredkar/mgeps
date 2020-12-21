@@ -121,17 +121,17 @@ export default class ContactUs extends Component {
               Nextenders (India) Private Limited
             </Text> */}
 
-            <Text style={{ fontSize: 18, padding: 10, color: "Orange" }} selectable={true}>
+            <Text style={{ fontSize: 18, padding: 10 }} selectable={true}>
               {this.state.Address.replace(/,/g, ',\n').trim()}
             </Text>
 
             <View style={{ flexDirection: "row", marginTop: 20 }}>
-              <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+              <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
                 {this.state.EmailId}
               </Text>
 
             </View>
-            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
               {this.state.PhoneNo}
             </Text>
 

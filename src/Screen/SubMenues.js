@@ -21,6 +21,7 @@ import { homeStyles } from "../style/homeStyles";
 import { gStyles } from "../style/appStyles";
 import { AppColors } from "../style/AppColors";
 import { DASHBOARD_URL } from "./Utils";
+import { Platform } from "react-native";
 
 const STORAGE_KEY = "@user_data";
 
@@ -147,10 +148,13 @@ class SubMenues extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-        /> */}
+        {Platform.OS != "ios" ? 
+          (<GeneralStatusBarColor
+            backgroundColor={AppColors.colorPrimary}
+            barStyle="light-content"
+          />) 
+          : null
+        }
 
         <CustomToolbar
           navigation={this.props.navigation}

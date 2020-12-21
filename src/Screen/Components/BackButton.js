@@ -16,7 +16,7 @@ function BackButton(props)  {
       if(Platform.OS === 'ios'){     
         return (
             <TouchableOpacity
-            onPress={() =>navigation.goBack()}>  
+            onPress={() => navigation.goBack()}>  
             <View style={{ padding:10, justifyContent: 'center', alignItems: 'center' }}>
             <Icon name="arrow-back-ios" size={25} color="#FFFFFF" />  
             </View>

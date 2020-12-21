@@ -140,4 +140,27 @@ export const homeStyles = StyleSheet.create({
     width: 1,
     height: 40,
   },
+
+  center: {
+    alignSelf: "center", 
+    alignItems: "center", 
+    alignContent: "center"
+  },
+
+  retryImage: {
+    flex: 1,
+    marginTop: "46%",
+    height: 70,
+    width: 70,
+    alignSelf: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+
+  retryText: {
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold",
+  },
 });

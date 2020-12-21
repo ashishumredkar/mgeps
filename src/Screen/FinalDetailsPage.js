@@ -70,7 +70,10 @@ export default class FinalDetailsPage extends Component {
 
   getDetails = async (token, urlParams, url) => {
     this.setState({ loading: true });
+    console.log("Detail Page URL :: ", url);
+    console.log("\n\n\n\n");
     console.log("urlParams ", urlParams);
+    console.log("\n\n\n\n");
     const data = urlParams;
     fetch(url, {
       method: "POST",

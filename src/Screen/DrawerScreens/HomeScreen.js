@@ -86,9 +86,12 @@ class HomeScreen extends React.Component {
       const token = await AsyncStorage.getItem("auth_token");
       const tncFlag = await AsyncStorage.getItem("tnc");
 
+      console.log("tncFlag",tncFlag)
+
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });
       }
+
       if (userData) {
         this.setState({
           userId: mData.id,
@@ -175,7 +178,11 @@ class HomeScreen extends React.Component {
   };
 
   onResponse = (response) => {
-    AsyncStorage.setItem("tnc", "" + response);
+   
+    if(!response){
+      this.props.navigation.navigate("Auth")
+    }else
+    AsyncStorage.setItem("tnc","true");
     this.setState({ isConditionAccepted: false });
   };
 
@@ -197,7 +204,7 @@ class HomeScreen extends React.Component {
             onCloseModal={this.closeModal}
           />
 
-          {userType === "Agency" ? (
+          {userType != "Agency" ? (
             <TouchableOpacity
               style={homeStyles.facebookStyle}
               activeOpacity={0.5}

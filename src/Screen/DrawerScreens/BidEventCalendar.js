@@ -45,8 +45,8 @@ export default class BidEventCalndar extends Component {
       bidEvent: [],
     };
   }
-  componentWillUnmount(){
-    this.datePickerRef=null;
+  componentWillUnmount() {
+    // this.datePickerRef=null;
   }
 
   async componentDidMount() {
@@ -71,8 +71,6 @@ export default class BidEventCalndar extends Component {
       userType: this.state.userTypeId,
       date: date,
     };
-
-   
 
     // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
     fetch(BID_EVENT_CAL_URL, {
@@ -166,38 +164,21 @@ export default class BidEventCalndar extends Component {
 
     return (
       <View style={styles.container}>
-        <DatePicker
-          ref={(ref) => (this.datePickerRef = ref)}
-          style={{ width: null,height:1 }}
-          date={this.state.date}
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          // minDate="2016-05-01"
-          // maxDate="2016-06-01"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-            // ... You can check the source to find the other keys.
-          }}
-          onDateChange={(mdate) => {
-            this.getBidEvent(mdate);
-            this.setState({ data: mdate });
-          }}
-          visible={false}
-        />
+        
 
         <Modal
-          transparent={true}
+         onTouchOutside={() => {
+          this.setState({modalVisible:false});
+        }}
+        width={0.9}
+       
+        onHardwareBackPress={() => {
+          this.setState({modalVisible:false});
+          console.log('onHardwareBackPress');
+          return true;
+        }}
+          width={0.9}
+          transparent={false}
           animationType={"none"}
           visible={modalVisible}
           style={{
@@ -240,25 +221,55 @@ export default class BidEventCalndar extends Component {
                   renderItem={this.renderItem}
                   keyExtractor={(item, index) => index.toString}
                 />
-
-                <Button
-                  title="CLOSE"
-                  buttonStyle={{
-                    width: 400,
-                    flex: 1,
-                    marginTop: 20,
-                    borderRadius: 16,
-                    backgroundColor: AppColors.red300,
-                  }}
-                  onPress={() => {
-                    this.setState({ modalVisible: false });
-                    this.props.navigation.navigate("HomeScreen");
-                  }}
-                />
+                <View style={{ backgroundColor: AppColors.red300 }}>
+                  <Button
+                    title="CLOSE"
+                    buttonStyle={{
+                      width: 400,
+                      flex: 1,
+                      marginTop: 20,
+                      borderRadius: 16,
+                      backgroundColor: AppColors.red300,
+                    }}
+                    onPress={() => {
+                      this.setState({ modalVisible: false });
+                      this.props.navigation.navigate("HomeScreen");
+                    }}
+                  />
+                </View>
               </View>
             </View>
           </View>
         </Modal>
+        
+        <DatePicker
+          ref={(ref) => (this.datePickerRef = ref)}
+          date={this.state.date}
+          mode="date"
+          placeholder="select date"
+          format="DD-MM-YYYY"
+          // minDate="2016-05-01"
+          // maxDate="2016-06-01"
+          confirmBtnText="Confirm"
+          cancelBtnText="Cancel"
+          customStyles={{
+            dateIcon: {
+              position: "absolute",
+              left: 0,
+              top: 4,
+              marginLeft: 0,
+            },
+            dateInput: {
+              marginLeft: 36,
+            },
+            // ... You can check the source to find the other keys.
+          }}
+          onDateChange={(mdate) => {
+            this.getBidEvent(mdate);
+            this.setState({ data: mdate });
+          }}
+          visible={false}
+        />
       </View>
     );
   }

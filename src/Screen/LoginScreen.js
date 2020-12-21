@@ -18,7 +18,7 @@ import {
   ImageBackground,
   Linking,
   Button,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -59,21 +59,9 @@ const LoginScreen = ({ navigation }) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const [loginType, setLoginType] = useState("Merchant");
+  const [loginType, setLoginType] = useState();
 
-  const [loginCollection, setLoginCollection] = useState([
-    // { label: "Agency", value: "Agency" },
-    // { label: "Merchant", value: "Merchant" },
-  ]);
-
-  const userNameInputRef = createRef();
-  const userEmailInputRef = createRef();
-  const userAgeInputRef = createRef();
-  const useraddressInputRef = createRef();
-
-  const userRegisterFunction = () => {
-    alert("User Registered");
-  };
+  const [loginCollection, setLoginCollection] = useState([]);
 
   const [fcmId, setfcmId] = useState(
     "sdlfksdlflsdf987987s9d89f7sd987f987sd89f798s7df"
@@ -89,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
   const getFcm = () => {
     PushNotification.configure({
       //(optional) Called when Token is generated (iOS and Android)
-      requestPermissions: Platform.OS === 'ios',
+      requestPermissions: Platform.OS === "ios",
       onRegister: function (token) {
         console.log("TOKEN:", token);
         setfcmId(token.token);
@@ -135,7 +123,7 @@ const LoginScreen = ({ navigation }) => {
       requestPermissions: true,
     });
   };
-  
+
   const fetchUserType = async () => {
     setLoading(true);
     fetch(LOGIN_TYPE_URL)
@@ -145,8 +133,6 @@ const LoginScreen = ({ navigation }) => {
         var points = [json.LoginTypes];
 
         var mData = []; // Good
-      ;
-
         if (points[0].Agency) {
           mData = mData.concat({ label: "Agency", value: "Agency" });
         }
@@ -169,6 +155,16 @@ const LoginScreen = ({ navigation }) => {
 
   const handleSubmitPress = () => {
     setErrortext("");
+
+    if (!loginType) {
+      Toast.showWithGravity(
+        "Please Select Login Type",
+        Toast.LONG,
+        Toast.CENTER
+      );
+
+      return;
+    }
     if (!userEmail) {
       Toast.showWithGravity("Please fill Email", Toast.LONG, Toast.CENTER);
 
@@ -179,6 +175,7 @@ const LoginScreen = ({ navigation }) => {
 
       return;
     }
+
     setLoading(true);
     let dataToSend = {
       username: userEmail,
@@ -223,7 +220,7 @@ const LoginScreen = ({ navigation }) => {
 
           //const log=JSON.stringify(responseJson.userData)
 
-          console.log("LOGIN RESPONSE",JSON.stringify(responseJson.userData))
+          console.log("LOGIN RESPONSE", JSON.stringify(responseJson.userData));
 
           AsyncStorage.setItem("user_id", "" + responseJson.userData.id);
           AsyncStorage.setItem("userType", loginType);
@@ -246,7 +243,8 @@ const LoginScreen = ({ navigation }) => {
         setModalVisible(true);
         setLoading(false);
         console.error(error);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const onForgotpassword = async () => {
@@ -275,18 +273,12 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  const ModalScreen = () => {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-        <Button onPress={() => navigation.goBack()} title="Dismiss" />
-      </View>
-    );
-  };
-
   const onRety = () => {
     setModalVisible(false);
-    fetchUserType();
+
+    if (userEmail && userPassword) {
+      handleSubmitPress();
+    } else fetchUserType();
   };
 
   const closeModal = () => {
@@ -294,144 +286,154 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss();}}>
-      <KeyboardAvoidingView style={styles.container} behavior = "padding" keyboardVerticalOffset={-130}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}
+    >
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={-130}
+      >
         <GeneralStatusBarColor
           backgroundColor="#3775f0"
           barStyle="light-content"
         />
 
-          <ImageBackground
-            style={styles.bgImage}
-            source={require("../Image/website_image_fit.png")}
-          />
-          <Loader loading={loading} />
+        <ImageBackground
+          style={styles.bgImage}
+          source={require("../Image/website_image_fit.png")}
+        />
+        <Loader loading={loading} />
 
-          <AlertModal
-            loading={isModalVisible}
-            onRety={onRety}
-            onCloseModal={closeModal}
-          />
+        <AlertModal
+          loading={isModalVisible}
+          onRety={onRety}
+          onCloseModal={closeModal}
+        />
 
-          <View style={{ width: null, height: "42%" }} />
+        <View style={{ width: null, height: "42%" }} />
 
-          <View>
-            <DropDownPicker
-              items={loginCollection}
-              placeholder="Select Login Type"
-              containerStyle={{ height: 40 }}
-              style={{ backgroundColor: "#fafafa" }}
-              itemStyle={{
-                justifyContent: "flex-start",
-              }}
-              dropDownStyle={{ backgroundColor: "#fafafa" }}
-              onChangeItem={(item) => setLoginType(item.value)}
-            />
-            <View style={{ width: 300, height: 60 }} />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              underlineColorAndroid="transparent"
-              onChangeText={(UserEmail) => setUserEmail(UserEmail)}
-              placeholder="USERNAME" //dummy@abc.com
-              placeholderTextColor="#8b9cb5"
-              autoCapitalize="none"
-              value={userEmail}
-              keyboardType="default"
-              returnKeyType="next"
-              onSubmitEditing={() =>
-                passwordInputRef.current && passwordInputRef.current.focus()
-              }
-              underlineColorAndroid="#f000"
-              blurOnSubmit={false}
-            />
-            <Image
-              style={styles.inputIcon}
-              source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }}
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              secureTextEntry={true}
-              underlineColorAndroid="transparent"
-              onChangeText={(UserPassword) => setUserPassword(UserPassword)}
-              placeholder="PASSWORD" //12345
-              placeholderTextColor="#8b9cb5"
-              keyboardType="default"
-              value={userPassword}
-              ref={passwordInputRef}
-              onSubmitEditing={Keyboard.dismiss}
-              blurOnSubmit={false}
-              secureTextEntry={true}
-              underlineColorAndroid="#f000"
-              returnKeyType="done"
-            />
-            <Image
-              style={styles.inputIcon}
-              source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.outerCircle}
-            onPress={() => handleSubmitPress()}
-          >
-            <View style={styles.innerCircle}>
-              {/* <Text style={styles.paragraph}/> */}
-              <Image
-                style={{
-                  width: 25,
-                  height: 25,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  alignContent: "center",
-                  marginTop: 15,
-                }}
-                source={require("../../src/Image/right_arrw.png")}
-              />
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              width: 80,
-              height: 2,
-              backgroundColor: "white",
-              alignSelf: "center",
-              marginTop: 6,
+        <View>
+          <DropDownPicker
+            items={loginCollection}
+            placeholder="Select Login Type"
+            containerStyle={{ height: 40 }}
+            style={{ backgroundColor: "#fafafa" }}
+            itemStyle={{
+              justifyContent: "flex-start",
             }}
+            dropDownStyle={{ backgroundColor: "#fafafa" }}
+            onChangeItem={(item) => setLoginType(item.value)}
           />
+          <View style={{ width: 300, height: 60 }} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputs}
+            underlineColorAndroid="transparent"
+            onChangeText={(UserEmail) => setUserEmail(UserEmail)}
+            placeholder="USERNAME" //dummy@abc.com
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="none"
+            value={userEmail}
+            keyboardType="default"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              passwordInputRef.current && passwordInputRef.current.focus()
+            }
+            underlineColorAndroid="#f000"
+            blurOnSubmit={false}
+          />
+          <Image
+            style={styles.inputIcon}
+            source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }}
+          />
+        </View>
 
-          <Text style={styles.paragraph}> Log In </Text>
-
-          <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => onForgotpassword()}
-          >
-            <Text style={[styles.btnText, styles.underline]}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Text
-              style={[styles.btnText, { height: 40, marginTop: 10 }]}
-              onPress={() => {
-                Linking.openURL("https://www.philgeps.gov.ph/");
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputs}
+            secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            onChangeText={(UserPassword) => setUserPassword(UserPassword)}
+            placeholder="PASSWORD" //12345
+            placeholderTextColor="#8b9cb5"
+            keyboardType="default"
+            value={userPassword}
+            ref={passwordInputRef}
+            onSubmitEditing={Keyboard.dismiss}
+            blurOnSubmit={false}
+            secureTextEntry={true}
+            underlineColorAndroid="#f000"
+            returnKeyType="done"
+          />
+          <Image
+            style={styles.inputIcon}
+            source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.outerCircle}
+          onPress={() => handleSubmitPress()}
+        >
+          <View style={styles.innerCircle}>
+            {/* <Text style={styles.paragraph}/> */}
+            <Image
+              style={{
+                width: 25,
+                height: 25,
+                alignItems: "center",
+                justifyContent: "center",
+                alignContent: "center",
+                marginTop: 15,
               }}
-            >
-              Copyright {"\u00A9"}By.philGEPS{" "}
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL("https://www.philgeps.gov.ph/");
-              }}
-            >
-              <Image
-                source={require("../Image/menu_logo.png")}
-                style={styles.image}
-              />
-            </TouchableOpacity>
+              source={require("../../src/Image/right_arrw.png")}
+            />
           </View>
-          {/* <Modal
+        </TouchableOpacity>
+        <View
+          style={{
+            width: 80,
+            height: 2,
+            backgroundColor: "white",
+            alignSelf: "center",
+            marginTop: 6,
+          }}
+        />
+
+        <Text style={styles.paragraph}> Log In </Text>
+
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={() => onForgotpassword()}
+        >
+          <Text style={[styles.btnText, styles.underline]}>
+            Forgot Password?
+          </Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: "row", marginTop: 20 }}>
+          <Text
+            style={[styles.btnText, { height: 40, marginTop: 10 }]}
+            onPress={() => {
+              Linking.openURL("https://www.philgeps.gov.ph/");
+            }}
+          >
+            Copyright {"\u00A9"}By.philGEPS{" "}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL("https://www.philgeps.gov.ph/");
+            }}
+          >
+            <Image
+              source={require("../Image/menu_logo.png")}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+        </View>
+        {/* <Modal
             animationType = {"slide"}
             transparent={false}
             visible={isModalVisible}
@@ -448,9 +450,8 @@ const LoginScreen = ({ navigation }) => {
             Maecenas eget tempus augue, a convallis velit.</Text>
             </View>
           </Modal> */}
-
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 export default LoginScreen;

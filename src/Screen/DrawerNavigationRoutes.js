@@ -46,6 +46,7 @@ import {
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const STORAGE_KEY = "@user_data";
+
 const homeScreenStack = ({ navigation }) => {
   return (
     <Stack.Navigator initialRouteName="HomeScreen">
@@ -93,13 +94,12 @@ const homeScreenStack = ({ navigation }) => {
         component={FinalDetailsPage}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="ProfileScreen"
-        component={ProfileScreen}
-        options={{
-          title: "Profile Overview", //Set Header Title
-        }}
+     {/* <Drawer.Screen
+        name="bidEventStack"
+        options={{ headerShown: false }}
+        component={bidEventStack}
       /> */}
+
     </Stack.Navigator>
   );
 };

@@ -37,6 +37,8 @@ import ContactUs from "./DrawerScreens/ContactUs";
 import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 import BidDetails from './BidDetails';
 import BidDetailsPage from './BidDetailsPage';
+import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
+
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -183,12 +185,7 @@ export function NotificationView(props) {
     const token = await AsyncStorage.getItem("auth_token");
     const userType = await AsyncStorage.getItem("userType");
     //console.log("getNotificationCount",token)
-    fetch(
-      "https://mgeps-uat.philgeps.gov.ph/api/Calendars/getCountMobileNotification/" +
-        userType +
-        "/" +
-        mData.id,
-      {
+    fetch(NOTIFICATION_COUNT_URL + "/" + userType + "/" + mData.id, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -322,9 +319,7 @@ const settingScreenStack = ({ navigation }) => {
       <Stack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
-        options={{
-          title: "Settings", //Set Header Title
-        }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -350,9 +345,7 @@ const contactUsStack = ({ navigation }) => {
       <Stack.Screen
         name="ContactUs"
         component={ContactUs}
-        options={{
-          title: "Contact Us", //Set Header Title
-        }}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

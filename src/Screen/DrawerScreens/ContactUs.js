@@ -5,10 +5,13 @@ import {
   View,
   TouchableOpacity,
   Linking,
+  SafeAreaView,
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-
 import { Icon } from "react-native-elements";
+import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
+import CustomToolbar from "../Components/CustomToolbar";
+import { AppColors } from "../../style/AppColors";
 
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import BottomView from "../BottomView";
@@ -19,35 +22,21 @@ export default class ContactUs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      calls: [
-        {
-          id: 1,
-          name: "Profile",
-          type: "profile",
-          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
-        },
-        {
-          id: 2,
-          name: "Mute Notification",
-          type: "notification",
-          image:
-            "https://cdn.iconscout.com/icon/free/png-64/notifications-1780874-1514189.png",
-        },
-      ],
       isVisible: false,
       checked: true,
+      userType: '',
       Address:'',
       EmailId:'',
       PhoneNo:'',
     };
   }
 
-  async componentDidMount (){
+  async componentDidMount () {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     // const userType = await AsyncStorage.getItem("userType");
-    this.getContactUsData(mData.id,mData.userType,token);
+    this.getContactUsData(mData.id, mData.userType, token);
   }
 
   getContactUsData = async (id, muserType, token) => {
@@ -71,7 +60,7 @@ export default class ContactUs extends Component {
         //Hide Loader
         //setLoading(false);
         if(res){
-          this.setState({Address:res.Address,EmailId:res.EmailId,PhoneNo:res.PhoneNo})
+          this.setState({muserType, Address:res.Address, EmailId:res.EmailId, PhoneNo:res.PhoneNo})
         }
       })
       .catch((error) => {
@@ -107,52 +96,64 @@ export default class ContactUs extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View style={{ margin: 20, flex: 0.90 }}>
-          {/* <Text style={{ fontSize: 24, padding: 10,}}>
-            Nextenders (India) Private Limited
-          </Text> */}
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <GeneralStatusBarColor
+          backgroundColor={AppColors.colorPrimary}
+          barStyle="light-content"
+        />
 
-          <Text style={{ fontSize: 18, padding: 10, color: "Orange" }} selectable={true}>
-            {this.state.Address.replace(/, /g, ',\n')}
-          </Text>
+        <CustomToolbar
+          title={"Contact Us"}
+          userType={""}
+          backgroundColor="#3775f0"
+        />
+        <View style={{ flex: 1 }}>
+          <View style={{ margin: 20, flex: 0.90 }}>
+            {/* <Text style={{ fontSize: 24, padding: 10,}}>
+              Nextenders (India) Private Limited
+            </Text> */}
 
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
-              {this.state.EmailId}
+            <Text style={{ fontSize: 18, padding: 10, color: "Orange" }} selectable={true}>
+              {this.state.Address.replace(/,/g, ',\n').trim()}
             </Text>
 
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
+              <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+                {this.state.EmailId}
+              </Text>
+
+            </View>
+            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
+              {this.state.PhoneNo}
+            </Text>
+
+            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+              <TouchableOpacity onPress={() => Linking.openURL('mailto:' + this.state.EmailId + '?subject=Contact Us&body=Hi Team,\n') }>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="email" type="Zocial" color="white" />
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => Linking.openURL('tel:' + this.state.PhoneNo) }>
+                <View
+                  style={styles.circle}
+                  underlayColor="#ccc"
+                  onPress={() => alert("Yaay!")}>
+                  <Icon name="call" type="Zocial" color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-          <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8, color: "Orange" }} selectable={true}>
-            {this.state.PhoneNo}
-          </Text>
 
-          <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-            <TouchableOpacity onPress={() => Linking.openURL('mailto:' + this.state.EmailId + '?subject=Contact Us&body=Hi Team,\n') }>
-              <View
-                style={styles.circle}
-                underlayColor="#ccc"
-                onPress={() => alert("Yaay!")}>
-                <Icon name="email" type="Zocial" color="white" />
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => Linking.openURL('tel:' + this.state.PhoneNo) }>
-              <View
-                style={styles.circle}
-                underlayColor="#ccc"
-                onPress={() => alert("Yaay!")}>
-                <Icon name="call" type="Zocial" color="white" />
-              </View>
-            </TouchableOpacity>
+          {/* <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View> */}
+          <View style={{ flex: 0.10, alignSelf: "auto" }}>
+            <BottomView />
           </View>
         </View>
-
-        {/* <View style={{ flex: 0.89, margin: 2 }}>{this.renderMap()}</View> */}
-        <View style={{ flex: 0.10, alignSelf: "auto" }}>
-          <BottomView />
-        </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

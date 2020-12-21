@@ -11,9 +11,13 @@ import {
   Pressable,
   Modal,
   Button,
+  SafeAreaView,
 } from "react-native";
 import RadioButton from "../Components/RadioButton";
 import { CheckBox } from "react-native-elements";
+import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
+import CustomToolbar from "../Components/CustomToolbar";
+import { AppColors } from "../../style/AppColors";
 
 const PROP = [
   {
@@ -90,65 +94,77 @@ export default class SettingsScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Modal
-          style={styles.modal}
-          animationType={"fade"}
-          transparent={false}
-          visible={this.state.isVisible}
-          onRequestClose={() => {
-            console.log("Modal has been closed.");
-          }}
-        >
-          {/*All views of Modal*/}
-          <View style={styles.modal}>
-            <Text style={styles.text}>Mute notification for...!</Text>
-            <Text style={styles.text}>
-              choose any one from following options
-            </Text>
-            <RadioButton PROP={PROP} />
-            
-            <CheckBox
-              title="Show Notifications"
-              checked={this.state.checked}
-              onPress={() => this.setState({ checked: !this.state.checked })}
-            />
-
-            <View style={{ flexDirection: "row", margin: 10 }}>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="OK"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                {" "}
-                OK
-              </Text>
-              <Text
-                style={{ flex: 1, margin: 10 }}
-                title="CANCEL"
-                onPress={() => {
-                  this.setState({ isVisible: !this.state.isVisible });
-                }}
-              >
-                CANCEL
-              </Text>
-            </View>
-          </View>
-          <View
-            style={{ height: 1, width: "100%", backgroundColor: "white" }}
-          />
-        </Modal>
-        <FlatList
-          extraData={this.state}
-          data={this.state.calls}
-          keyExtractor={(item) => {
-            return item.id;
-          }}
-          renderItem={this.renderItem}
+      <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+        <GeneralStatusBarColor
+          backgroundColor={AppColors.colorPrimary}
+          barStyle="light-content"
         />
-      </View>
+
+        <CustomToolbar
+          title={"Settings"}
+          userType={""}
+          backgroundColor="#3775f0"
+        />
+        <View style={styles.container}>
+          <Modal
+            style={styles.modal}
+            animationType={"fade"}
+            transparent={false}
+            visible={this.state.isVisible}
+            onRequestClose={() => {
+              console.log("Modal has been closed.");
+            }}
+          >
+            {/*All views of Modal*/}
+            <View style={styles.modal}>
+              <Text style={styles.text}>Mute notification for...!</Text>
+              <Text style={styles.text}>
+                choose any one from following options
+              </Text>
+              <RadioButton PROP={PROP} />
+              
+              <CheckBox
+                title="Show Notifications"
+                checked={this.state.checked}
+                onPress={() => this.setState({ checked: !this.state.checked })}
+              />
+
+              <View style={{ flexDirection: "row", margin: 10 }}>
+                <Text
+                  style={{ flex: 1, margin: 10 }}
+                  title="OK"
+                  onPress={() => {
+                    this.setState({ isVisible: !this.state.isVisible });
+                  }}
+                >
+                  {" "}
+                  OK
+                </Text>
+                <Text
+                  style={{ flex: 1, margin: 10 }}
+                  title="CANCEL"
+                  onPress={() => {
+                    this.setState({ isVisible: !this.state.isVisible });
+                  }}
+                >
+                  CANCEL
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{ height: 1, width: "100%", backgroundColor: "white" }}
+            />
+          </Modal>
+          <FlatList
+            extraData={this.state}
+            data={this.state.calls}
+            keyExtractor={(item) => {
+              return item.id;
+            }}
+            renderItem={this.renderItem}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
 }

@@ -115,7 +115,7 @@ export default class BidEventCalndar extends Component {
         key={item.key}
         style={[
           styles.RectangleShapeView,
-          { backgroundColor: AppColors.colorPrimary },
+          { backgroundColor: AppColors.colorPrimary, marginLeft: 10, marginRight: 10 },
         ]}
       >
         <Text
@@ -144,7 +144,7 @@ export default class BidEventCalndar extends Component {
         key={item.key}
         style={[
           styles.RectangleShapeView,
-          { backgroundColor: AppColors.AppOrange },
+          { backgroundColor: AppColors.AppOrange, marginLeft: 10, marginRight: 10 },
         ]}
       >
         <Text
@@ -198,11 +198,10 @@ export default class BidEventCalndar extends Component {
 
         <Modal
           transparent={true}
-          animationType={"none"}
+          animationType={"fade"}
           visible={modalVisible}
           style={{
             flex: 1,
-            alignItems: "center",
             flexDirection: "column",
             justifyContent: "space-around",
             backgroundColor: "#00000040",
@@ -215,12 +214,13 @@ export default class BidEventCalndar extends Component {
             this.setState({ modalVisible: false });
           }}
         >
-          <View style={styles.modalBackground}>
-            <View style={styles.activityIndicatorWrapper}>
+          <View style={[styles.modalBackground, {width: 450}]}>
+            <View style={[styles.activityIndicatorWrapper, {margin: 50}]}>
               <View
                 style={{
                   flex: 0.5,
-                  width: "100%",
+                  width: "80%",
+                  height: 40,
                   alignSelf: "center",
                   alignItems: "center",
                 }}
@@ -229,8 +229,8 @@ export default class BidEventCalndar extends Component {
                   source={require("../../Image/logo_192.png")}
                   style={[styles.image]}
                 />
-                <Text style={styles.hyperLinkText}>
-                  Bid event Calendar Menus
+                <Text style={[styles.hyperLinkText]}>
+                  Bid Event Calendar Menus
                 </Text>
               </View>
 
@@ -245,8 +245,8 @@ export default class BidEventCalndar extends Component {
                   title="CLOSE"
                   buttonStyle={{
                     width: 400,
-                    flex: 1,
-                    marginTop: 20,
+                    marginTop: 60,
+                    marginBottom: 20,
                     borderRadius: 16,
                     backgroundColor: AppColors.red300,
                   }}
@@ -255,6 +255,7 @@ export default class BidEventCalndar extends Component {
                     this.props.navigation.navigate("HomeScreen");
                   }}
                 />
+                <View style={{ backgroundColor: "white", marginTop: 20 }}></View>
               </View>
             </View>
           </View>
@@ -275,8 +276,6 @@ const styles = StyleSheet.create({
 
   modalBackground: {
     flex: 1,
-    width: "100%",
-    alignItems: "center",
     flexDirection: "column",
     justifyContent: "space-around",
     backgroundColor: "#00000040",
@@ -309,8 +308,9 @@ const styles = StyleSheet.create({
   },
   hyperLinkText: {
     color: AppColors.colorPrimary,
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: "bold",
+    height: 80,
   },
   RectangleShapeView: {
     marginTop: 20,

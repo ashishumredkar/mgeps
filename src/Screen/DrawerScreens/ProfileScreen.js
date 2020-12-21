@@ -39,7 +39,7 @@ const ProfileScreen = (props) => {
 
       const value = JSON.parse(userData);
 
-      console.log("userData",userData)
+      console.log("userData", userData)
 
       setUserName(userType);
       setUserData(value);
@@ -58,10 +58,12 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
 
-      {/* <GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-      /> */}
+      {Platform.OS != "ios" ? (
+          <GeneralStatusBarColor
+              backgroundColor={AppColors.colorPrimary}
+              barStyle="light-content"
+          />
+        ) : ""}
 
       <CustomToolbar
         title={"Profile"}

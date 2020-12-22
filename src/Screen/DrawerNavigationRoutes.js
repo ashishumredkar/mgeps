@@ -398,6 +398,8 @@ const bidEventStack = ({ navigation }) => {
         component={BidEventCalndar}
         options={{
           title: "BidEventCalndar", //Set Header Title
+          headerLeft: null,
+          gesturesEnabled: false,
         }}
       />
        <Stack.Screen

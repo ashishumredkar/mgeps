@@ -9,7 +9,8 @@ import {
   Button,
   Image,
   StatusBar,
-  SafeAreaView
+  SafeAreaView,
+  BackHandler
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -51,6 +52,11 @@ export const Divider = () => {
 
 export default class BidDetails extends Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      drawerLabel: () => null,
+    };
+  };
   constructor(props) {
     super(props);
 
@@ -67,9 +73,23 @@ export default class BidDetails extends Component {
     };
   }
 
-  async componentDidMount() {
+  async componentDidMount(props) {
     await this.readData();
+    BackHandler.addEventListener(
+      'hardwareBackPress',
+      this.handleBackButtonPressAndroid
+    );
   }
+
+  handleBackButtonPressAndroid = () => {
+    if (!this.props.navigation.isFocused()) {
+      // The screen is not focused, so don't do anything
+      return false;
+    }
+
+    this.props.navigation.navigate('HomeScreen');
+    return true;
+  };
 
   readData = async () => {
     try {

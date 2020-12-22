@@ -12,24 +12,10 @@ import {
 
 import DatePicker from "react-native-datepicker";
 import { AppColors } from "../../style/AppColors";
+import Loader from "../Components/Loader";
 import AsyncStorage from "@react-native-community/async-storage";
 const STORAGE_KEY = "@user_data";
 import { BID_EVENT_CAL_URL } from "../Utils";
-
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
 
 export default class BidEventCalndar extends Component {
   constructor(props) {
@@ -72,7 +58,8 @@ export default class BidEventCalndar extends Component {
       date: date,
     };
 
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
+    this.setState({ loading: true });
+
     fetch(BID_EVENT_CAL_URL, {
       //Pune office UAT
       method: "POST",
@@ -91,11 +78,13 @@ export default class BidEventCalndar extends Component {
         if (res) {
           this.setState({ bidEvent: res, modalVisible: true });
         }
+        this.setState({ loading: false });
       })
       .catch((error) => {
         //Hide Loader
         //setLoading(false);
         console.error("qwerty  ", error);
+        this.setState({ loading: false });
       });
   };
 
@@ -160,11 +149,11 @@ export default class BidEventCalndar extends Component {
     );
 
   render() {
+    if (this.state.loading) return <Loader loading={this.state.loading} />;
     const { modalVisible } = this.state;
 
     return (
       <View style={styles.container}>
-
 
         <Modal
           transparent={true}

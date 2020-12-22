@@ -164,7 +164,7 @@ export default class BidEventCalndar extends Component {
 
     return (
       <View style={styles.container}>
-        
+
 
         <Modal
           transparent={true}
@@ -230,7 +230,7 @@ export default class BidEventCalndar extends Component {
             </View>
           </View>
         </Modal>
-        
+
         <DatePicker
           ref={(ref) => (this.datePickerRef = ref)}
           date={this.state.date}
@@ -271,10 +271,12 @@ export default class BidEventCalndar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: "center",
-    alignItems: "center",
-    alignContent: "center",
-    backgroundColor: "#ecf0f1",
+    justifyContent: 'center',
+    alignItems: 'center'
+    // alignSelf: "center",
+    // alignItems: "center",
+    // alignContent: "center",
+    //backgroundColor: "#ecf0f1",
   },
 
   modalBackground: {

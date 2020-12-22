@@ -95,12 +95,6 @@ export default class SettingsScreen extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1,backgroundColor: AppColors.colorPrimary}}>
-       {Platform.OS != "ios" ? (
-          <GeneralStatusBarColor
-              backgroundColor={AppColors.colorPrimary}
-              barStyle="light-content"
-          />
-        ) : null}
         <CustomToolbar
           title={"Settings"}
           userType={""}
@@ -123,7 +117,7 @@ export default class SettingsScreen extends Component {
                 choose any one from following options
               </Text>
               <RadioButton PROP={PROP} />
-              
+
               <CheckBox
                 title="Show Notifications"
                 checked={this.state.checked}

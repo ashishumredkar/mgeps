@@ -122,7 +122,7 @@ export default class BidDetails extends Component {
               if(mData.error){
                 this.setState({
                     isLoading: false,
-                  });  
+                  });
               }
             this.state.page === 1
               ? this.setState({ users: [...mData] })
@@ -188,11 +188,7 @@ export default class BidDetails extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-        /> */}
-
+        
         <CustomToolbar
           navigation={this.props.navigation}
           title={this.state.pageTitle}

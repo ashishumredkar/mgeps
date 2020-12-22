@@ -73,12 +73,7 @@ export default class ContactUs extends Component {
   renderMap = () => {
     return (
       <View style={[styles.container,{ackgroundColor: AppColors.colorPrimary}]}>
-        {Platform.OS != "ios" ? (
-          <GeneralStatusBarColor
-              backgroundColor={AppColors.colorPrimary}
-              barStyle="light-content"
-          />
-        ) : null}
+        
         <MapView
           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
           style={styles.map}
@@ -103,12 +98,6 @@ export default class ContactUs extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, }}>
-        {Platform.OS != "ios" ? (
-          <GeneralStatusBarColor
-              backgroundColor={AppColors.colorPrimary}
-              barStyle="light-content"
-          />
-        ) : null}
 
         <CustomToolbar
           title={"Contact Us"}

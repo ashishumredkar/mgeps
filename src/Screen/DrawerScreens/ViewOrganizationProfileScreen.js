@@ -93,7 +93,7 @@ class ViewOrganizationProfileScreen extends React.Component {
         //Hide Loader
 
         this.setState({ loading: false, organizationDetails: responseJson });
-        
+
         console.log("\n\n\n");
         console.log("getDetails ", responseJson);
       })
@@ -119,10 +119,6 @@ class ViewOrganizationProfileScreen extends React.Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-        <GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-        />
 
         <CustomToolbar
           title={"My Organization Profile"}

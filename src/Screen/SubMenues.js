@@ -148,13 +148,6 @@ class SubMenues extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {Platform.OS != "ios" ? 
-          (<GeneralStatusBarColor
-            backgroundColor={AppColors.colorPrimary}
-            barStyle="light-content"
-          />) 
-          : null
-        }
 
         <CustomToolbar
           navigation={this.props.navigation}

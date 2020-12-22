@@ -78,10 +78,6 @@ export default class FinalDetailsPage extends Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {/* <GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-        /> */}
 
         <CustomToolbar
           navigation={this.props.navigation}

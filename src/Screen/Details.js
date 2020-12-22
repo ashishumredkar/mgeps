@@ -193,7 +193,7 @@ export default class Details extends Component {
               source={require("../Image/ic_left.png")}
             />
           </TouchableOpacity>
-          
+
           <View style={[styles.center, {width: "40%"}]}>
             <Button title="Go TO Dashboard" onPress={() => this.props.navigation.navigate("HomeScreen")} />
           </View>
@@ -204,10 +204,6 @@ export default class Details extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-        {Platform.OS != "ios" ? (<GeneralStatusBarColor
-          backgroundColor={AppColors.colorPrimary}
-          barStyle="light-content"
-        />) : ""}
 
         <CustomToolbar
           navigation={this.props.navigation}
@@ -379,8 +375,8 @@ const styles = StyleSheet.create({
   },
 
   center: {
-    alignSelf: "center", 
-    alignItems: "center", 
+    alignSelf: "center",
+    alignItems: "center",
     alignContent: "center"
   },
 });

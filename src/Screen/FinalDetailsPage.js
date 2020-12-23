@@ -20,6 +20,8 @@ import { gStyles } from "../style/appStyles";
 import { viewDetailStyles } from "../style/viewDetailStyles";
 import { AppColors } from "../style/AppColors";
 import { READ_NOTIFICATION_URL } from "./Utils";
+import EventEmitter from "react-native-eventemitter";
+
 
 export const Divider = () => {
   return (
@@ -133,6 +135,8 @@ export default class FinalDetailsPage extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("sendAckForRead ", responseJson);
+        EventEmitter.emit("UPDATE_COUNT", "true");
+
       })
       .catch((error) => {
         //Hide Loader

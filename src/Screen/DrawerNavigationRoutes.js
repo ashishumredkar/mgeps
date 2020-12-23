@@ -38,11 +38,10 @@ import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 import BidDetails from './BidDetails';
 import BidDetailsPage from './BidDetailsPage';
 import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
+import EventEmitter from "react-native-eventemitter";
 
 import {
   createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
 } from '@react-navigation/drawer';
 import OptionMenu from "./Components/OptionMenu";
 const myIcon = <Icon name="more-vert" size={30} color="white" />;
@@ -184,6 +183,9 @@ export function NotificationView(props) {
   useEffect(() => {
     //fetch('') // Pune office UAT
     getNotificationCount();
+    EventEmitter.on("UPDATE_COUNT", (value)=>{
+      getNotificationCount()
+  });
   }, []);
 
   const getNotificationCount = async () => {

@@ -177,13 +177,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     setLoading(true);
-    let dataToSend = {
-      username: userEmail,
-      password: userPassword,
-      login_type: loginType,
-      fcm_id: fcmId,
-      country: "IN",
-    };
+  
     fetch(LOGIN_URL, {
       method: "POST",
       body: JSON.stringify({
@@ -204,7 +198,7 @@ const LoginScreen = ({ navigation }) => {
         //Hide Loader
         setLoading(false);
         console.log("res1 ", responseJson);
-        console.log("res2 ", responseJson.data);
+        console.log("handleSubmitPress ", responseJson.data);
 
         if (responseJson.errorCode === 1) {
           Toast.showWithGravity(

@@ -87,7 +87,7 @@ class HomeScreen extends React.Component {
       const token = await AsyncStorage.getItem("auth_token");
       const tncFlag = await AsyncStorage.getItem("tnc");
 
-      console.log("tncFlag",tncFlag)
+      console.log("tncFlag",mData)
 
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });

@@ -184,15 +184,15 @@ export function NotificationView(props) {
   useEffect(() => {
     //fetch('') // Pune office UAT
     getNotificationCount();
-  }, [notificationCount]);
+  }, []);
 
   const getNotificationCount = async () => {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     const userType = await AsyncStorage.getItem("userType");
-    //console.log("getNotificationCount",token)
-    fetch(NOTIFICATION_COUNT_URL + "/" + userType + "/" + mData.id, {
+    console.log("getNotificationCount22 ",mData)
+    fetch(NOTIFICATION_COUNT_URL + "/" + mData.id + "/" + mData.userType, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -207,7 +207,7 @@ export function NotificationView(props) {
         if (json) {
           setNotificationCount(json.notificationCount);
         }
-        console.log("mData", json.notificationCount);
+        console.log("setNotificationCount", json.notificationCount);
       })
       .catch((error) => {
         console.error(error);

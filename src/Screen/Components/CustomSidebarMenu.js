@@ -89,7 +89,7 @@ const CustomSidebarMenu = (props) => {
             <View style={{ flexDirection: "row",height:40,marginTop:-5  }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
-                source={require("../../Image/faq.png")}
+                source={require("../../Image/faq2.png")}
               />
               <Text style={{ color: "black", marginTop: 5 ,marginLeft:5}}>FAQ</Text>
             </View>

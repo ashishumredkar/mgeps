@@ -206,7 +206,7 @@ export function NotificationView(props) {
       .then((json) => {
         if (json) {
           if(json.notificationCount>999){
-            setNotificationCount("999");
+            setNotificationCount("999+");
           }else
           setNotificationCount(json.notificationCount);
         }

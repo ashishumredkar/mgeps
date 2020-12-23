@@ -86,17 +86,18 @@ class SubMenues extends React.Component {
       iconBackColor:this.props.route.params.backgroundColor,
       iconUri:this.props.route.params.iconUrl,
     });
-    //this.readData();
+    this.readData();
   }
 
   readData = async () => {
     try {
       const userData = await AsyncStorage.getItem(STORAGE_KEY);
       const token = await AsyncStorage.getItem("auth_token");
+      const userType = await AsyncStorage.getItem("userType");
 
       const mData = JSON.parse(userData);
-      console.log("userData", token);
-      console.log("userData", mData.userType);
+      console.log("userData", mData);
+      console.log("commando", mData);
 
       // if (token) {
       //   setAuthToken(token);
@@ -104,7 +105,7 @@ class SubMenues extends React.Component {
       if (userData) {
         this.setState({
           userId: mData.id,
-          userType: mData.userType,
+          userType: userType,
           authToken: token,
         });
 
@@ -152,7 +153,7 @@ class SubMenues extends React.Component {
         <CustomToolbar
           navigation={this.props.navigation}
           title={this.state.title}
-          userType={"Merchant"}
+          userType={this.state.userType}
           backgroundColor="#3775f0"
         />
         <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>

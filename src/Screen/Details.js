@@ -65,6 +65,7 @@ export default class Details extends Component {
       pageLink: "",
       authToken: "",
       totalCount: 0,
+      userType:''
     };
   }
 
@@ -76,11 +77,13 @@ export default class Details extends Component {
     try {
 
       const token = await AsyncStorage.getItem("auth_token");
+      const userType = await AsyncStorage.getItem("userType");
 
 
       if (token) {
         this.setState({
           authToken: token,
+          userType:userType
         });
         this.fetchData();
       }
@@ -208,7 +211,7 @@ export default class Details extends Component {
         <CustomToolbar
           navigation={this.props.navigation}
           title={this.state.pageTitle}
-          userType={"Merchant"}
+          userType={this.state.userType}
           backgroundColor="#3775f0"
         />
         {/* {this.state.isLoading ?<Loader loading={this.state.isLoading} /> : null } */}

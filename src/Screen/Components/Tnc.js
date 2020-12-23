@@ -6,26 +6,43 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Modal, Image, Text, Platform } from "react-native";
 import { Button } from "react-native-elements";
 import { AppColors } from "../../style/AppColors";
+import { TERMS_CONDITION_URL } from "../Utils";
 
 const Tnc = (props) => {
-  const { loading, ...attributes } = props;
+  const { loading, userType, authToken, ...attributes } = props;
 
-  //   const [showModal, setShowModal] = useState(loading);
-  //   useEffect(() => {
-  //     // Update the document title using the browser API
-  //     setShowModal(loading)
-  //   }, [showModal]);
+  useEffect(() => {
+    fetchTermAndCondition()
+  }, []);
+
+  const fetchTermAndCondition = async () => {
+    fetch(TERMS_CONDITION_URL, {
+      "method": "POST",
+      body: JSON.stringify({
+        userType: userType,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + authToken,
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        // props.termsCondition = json.termsCondition;
+        console.log("Terms Conditions :: ", json.termsCondition);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  };
 
   return (
     <Modal
       transparent={true}
       animationType={"none"}
       visible={loading}
-      //   onRequestClose={() => {
-      //     console.log("Modal has been closed.");
-      //   }}
       onRequestClose={() => {
-        // setShowModal(false);
         props.onCloseModal();
       }}
     >
@@ -38,26 +55,13 @@ const Tnc = (props) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ height: 30 }}> Terms of Service</Text>
-            <Text style={{ height: 30 }}>Last updated January 2020</Text>
+            <Text style={{ height: 30, color: AppColors.teal500, fontSize: 20, fontWeight: "bold" }}> Terms of Service</Text>
+            <Text style={{ height: 30, color: AppColors.teal500, fontSize: 12, marginLeft: 10 }}>Last updated January 2020</Text>
           </View>
-          <Button
-            title="DECLINE"
-            buttonStyle={{
-              marginTop: 5,
-              borderRadius: 16,
-              backgroundColor: AppColors.red800,
-              alignContent: "center",
-              height: 35,
-              width: 120,
-            }}
-            onPress={() => props.onCloseModal()}
-          />
         </View>
-        <Text style={{ height: 1,backgroundColor:'red',width:'100%' }}/>
-
-        
-        <Text style={{width:'100%' ,flex:1,marginTop:10,padding:12}}>
+        <Text style={{ height: 1, backgroundColor:'red', width:'100%' }}/>
+        <Text style={{width:'100%', flex:1, marginTop:10, padding:12}}>
+        {/* {termsCondition} */}
 
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
        

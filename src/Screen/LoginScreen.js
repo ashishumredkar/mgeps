@@ -33,22 +33,10 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 import Toast from "react-native-simple-toast";
 import Icon from "react-native-vector-icons/MaterialIcons";
-
-//import messaging from "@react-native-firebase/messaging";
-// import firebase from '@react-native-firebase/app';
-// import PushNotificationIOS from "@react-native-community/push-notification-ios";
-
-//import PushNotification from "react-native-push-notification";
-// import FCM from "react-native-fcm";
-
 import BottomView from "./BottomView";
 import { Modal } from "react-native-paper";
 import { LOGIN_URL, LOGIN_TYPE_URL } from "./Utils";
 // import Loader from './Components/Loader'
-
-//import {Notifications} from 'react-native-notifications';
-// import Icon from 'react-native-vector-icons/FontAwesome5';
-// import { Container, Footer, Title, Button } from "native-base";
 
 const LoginScreen = ({ navigation }) => {
   const [userEmail, setUserEmail] = useState(""); //kiranab

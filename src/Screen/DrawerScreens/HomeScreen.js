@@ -59,6 +59,7 @@ const imagesArray = [
 ];
 
 class HomeScreen extends React.Component {
+
   static navigationOptions = ({ navigation }) => {
     return {
       drawerLabel: () => null,
@@ -87,11 +88,13 @@ class HomeScreen extends React.Component {
       const token = await AsyncStorage.getItem("auth_token");
       const tncFlag = await AsyncStorage.getItem("tnc");
 
-      console.log("tncFlag",tncFlag)
+      console.log("tncFlag", tncFlag)
 
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });
       }
+
+      this.setState({ isConditionAccepted: true });
 
       if (userData) {
         this.setState({
@@ -127,16 +130,12 @@ class HomeScreen extends React.Component {
       .then((responseJson) => {
         //Hide Loader
         this.setState({ loading: false });
-
         console.log("authToken5 ", responseJson);
-
         this.setState({ menuList: responseJson.dashboardMenuList });
       })
       .catch((error) => {
         //Hide Loader
-        //setLoading(false);
         this.setState({ loading: false });
-
         console.error("qwerty  ", error);
       })
       .finally(() => this.setState({ loading: false }));
@@ -182,12 +181,12 @@ class HomeScreen extends React.Component {
   };
 
   onResponse = (response) => {
-   
     if(!response){
       this.props.navigation.navigate("Auth")
-    }else
-    AsyncStorage.setItem("tnc","true");
-    this.setState({ isConditionAccepted: false });
+    } else {
+      AsyncStorage.setItem("tnc", "true");
+      this.setState({ isConditionAccepted: false });
+    }
   };
 
   closeModal = () => {
@@ -209,6 +208,8 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 0.9, margin: 5 }}>
           <Tnc
             loading={isConditionAccepted}
+            userType={this.state.userType}
+            authToken={this.state.authToken}
             onResponse={this.onResponse}
             onCloseModal={this.closeModal}
           />

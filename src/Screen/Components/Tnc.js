@@ -10,8 +10,7 @@ import { TERMS_CONDITION_URL } from "../Utils";
 
 const Tnc = (props) => {
   const { loading, userType, authToken, ...attributes } = props;
-
-  const [tncText,setTncText]=useState('')
+  const [tncText, setTncText]=useState('')
 
   useEffect(() => {
     fetchTermAndCondition()
@@ -64,65 +63,49 @@ const Tnc = (props) => {
         </View>
         <Text style={{ height: 1, backgroundColor:'red', width:'100%' }}/>
         <Text style={{width:'100%', flex:1, marginTop:10, padding:12}}>
-        {/* {termsCondition} */}
-
-       {tncText}
-       </Text>
-        {/* <View
+          {tncText}
+        </Text>
+        <View style={styles.bottomView}>
+        <Text style={{ height: 1,backgroundColor:'#67EEF0',width:'100%' }}/>
+        <View
           style={{
             flex: 1,
-            height: 1,
-            width: "100%",
-            backgroundColor: "white",
+            flexDirection: "row",
+            justifyContent: "flex-end",
           }}
-        /> */}
-
-        <View style={styles.bottomView}>
-
-        <Text style={{ height: 1,backgroundColor:'#67EEF0',width:'100%' }}/>
-
-        
-
+        >
+          <Button
+            title="Accept"
+            buttonStyle={{
+              marginTop: 5,
+              borderRadius: 16,
+              backgroundColor: AppColors.green600,
+              width:120,
+              height: 35,
+            }}
+            onPress={() => props.onResponse(true)}
+          />
           <View
             style={{
+              width: 50,
+              height: 50,
               flex: 1,
-              flexDirection: "row",
-              justifyContent: "flex-end",
             }}
-          >
-            <Button
-              title="Accept"
-              buttonStyle={{
-                marginTop: 5,
-                borderRadius: 16,
-                backgroundColor: AppColors.green600,
-                width:120,
-                height: 35,
-              }}
-              onPress={() => props.onResponse(true)}
-            />
-            <View
-              style={{
-                width: 50,
-                height: 50,
-                flex: 1,
-              }}
-            />
+          />
 
-            <Button
-              title="Decline"
-              buttonStyle={{
-                marginTop: 5,
-                borderRadius: 16,
-                backgroundColor: AppColors.red800,
-                width:120,
-                height: 35,
-              }}
-              onPress={() => props.onResponse(false)}
-            />
+          <Button
+            title="Decline"
+            buttonStyle={{
+              marginTop: 5,
+              borderRadius: 16,
+              backgroundColor: AppColors.red800,
+              width:120,
+              height: 35,
+            }}
+            onPress={() => props.onResponse(false)}
+          />
 
-            {/* <View style={{width: 50, height: 50, backgroundColor: 'steelblue',flex:1}} /> */}
-          </View>
+        </View>
         </View>
       </View>
     </Modal>

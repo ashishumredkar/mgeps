@@ -10,7 +10,8 @@ import {
   Modal,
   ScrollView,
   Platform,
-  SafeAreaView
+  SafeAreaView,
+  Loader
 } from "react-native";
 import BottomView from "./BottomView";
 import CustomToolbar from "./Components/CustomToolbar";

@@ -99,17 +99,12 @@ class SubMenues extends React.Component {
       console.log("userData", mData);
       console.log("commando", mData);
 
-      // if (token) {
-      //   setAuthToken(token);
-      // }
       if (userData) {
         this.setState({
           userId: mData.id,
           userType: userType,
           authToken: token,
         });
-
-        this.getMenuItems(mData.id, mData.userType, token);
       }
     } catch (e) {
       console.log("catch ", e);
@@ -117,35 +112,6 @@ class SubMenues extends React.Component {
     }
   };
 
-  getMenuItems = async (id, muserType, token) => {
-    const data = {
-      id: id,
-      userType: muserType,
-    };
-    console.log("authToken5 ", token);
-
-    // fetch("https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/dashboard", {//Live UAT
-    fetch(DASHBOARD_URL, { //Pune office UAT
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //Hide Loader
-        //setLoading(false);
-        this.setState({ menuList: responseJson.dashboardMenuList });
-      })
-      .catch((error) => {
-        //Hide Loader
-        //setLoading(false);
-        console.error("qwerty  ", error);
-      });
-  };
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>

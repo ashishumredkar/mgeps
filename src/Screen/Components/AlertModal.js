@@ -8,24 +8,17 @@ import { Button } from "react-native-elements";
 import { AppColors } from "../../style/AppColors";
 
 const AlertModal = (props) => {
-  const { loading, ...attributes } = props;
-
-  //   const [showModal, setShowModal] = useState(loading);
-  //   useEffect(() => {
-  //     // Update the document title using the browser API
-  //     setShowModal(loading)
-  //   }, [showModal]);
+  const { loading, errorMessage,  ...attributes } = props;
+    // useEffect(() => {
+      
+    // }, []);
 
   return (
     <Modal
       transparent={true}
       animationType={"none"}
       visible={loading}
-      //   onRequestClose={() => {
-      //     console.log("Modal has been closed.");
-      //   }}
       onRequestClose={() => {
-        // setShowModal(false);
         props.onCloseModal();
       }}
     >
@@ -34,10 +27,10 @@ const AlertModal = (props) => {
           <View
             style={{
               backgroundColor: AppColors.red300,
-              flex: 1,
               width: "100%",
               alignSelf: "center",
               alignItems: "center",
+              marginBottom: 10,
             }}
           >
             <Image
@@ -48,15 +41,19 @@ const AlertModal = (props) => {
             <Text style={styles.paragraph}>Login Type</Text>
           </View>
 
-          <View style={{ backgroundColor: "white", flex: 1, marginTop: 15}}>
-            <Text style={styles.text}>No Records Found</Text>
+          <View style={{ backgroundColor: "white", flex: 1, marginTop: 5, paddingLeft: 20, paddingRight: 20,}}>
+            <Text style={styles.text}>{errorMessage ? errorMessage : "No Records Found"}</Text>
 
             <Button
               title="RETRY"
               buttonStyle={{
-                marginTop: 20,
+                marginTop: 15,
                 borderRadius: 16,
                 backgroundColor: AppColors.red300,
+                width: "60%",
+                alignItems: "center",
+                alignContent: "center",
+                alignSelf: "center",
               }}
               onPress={() => props.onRety()}
             />
@@ -64,9 +61,13 @@ const AlertModal = (props) => {
             <Button
               title="CLOSE"
               buttonStyle={{
-                marginTop: 20,
+                marginTop: 10,
                 borderRadius: 16,
                 backgroundColor: AppColors.red300,
+                width: "60%",
+                alignItems: "center",
+                alignContent: "center",
+                alignSelf: "center",
               }}
               onPress={() => props.onCloseModal()}
             />
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   activityIndicatorWrapper: {
     backgroundColor: "#FFFFFF",
     height: "40%",
-    width: "60%",
+    width: "70%",
     borderRadius: 2,
     display: "flex",
     alignItems: "center",

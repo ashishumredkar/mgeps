@@ -25,6 +25,7 @@ export default class ContactUs extends Component {
       isVisible: false,
       checked: true,
       userType: '',
+      userTypeName: "",
       Address:'',
       EmailId:'',
       PhoneNo:'',
@@ -35,11 +36,12 @@ export default class ContactUs extends Component {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
+    const userTypeName = await AsyncStorage.getItem("userType");
     // const userType = await AsyncStorage.getItem("userType");
-    this.getContactUsData(mData.id, mData.userType, token);
+    this.getContactUsData(mData.id, mData.userType, token, userTypeName);
   }
 
-  getContactUsData = async (id, muserType, token) => {
+  getContactUsData = async (id, muserType, token, userTypeName) => {
     const data = {
       id: id,
       userType: muserType,
@@ -60,7 +62,7 @@ export default class ContactUs extends Component {
         //Hide Loader
         //setLoading(false);
         if(res){
-          this.setState({muserType, Address:res.Address, EmailId:res.EmailId, PhoneNo:res.PhoneNo})
+          this.setState({muserType, Address:res.Address, EmailId:res.EmailId, PhoneNo:res.PhoneNo, userTypeName})
         }
       })
       .catch((error) => {
@@ -101,7 +103,7 @@ export default class ContactUs extends Component {
 
         <CustomToolbar
           title={"Contact Us"}
-          userType={""}
+          userType={this.state.userTypeName}
           backgroundColor="#3775f0"
         />
         <View style={{ flex: 1 }}>
@@ -110,38 +112,40 @@ export default class ContactUs extends Component {
               Nextenders (India) Private Limited
             </Text> */}
 
-            <Text style={{ fontSize: 18, padding: 10 }} selectable={true}>
-              {this.state.Address.replace(/,/g, ',\n').trim()}
-            </Text>
-
-            <View style={{ flexDirection: "row", marginTop: 20 }}>
-              <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
-                {this.state.EmailId}
+            <View style={{ backgroundColor: AppColors.grey10, height: "50%" }}>
+              <Text style={{ fontSize: 18, padding: 10 }} selectable={true}>
+                {this.state.Address.replace(/,/g, ',\n').trim()}
               </Text>
 
-            </View>
-            <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
-              {this.state.PhoneNo}
-            </Text>
+              <View style={{ flexDirection: "row", marginTop: 20 }}>
+                <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
+                  {this.state.EmailId}
+                </Text>
 
-            <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
-              <TouchableOpacity onPress={() => Linking.openURL('mailto:' + this.state.EmailId + '?subject=Contact Us&body=Hi Team,\n') }>
-                <View
-                  style={styles.circle}
-                  underlayColor="#ccc"
-                  onPress={() => alert("Yaay!")}>
-                  <Icon name="email" type="Zocial" color="white" />
-                </View>
-              </TouchableOpacity>
+              </View>
+              <Text style={{ fontSize: 18, paddingLeft: 10, paddingBottom: 8 }} selectable={true}>
+                {this.state.PhoneNo}
+              </Text>
 
-              <TouchableOpacity onPress={() => Linking.openURL('tel:' + this.state.PhoneNo) }>
-                <View
-                  style={styles.circle}
-                  underlayColor="#ccc"
-                  onPress={() => alert("Yaay!")}>
-                  <Icon name="call" type="Zocial" color="white" />
-                </View>
-              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+                <TouchableOpacity onPress={() => Linking.openURL('mailto:' + this.state.EmailId + '?subject=Contact Us&body=Hi Team,\n') }>
+                  <View
+                    style={styles.circle}
+                    underlayColor="#ccc"
+                    onPress={() => alert("Yaay!")}>
+                    <Icon name="email" type="Zocial" color="white" />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => Linking.openURL('tel:' + this.state.PhoneNo) }>
+                  <View
+                    style={styles.circle}
+                    underlayColor="#ccc"
+                    onPress={() => alert("Yaay!")}>
+                    <Icon name="call" type="Zocial" color="white" />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
 

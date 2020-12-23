@@ -309,8 +309,8 @@ PODS:
   - RNFBApp (10.1.0):
     - Firebase/CoreOnly (~> 7.1.0)
     - React-Core
-  - RNGestureHandler (1.7.0):
-    - React
+  - RNGestureHandler (1.9.0):
+    - React-Core
   - RNReanimated (1.13.2):
     - React-Core
   - RNScreens (2.15.0):
@@ -500,7 +500,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNCPushNotificationIOS: 5b1cf9ad2aaa107ecb92d5d2d7005ba521b2b97a
   RNFBApp: 2b4e07dfca4cf780b9e2d61bcc21e34d890cd654
-  RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
+  RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
@@ -509,4 +509,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 48fec02da2aec292ed0d41510cf1987c4ab9ec6c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0

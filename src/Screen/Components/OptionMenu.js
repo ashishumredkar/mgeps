@@ -17,7 +17,7 @@ const OptionMenu = (props) =>{
 
     const handleClick = index => {
         let options = props.options;
-        for (var i = 0; i < options.length; i++) {
+        for (var i = 0; i < 1; i++) {
             if (index === i) {
               if (index === options.length - 1) {
                 const open = false;

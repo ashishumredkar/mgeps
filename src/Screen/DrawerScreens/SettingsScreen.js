@@ -153,8 +153,8 @@ export default class SettingsScreen extends Component {
           <FlatList
             extraData={this.state}
             data={this.state.calls}
-            keyExtractor={(item) => {
-              return item.id;
+            keyExtractor={(item,index) => {
+              return index.toString();
             }}
             renderItem={this.renderItem}
           />

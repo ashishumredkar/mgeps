@@ -58,7 +58,7 @@ const CustomToolbar = (props) => {
           <OptionMenu
             customButton={myIcon}
             destructiveIndex={1}
-            options={["Settings", undefined]}
+            options={["Settings"]}
             actions={[navSettings]}
           />
         </View>

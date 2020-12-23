@@ -254,7 +254,6 @@ export default class Details extends Component {
                     onPress={() => {
                       const abc=this.state.users;
                       abc[index].isAcknowledge=1;
-                      console.log("bokachoda ",abc);
 
                       this.setState({users:abc})
 

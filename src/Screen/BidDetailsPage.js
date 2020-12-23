@@ -179,7 +179,7 @@ export default class FinalDetailsPage extends Component {
               </View>
             </View>
           </View>
-          {this.state.isLoading && (
+          {this.state.loading && (
             <View style={{ flex: 1, alignItems: "center" }}>
               <ActivityIndicator size="large" color="#ff6a00" />
             </View>

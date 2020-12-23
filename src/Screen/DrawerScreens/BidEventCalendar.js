@@ -97,6 +97,7 @@ export default class BidEventCalndar extends Component {
             title: "Bid Event Calendar",
             subTitle: item.bidNoticeToBeSubmitted.label,
           });
+
           this.setState({ modalVisible: false });
         }}
         key={item.key}
@@ -126,7 +127,7 @@ export default class BidEventCalndar extends Component {
           this.props.navigation.navigate("BidDetails", {
             link: item.bidNoticeToBeOpen.link,
             title: "Bid Event Calendar",
-            subTitle: item.bidNoticeToBeSubmitted.label,
+            subTitle: item.bidNoticeToBeOpen.label,
           });
           this.setState({ modalVisible: false });
         }}
@@ -170,7 +171,7 @@ export default class BidEventCalndar extends Component {
             backgroundColor: "#00000040",
           }}
           onRequestClose={() => {
-            this.props.navigation.navigate("HomeScreen");
+            this.props.navigation.replace("HomeScreen");
             this.setState({ modalVisible: false });
           }}
         >
@@ -204,7 +205,7 @@ export default class BidEventCalndar extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.setState({ modalVisible: false });
-                    this.props.navigation.navigate("HomeScreen");
+                    this.props.navigation.replace("HomeScreen");
                   }}
                   style={{ backgroundColor: AppColors.red300, marginLeft: 10, marginRight: 10, borderRadius: 6, padding: 10, marginBottom: 10 }}>
                     <Text style={{fontSize: 14, fontWeight: "bold", textAlign: "center", color: AppColors.white}}>CLOSE</Text>

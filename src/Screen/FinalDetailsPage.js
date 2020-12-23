@@ -11,7 +11,7 @@ import {
   ScrollView,
   Platform,
   SafeAreaView,
-  Loader
+  ActivityIndicator,
 } from "react-native";
 import BottomView from "./BottomView";
 import CustomToolbar from "./Components/CustomToolbar";
@@ -22,7 +22,6 @@ import { viewDetailStyles } from "../style/viewDetailStyles";
 import { AppColors } from "../style/AppColors";
 import { READ_NOTIFICATION_URL } from "./Utils";
 import EventEmitter from "react-native-eventemitter";
-
 
 export const Divider = () => {
   return (
@@ -93,7 +92,6 @@ export default class FinalDetailsPage extends Component {
 
         if (responseJson) {
           this.setState({ loading: false, userSelected: responseJson });
-          this.setState({ loading: false });
           this.sendAckForRead(
             this.state.authToken,
             responseJson.notificationId,
@@ -119,25 +117,22 @@ export default class FinalDetailsPage extends Component {
       moduleName: moduleName,
       notificationId: notificationId,
     };
-    this.setState({ loading: true });
 
     var url = READ_NOTIFICATION_URL; // Pune UAT
     // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi"; // LIVE UAt
     fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    )
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("sendAckForRead ", responseJson);
         EventEmitter.emit("UPDATE_COUNT", "true");
-
       })
       .catch((error) => {
         //Hide Loader
@@ -146,16 +141,6 @@ export default class FinalDetailsPage extends Component {
       .finally(() => this.setState({ loading: false }));
   };
 
-  clickEventListener = (item) => {
-    this.setState({ userSelected: item }, () => {
-      this.setModalVisible(true);
-    });
-  };
-
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
   render() {
     const { userSelected, userType, urlParameter } = this.state;
     const noticeDetails = Object.keys(userSelected).map((key) => ({
@@ -163,15 +148,16 @@ export default class FinalDetailsPage extends Component {
     }));
 
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}
+      >
         <CustomToolbar
           navigation={this.props.navigation}
           title={this.state.pageTitle}
           userType={userType}
           backgroundColor="#3775f0"
         />
-        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+        <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
           <View style={{ flex: 0.9, zIndex: 0 }}>
             <View style={{ paddingTop: 8, paddingLeft: 8 }}>
               <Text
@@ -208,7 +194,13 @@ export default class FinalDetailsPage extends Component {
               </View>
               <View style={viewDetailStyles.card}>
                 <View style={viewDetailStyles.cardContent} />
-
+                
+                {this.state.loading && (
+                  <View style={{ flex: 1, alignItems: "center" }}>
+                    <ActivityIndicator size="large" color="#ff6a00" />
+                  </View>
+                )}
+                
                 <View
                   style={{
                     width: "100%",
@@ -220,7 +212,7 @@ export default class FinalDetailsPage extends Component {
                 >
                   <FlatList
                     data={noticeDetails}
-                    showsVerticalScrollIndicator ={false}
+                    showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item, index }) => {
                       //console.log("item ", item);
@@ -242,19 +234,27 @@ export default class FinalDetailsPage extends Component {
                         return (
                           <View>
                             <View style={viewDetailStyles.notificationLabel}>
-                              <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                              <Text style={viewDetailStyles.name}>
+                                {key
+                                  .replace(/([A-Z])/g, " $1")
+                                  .trim()
+                                  .replace(/^./, function (str) {
+                                    return str.toUpperCase();
+                                  })}
+                                :
+                              </Text>
                               <Text style={viewDetailStyles.notificationValue}>
                                 {value}
                               </Text>
                             </View>
                             <View
-                                style={{
-                                  height: 1,
-                                  width: "100%",
-                                  backgroundColor: AppColors.AppGrey001,
-                                  marginTop: 8,
-                                }}
-                              />
+                              style={{
+                                height: 1,
+                                width: "100%",
+                                backgroundColor: AppColors.AppGrey001,
+                                marginTop: 8,
+                              }}
+                            />
                           </View>
                         );
                       }
@@ -266,11 +266,6 @@ export default class FinalDetailsPage extends Component {
                 </View>
               </View>
             </View>
-            {this.state.isLoading && (
-              <View style={{ flex: 1, alignItems: "center" }}>
-                <ActivityIndicator size="large" color="#ff6a00" />
-              </View>
-            )}
           </View>
           <View style={{ flex: 0.1, zIndex: 999 }}>
             <BottomView />

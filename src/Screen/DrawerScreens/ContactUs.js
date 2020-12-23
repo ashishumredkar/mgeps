@@ -61,8 +61,8 @@ export default class ContactUs extends Component {
       .then((res) => {
         //Hide Loader
         //setLoading(false);
-        if(res){
-          this.setState({muserType, Address:res.Address, EmailId:res.EmailId, PhoneNo:res.PhoneNo, userTypeName})
+        if(res) {
+          this.setState({muserType, Address:res.Address, EmailId:res.EmailId, PhoneNo:res.PhoneNo, userTypeName});
         }
       })
       .catch((error) => {

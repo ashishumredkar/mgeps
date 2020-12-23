@@ -11,5 +11,6 @@ export const BID_EVENT_CAL_URL = URL + "/api/Calendars/getOpportunityCountOnDate
 export const FAQ_URL = URL + "/CmsHomePages/view_faq";
 export const VIEW_ORGANIZATION_URL = URL + "/api/BuyerUsers/viewOrganization";
 export const TERMS_CONDITION_URL = URL + "/api/BuyerUsers/termsCondition";
+export const USER_PROFILE_URL = URL + "/api/BuyerUsers/userProfile";
 
 export const STORAGE_KEY = "@user_data";

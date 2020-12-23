@@ -21,12 +21,14 @@ import { AppColors } from "../../style/AppColors";
 import { homeStyles } from "../../style/homeStyles";
 import { viewDetailStyles } from "../../style/viewDetailStyles";
 import BottomView from "../BottomView";
+import { USER_PROFILE_URL } from "../Utils";
 
 const ProfileScreen = (props) => {
   const [profileData, setProfileData] = useState();
   const [username, setUserName] = useState("");
-
-  const [userData, setUserData] = useState();
+  const [fullName, setFullName] = useState("");
+  const [shortName, setShortName] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
 
   useEffect(() => {
     readData();
@@ -35,24 +37,68 @@ const ProfileScreen = (props) => {
   const readData = async () => {
     try {
       const userData = await AsyncStorage.getItem("@user_data");
-      const userType = await AsyncStorage.getItem("userType");
-
-      const value = JSON.parse(userData);
-
+      const token = await AsyncStorage.getItem("auth_token");
+      const userTypeName = await AsyncStorage.getItem("userType");
+      const objUserData = JSON.parse(userData);
       console.log("userData", userData)
 
-      setUserName(userType);
-      setUserData(value);
+      setUserName(userTypeName);
+      setFullName(objUserData.fname + " " + objUserData.mname + " " + objUserData.lname);
+      setShortName(objUserData.fname.charAt(0) + objUserData.lname.charAt(0));
+      setEmailAddress(objUserData.email);
 
-      const noticeDetails = Object.keys(value).map((key) => ({
-        [key]: value[key],
-      }));
-      console.log("setAnimatingabc ", noticeDetails);
-
-      setProfileData(noticeDetails);
+      getUserProfileData(objUserData.id, objUserData.userType, token, userTypeName);
     } catch (e) {
       console.log("catch ", e);
     }
+  };
+
+  const getUserProfileData = async (id, userTypeId, token, userTypeName) => {
+    const data = {
+      userId: id,
+      userType: userTypeId,
+    };
+
+    console.log("Post data :: ", data);
+
+    fetch(USER_PROFILE_URL, { //Pune office UAT
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        //Hide Loader
+        // setLoading(false);
+        if(response) {
+          console.log("User data \n\n\n", response);
+
+          if (response.firstName) {
+            delete response.firstName;
+          }
+          if (response.lastName) {
+            delete response.lastName;
+          }
+          if (response.middleName) {
+            delete response.middleName;
+          }
+
+          const finalUserData = Object.keys(response).map((key) => ({
+            [key]: response[key],
+          }));
+
+          setProfileData(finalUserData);
+        }
+      })
+      .catch((error) => {
+        //Hide Loader
+        // setLoading(false);
+        console.error("qwerty  ", error);
+      });
   };
 
   return (
@@ -64,13 +110,13 @@ const ProfileScreen = (props) => {
         backgroundColor="#3775f0"
       />
       <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
-        {userData ? (
+        {profileData ? (
           <Card
             style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
           >
             <View style={{ flexDirection: "row" }}>
               <View style={[gStyles.userProfileNameStyle]}>
-                <Text>{userData.fname.charAt(0) + userData.lname.charAt(0)}</Text>
+                <Text style={gStyles.contactStyle}>{shortName}</Text>
               </View>
 
               <View style={{ width: 10 }}></View>
@@ -78,12 +124,10 @@ const ProfileScreen = (props) => {
               {/* CONTACT DETAILS  */}
               <View style={{ paddingTop: 8 }}>
                 <Text style={gStyles.contactStyle}>
-                  {userData.fname} {userData.mname} {userData.lname}
+                  {fullName}
                 </Text>
                 <Text>
-                  {userData.email === undefined || userData.email.length === 0
-                    ? "email"
-                    : userData.email}
+                  {emailAddress}
                 </Text>
               </View>
             </View>

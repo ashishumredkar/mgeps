@@ -48,6 +48,7 @@ const LoginScreen = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [loginType, setLoginType] = useState();
+  const [errorMessage, setErrorMessage] = useState();
 
   const [loginCollection, setLoginCollection] = useState([]);
 
@@ -150,17 +151,14 @@ const LoginScreen = ({ navigation }) => {
         Toast.LONG,
         Toast.CENTER
       );
-
       return;
     }
     if (!userEmail) {
       Toast.showWithGravity("Please fill Email", Toast.LONG, Toast.CENTER);
-
       return;
     }
     if (!userPassword) {
       Toast.showWithGravity("Please fill Password", Toast.LONG, Toast.CENTER);
-
       return;
     }
 
@@ -188,25 +186,22 @@ const LoginScreen = ({ navigation }) => {
         console.log("res1 ", responseJson);
         console.log("handleSubmitPress ", responseJson.data);
 
-        if (responseJson.errorCode === 1) {
-          Toast.showWithGravity(
-            responseJson.errorMessage,
-            Toast.LONG,
-            Toast.CENTER
-          );
-        }
+        //Toast the error message
+        // if (responseJson.errorCode === 1) {
+        //   Toast.showWithGravity(
+        //     responseJson.errorMessage,
+        //     Toast.LONG,
+        //     Toast.CENTER
+        //   );
+        // }
 
         // If server response message same as Data Matched
         if (responseJson.userData) {
           AsyncStorage.setItem("auth_token", responseJson.data.token);
-
-          //const log=JSON.stringify(responseJson.userData)
-
           console.log("LOGIN RESPONSE", JSON.stringify(responseJson.userData));
 
           AsyncStorage.setItem("user_id", "" + responseJson.userData.id);
           AsyncStorage.setItem("userType", loginType);
-
           AsyncStorage.setItem(
             "@user_data",
             JSON.stringify(JSON.parse(JSON.stringify(responseJson.userData)))
@@ -214,15 +209,17 @@ const LoginScreen = ({ navigation }) => {
 
           navigation.replace("DrawerNavigationRoutes");
         } else {
+          setErrorMessage(responseJson.errorMessage);
           setModalVisible(true);
           setLoading(false);
-          setErrortext("Please check your email id or password");
+          // setErrortext("Please check your email id or password");
           console.log("Please check your email id or password");
         }
       })
       .catch((error) => {
         //Hide Loader
         setModalVisible(true);
+        setErrorMessage("Failed to login, Please try again.");
         setLoading(false);
         console.error(error);
       })
@@ -291,6 +288,7 @@ const LoginScreen = ({ navigation }) => {
 
         <AlertModal
           loading={isModalVisible}
+          errorMessage={errorMessage}
           onRety={onRety}
           onCloseModal={closeModal}
         />

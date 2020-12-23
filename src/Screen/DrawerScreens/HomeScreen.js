@@ -71,6 +71,7 @@ class HomeScreen extends React.Component {
       menuList: [],
       userId: null,
       userType: "",
+      userTypeName: "",
       authToken: "",
       loading: true,
       isConditionAccepted: false,
@@ -86,9 +87,10 @@ class HomeScreen extends React.Component {
       const mData = JSON.parse(userData);
 
       const token = await AsyncStorage.getItem("auth_token");
+      const userTypeName = await AsyncStorage.getItem("userType");
       const tncFlag = await AsyncStorage.getItem("tnc");
 
-      console.log("tncFlag",mData)
+      console.log("tncFlag", mData)
       console.log("tncFlag", tncFlag)
 
       if (!tncFlag) {
@@ -101,6 +103,7 @@ class HomeScreen extends React.Component {
         this.setState({
           userId: mData.id,
           userType: mData.userType,
+          userTypeName: userTypeName,
           authToken: token,
         });
 
@@ -196,7 +199,9 @@ class HomeScreen extends React.Component {
 
   render() {
     if (this.state.loading) return <Loader loading={this.state.loading} />;
-    const { isConditionAccepted, userType } = this.state;
+    const { isConditionAccepted, userType, userTypeName } = this.state;
+
+    console.log("\n\nSom Tye :; ", userTypeName + " \n\n");
 
     return (
       <View style={{ flex: 1 }}>
@@ -215,7 +220,7 @@ class HomeScreen extends React.Component {
             onCloseModal={this.closeModal}
           />
 
-          {userType != "Agency" && this.state.menuList && this.state.menuList.length > 0 ? (
+          {userTypeName == "Merchant" && this.state.menuList && this.state.menuList.length > 0 ? (
             <TouchableOpacity
               style={homeStyles.facebookStyle}
               activeOpacity={0.5}

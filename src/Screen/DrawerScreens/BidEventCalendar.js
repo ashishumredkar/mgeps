@@ -102,7 +102,7 @@ export default class BidEventCalndar extends Component {
         key={item.key}
         style={[
           styles.RectangleShapeView,
-          { backgroundColor: AppColors.colorPrimary, marginLeft: 10, marginRight: 10 },
+          { backgroundColor: AppColors.blue400, marginLeft: 10, marginRight: 10, borderRadius: 6 },
         ]}
       >
         <Text
@@ -112,6 +112,8 @@ export default class BidEventCalndar extends Component {
             alignSelf: "center",
             padding: 10,
             fontSize: 16,
+            fontWeight: "bold",
+            color: AppColors.white,
           }}
         >
           {item.bidNoticeToBeSubmitted.label} (
@@ -131,7 +133,7 @@ export default class BidEventCalndar extends Component {
         key={item.key}
         style={[
           styles.RectangleShapeView,
-          { backgroundColor: AppColors.AppOrange, marginLeft: 10, marginRight: 10 },
+          { backgroundColor: AppColors.purpleLight, marginLeft: 10, marginRight: 10, borderRadius: 6 },
         ]}
       >
         <Text
@@ -141,6 +143,8 @@ export default class BidEventCalndar extends Component {
             alignSelf: "center",
             padding: 10,
             fontSize: 16,
+            fontWeight: "bold",
+            color: AppColors.white,
           }}
         >
           {item.bidNoticeToBeOpen.label} ({item.bidNoticeToBeOpen.count})
@@ -165,9 +169,6 @@ export default class BidEventCalndar extends Component {
             justifyContent: "space-around",
             backgroundColor: "#00000040",
           }}
-          //   onRequestClose={() => {
-          //     console.log("Modal has been closed.");
-          //   }}
           onRequestClose={() => {
             this.props.navigation.navigate("HomeScreen");
             this.setState({ modalVisible: false });
@@ -199,21 +200,15 @@ export default class BidEventCalndar extends Component {
                   renderItem={this.renderItem}
                   keyExtractor={(item, index) => index.toString}
                 />
-                <View style={{ backgroundColor: AppColors.red300 }}>
-                  <Button
-                    title="CLOSE"
-                    buttonStyle={{
-                      width: 400,
-                      marginTop: 60,
-                      marginBottom: 20,
-                      borderRadius: 16,
-                      backgroundColor: AppColors.red300,
-                    }}
-                    onPress={() => {
-                      this.setState({ modalVisible: false });
-                      this.props.navigation.navigate("HomeScreen");
-                    }}
-                  />
+                <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState({ modalVisible: false });
+                    this.props.navigation.navigate("HomeScreen");
+                  }}
+                  style={{ backgroundColor: AppColors.red300, marginLeft: 10, marginRight: 10, borderRadius: 6, padding: 10, marginBottom: 10 }}>
+                    <Text style={{fontSize: 14, fontWeight: "bold", textAlign: "center", color: AppColors.white}}>CLOSE</Text>
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>

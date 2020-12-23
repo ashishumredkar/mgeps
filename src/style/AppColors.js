@@ -24,6 +24,7 @@ export const AppColors = {
   blue: '#0000FF',
   lightBlue50: '#E1F5FE',
   colorPrimary: '#1976D2',
+  blue400: '#29B6F6',
   red200: '#EF9A9A',
   red300: '#E57373',
   red800: '#C62828',
@@ -31,4 +32,5 @@ export const AppColors = {
   green600: '#7CB342',
   grey10: '#e6e6e6',
   teal500: '#009688',
+  purpleLight: '#b19cd9',
 };

@@ -95,7 +95,7 @@ class HomeScreen extends React.Component {
         this.setState({ isConditionAccepted: true });
       }
 
-      this.setState({ isConditionAccepted: true });
+      // this.setState({ isConditionAccepted: true });
 
       if (userData) {
         this.setState({

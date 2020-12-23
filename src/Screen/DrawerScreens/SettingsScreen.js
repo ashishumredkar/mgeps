@@ -54,7 +54,13 @@ export default class SettingsScreen extends Component {
       ],
       isVisible: false,
       checked: true,
+      userNameType: "",
     };
+  }
+
+  async componentDidMount () {
+    const userTypeName = await AsyncStorage.getItem("userType");
+    this.setState({userNameType: userTypeName});
   }
 
   renderItem = ({ item }) => {

@@ -277,14 +277,15 @@ class HomeScreen extends React.Component {
                 >
                   <View style={homeStyles.cardHeader}>
                     <Text style={homeStyles.title}>{item.name}</Text>
-                    {/* <Image style={styles.icon} source={{uri:"https://img.icons8.com/ios/40/000000/settings.png"}}/> */}
                   </View>
 
                   <View style={homeStyles.cardFooter}>
-                    <Image
-                      style={homeStyles.cardImage}
-                      source={imagesArray[index]}
-                    />
+                    <View style={{backgroundColor: AppColors.white, width: 45, height: 45, borderRadius: 50 / 2,}}>
+                      <Image
+                        style={[homeStyles.cardImage, {tintColor: colors[index]}]}
+                        source={imagesArray[index]}
+                      />
+                    </View>
 
                     <Text style={homeStyles.subTitle}>
                       {item.unRead} Unread Notices

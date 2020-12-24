@@ -120,8 +120,10 @@ const LoginScreen = ({ navigation }) => {
       .then((json) => {
         setForgotPassword(json.forgetPassword);
         var points = [json.LoginTypes];
-
         var mData = []; // Good
+        mData = mData.concat({ label: "Select Login Type", value: "Select Login Type" });
+        setLoginType("Select Login Type");
+
         if (points[0].Agency) {
           mData = mData.concat({ label: "Agency", value: "Agency" });
         }
@@ -130,9 +132,7 @@ const LoginScreen = ({ navigation }) => {
         }
 
         console.log("mData", mData);
-
         setLoginCollection(mData);
-
         //PushNotification.checkPermissions(PushNotification.requestPermissions());
       })
       .catch((error) => {
@@ -185,15 +185,6 @@ const LoginScreen = ({ navigation }) => {
         setLoading(false);
         console.log("res1 ", responseJson);
         console.log("handleSubmitPress ", responseJson.data);
-
-        //Toast the error message
-        // if (responseJson.errorCode === 1) {
-        //   Toast.showWithGravity(
-        //     responseJson.errorMessage,
-        //     Toast.LONG,
-        //     Toast.CENTER
-        //   );
-        // }
 
         // If server response message same as Data Matched
         if (responseJson.userData) {
@@ -294,23 +285,36 @@ const LoginScreen = ({ navigation }) => {
           onCloseModal={closeModal}
         />
 
-        <View style={{ width: null, height: "42%" }} />
+        <View style={{ width: null, height: "50%" }} />
 
         <View>
-          <DropDownPicker
-            items={loginCollection}
-            placeholder="Select Login Type"
-            containerStyle={{ height: 40 }}
-            style={{ backgroundColor: "#fafafa" }}
-            itemStyle={{
-              justifyContent: "flex-start",
-            }}
-            dropDownStyle={{ backgroundColor: "#fafafa" }}
-            onChangeItem={(item) => setLoginType(item.value)}
-          />
-          <View style={{ width: 300, height: 60 }} />
+          <View style={{backgroundColor: AppColors.white, borderRadius: 50/2, paddingLeft: 10, height: 40, fontWeight: "bold", flexDirection: "row"}}>
+            <Picker
+              selectedValue={loginType}
+              onValueChange={(itemValue, itemIndex) => {
+                setLoginType(itemValue);
+                console.log("Login tyep ::: ", itemValue);
+              }}
+              mode='dialog'
+              style={{backgroundColor: AppColors.white, flex: 0.95, marginTop: -5, fontWeight: "bold"}}
+              textStyle={{backgroundColor: AppColors.white, flex: 0.95, marginTop: -5, fontWeight: "bold"}}
+            >
+                {loginCollection.map(item => (
+                    <Picker.Item style={{fontWeight: "bold"}} textStyle={{fontWeight: "bold"}}
+                        key={item.value}
+                        label={item.label}
+                        value={item.value}
+                    />
+                ))}
+              </Picker>
+              <Image
+                style={{marginTop: 2}}
+                source={require("../Image/ic_expand_arrow.png")}
+              />
+          </View>
+          <View style={{ width: 300, height: 0 }} />
         </View>
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainer} >
           <TextInput
             style={styles.inputs}
             underlineColorAndroid="transparent"
@@ -360,7 +364,6 @@ const LoginScreen = ({ navigation }) => {
           onPress={() => handleSubmitPress()}
         >
           <View style={styles.innerCircle}>
-            {/* <Text style={styles.paragraph}/> */}
             <Image
               style={{
                 width: 25,
@@ -368,7 +371,7 @@ const LoginScreen = ({ navigation }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 alignContent: "center",
-                marginTop: 15,
+                marginTop: 12,
               }}
               source={require("../../src/Image/right_arrw.png")}
             />
@@ -414,23 +417,6 @@ const LoginScreen = ({ navigation }) => {
             />
           </TouchableOpacity>
         </View>
-        {/* <Modal
-            animationType = {"slide"}
-            transparent={false}
-            visible={isModalVisible}
-            onRequestClose={() => {
-            Alert.alert('Modal has now been closed.');
-            }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-            <Image
-            source={require('../Image/menu_logo.png')}
-            style = { styles.image }/>
-            <Text style = { styles.text }>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Maecenas eget tempus augue, a convallis velit.</Text>
-            </View>
-          </Modal> */}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -449,11 +435,11 @@ const styles = StyleSheet.create({
     borderBottomColor: "#F5FCFF",
     backgroundColor: "#FFFFFF",
     borderRadius: 30,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     width: 300,
-    height: 45,
+    height: 40,
     marginTop: 20,
-    marginBottom: 20,
+    // marginBottom: 10,
     flexDirection: "row",
     alignItems: "center",
 
@@ -466,6 +452,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+    zIndex: 0,
   },
   inputs: {
     height: 45,
@@ -575,6 +562,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   outerCircle: {
+    marginTop: 20,
     borderRadius: 30,
     width: 60,
     height: 60,

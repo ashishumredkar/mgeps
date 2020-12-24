@@ -384,148 +384,154 @@ export default class Details extends Component {
             }}
             scrollHorizontal={true}
           >
-            <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
-              <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
-                <TouchableOpacity onPress={() => props.onCloseModal()}>
-                  <Image 
-                    style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
-                    source={require("../Image/ic_close.png")}
+            <KeyboardAvoidingView
+              style={styles.container}
+              behavior="padding"
+              keyboardVerticalOffset={-130}
+            >
+              <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
+                <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
+                  <TouchableOpacity onPress={() => props.onCloseModal()}>
+                    <Image 
+                      style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
+                      source={require("../Image/ic_close.png")}
+                      />
+                  </TouchableOpacity>
+
+                  <Text style={[styles.modelTitle]}>Filter</Text>
+                </View>
+
+                <View style={{flexDirection: "column", flex: 1}}>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.inputs}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => this.setState({notificationText: value})}
+                      value={this.state.notificationText}
+                      placeholder="Type Notification Keyword" //dummy@abc.com
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      returnKeyType="next"
+                      // onSubmitEditing={() =>
+                      //   refActivityType.current && refActivityType.current.focus()
+                      // }
+                      underlineColorAndroid="#f000"
+                      blurOnSubmit={false}
                     />
-                </TouchableOpacity>
+                  </View>
 
-                <Text style={[styles.modelTitle]}>Filter</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.inputs}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => this.setState({activityTypeText: value})}
+                      value={this.state.activityTypeText}
+                      placeholder="Type Activity Type Keyword" //dummy@abc.com
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      returnKeyType="next"
+                      // onSubmitEditing={() =>
+                      //   refDepartmentName.current && refDepartmentName.current.focus()
+                      // }
+                      // ref={refActivityType}
+                      underlineColorAndroid="#f000"
+                      blurOnSubmit={false}
+                    />
+                  </View>
+
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.inputs}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => this.setState({departmentText: value})}
+                      value={this.state.departmentText}
+                      placeholder="Type Department Keyword" //dummy@abc.com
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      returnKeyType="next"
+                      // onSubmitEditing={() =>
+                      //   passwordInputRef.current && passwordInputRef.current.focus()
+                      // }
+                      // ref={refDepartmentName}
+                      underlineColorAndroid="#f000"
+                      blurOnSubmit={false}
+                    />
+                  </View>
+
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.inputs}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => this.setState({classificationText: value})}
+                      value={this.state.classificationText}
+                      placeholder="Type Classification Keyword" //dummy@abc.com
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      returnKeyType="next"
+                      // onSubmitEditing={() =>
+                      //   passwordInputRef.current && passwordInputRef.current.focus()
+                      // }
+                      underlineColorAndroid="#f000"
+                      blurOnSubmit={false}
+                    />
+                  </View>
+
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.inputs}
+                      underlineColorAndroid="transparent"
+                      onChangeText={(value) => this.setState({eventIdText: value})}
+                      value={this.state.eventIdText}
+                      placeholder="Type Event Id Keyword" //dummy@abc.com
+                      placeholderTextColor="#8b9cb5"
+                      autoCapitalize="none"
+                      keyboardType="default"
+                      returnKeyType="next"
+                      // onSubmitEditing={() =>
+                      //   passwordInputRef.current && passwordInputRef.current.focus()
+                      // }
+                      underlineColorAndroid="#f000"
+                      blurOnSubmit={false}
+                    />
+                  </View>
+                </View>
+
+                <View style={{ flexDirection: "row", margin: 10 }}>
+                  <Button
+                    title="Apply Filter"
+                    buttonStyle={{
+                      marginTop: 5,
+                      borderRadius: 16,
+                      backgroundColor: AppColors.green600,
+                      width: 120,
+                      height: 35,
+                    }}
+                    onPress={() => {
+                      this.fetchData()
+                    }}
+                  />
+                  <Button
+                    title="Close"
+                    buttonStyle={{
+                      marginTop: 5,
+                      marginLeft: 5,
+                      borderRadius: 16,
+                      backgroundColor: AppColors.red400,
+                      width: 120,
+                      height: 35,
+                    }}
+                    onPress={() => {this.resetFilters()}}
+                  />
+                </View>
               </View>
-
-              <View style={{flexDirection: "column", flex: 1}}>
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.inputs}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({notificationText: value})}
-                    value={this.state.notificationText}
-                    placeholder="Type Notification Keyword" //dummy@abc.com
-                    placeholderTextColor="#8b9cb5"
-                    autoCapitalize="none"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    // onSubmitEditing={() =>
-                    //   refActivityType.current && refActivityType.current.focus()
-                    // }
-                    underlineColorAndroid="#f000"
-                    blurOnSubmit={false}
-                  />
-                </View>
-
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.inputs}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({activityTypeText: value})}
-                    value={this.state.activityTypeText}
-                    placeholder="Type Activity Type Keyword" //dummy@abc.com
-                    placeholderTextColor="#8b9cb5"
-                    autoCapitalize="none"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    // onSubmitEditing={() =>
-                    //   refDepartmentName.current && refDepartmentName.current.focus()
-                    // }
-                    // ref={refActivityType}
-                    underlineColorAndroid="#f000"
-                    blurOnSubmit={false}
-                  />
-                </View>
-
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.inputs}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({departmentText: value})}
-                    value={this.state.departmentText}
-                    placeholder="Type Department Keyword" //dummy@abc.com
-                    placeholderTextColor="#8b9cb5"
-                    autoCapitalize="none"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    // onSubmitEditing={() =>
-                    //   passwordInputRef.current && passwordInputRef.current.focus()
-                    // }
-                    // ref={refDepartmentName}
-                    underlineColorAndroid="#f000"
-                    blurOnSubmit={false}
-                  />
-                </View>
-
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.inputs}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({classificationText: value})}
-                    value={this.state.classificationText}
-                    placeholder="Type Classification Keyword" //dummy@abc.com
-                    placeholderTextColor="#8b9cb5"
-                    autoCapitalize="none"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    // onSubmitEditing={() =>
-                    //   passwordInputRef.current && passwordInputRef.current.focus()
-                    // }
-                    underlineColorAndroid="#f000"
-                    blurOnSubmit={false}
-                  />
-                </View>
-
-                <View style={styles.inputContainer}>
-                  <TextInput
-                    style={styles.inputs}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({eventIdText: value})}
-                    value={this.state.eventIdText}
-                    placeholder="Type Event Id Keyword" //dummy@abc.com
-                    placeholderTextColor="#8b9cb5"
-                    autoCapitalize="none"
-                    keyboardType="default"
-                    returnKeyType="next"
-                    // onSubmitEditing={() =>
-                    //   passwordInputRef.current && passwordInputRef.current.focus()
-                    // }
-                    underlineColorAndroid="#f000"
-                    blurOnSubmit={false}
-                  />
-                </View>
-              </View>
-
-              <View style={{ flexDirection: "row", margin: 10 }}>
-                <Button
-                  title="Apply Filter"
-                  buttonStyle={{
-                    marginTop: 5,
-                    borderRadius: 16,
-                    backgroundColor: AppColors.green600,
-                    width: 120,
-                    height: 35,
-                  }}
-                  onPress={() => {
-                    this.fetchData()
-                  }}
-                />
-                <Button
-                  title="Close"
-                  buttonStyle={{
-                    marginTop: 5,
-                    marginLeft: 5,
-                    borderRadius: 16,
-                    backgroundColor: AppColors.red400,
-                    width: 120,
-                    height: 35,
-                  }}
-                  onPress={() => {this.resetFilters()}}
-                />
-              </View>
-            </View>
-            <View
-              style={{ height: 1, width: "100%", backgroundColor: "white" }}
-            />
+              <View
+                style={{ height: 1, width: "100%", backgroundColor: "white" }}
+              />
+            </KeyboardAvoidingView>
           </Modal>
 
       </SafeAreaView>

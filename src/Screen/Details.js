@@ -72,6 +72,7 @@ export default class Details extends Component {
       activityTypeText: "",
       departmentText: "",
       classificationText: "",
+      eventIdText: "",
     };
   }
 
@@ -119,6 +120,9 @@ export default class Details extends Component {
       }
       if (this.state.classificationText) {
         url = url + '&classificationType=' + this.state.classificationText;
+      }
+      if (this.state.eventIdText) {
+        url = url + '&eventId=' + this.state.eventIdText;
       }
 
       console.log("\n\nFinale url :: ", url);
@@ -175,9 +179,13 @@ export default class Details extends Component {
 
   showFilters = () => {
     console.log("Calleddd this.....");
-    this.setState({ classificationText: "", activityTypeText: "", departmentText: "", classificationText: "" });
+    this.setState({ notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
     this.setState({ isVisible: true, page: 1});
   };
+
+  resetFilters = () => {
+    this.setState({ notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
+  }
 
   loadMoreUsers = () => {
     if (this.state.totalPageNo >= this.state.page + 1) {
@@ -390,6 +398,7 @@ export default class Details extends Component {
                     style={styles.inputs}
                     underlineColorAndroid="transparent"
                     onChangeText={(value) => this.setState({notificationText: value})}
+                    value={this.state.notificationText}
                     placeholder="Type Notification Keyword" //dummy@abc.com
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -408,6 +417,7 @@ export default class Details extends Component {
                     style={styles.inputs}
                     underlineColorAndroid="transparent"
                     onChangeText={(value) => this.setState({activityTypeText: value})}
+                    value={this.state.activityTypeText}
                     placeholder="Type Activity Type Keyword" //dummy@abc.com
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -427,6 +437,7 @@ export default class Details extends Component {
                     style={styles.inputs}
                     underlineColorAndroid="transparent"
                     onChangeText={(value) => this.setState({departmentText: value})}
+                    value={this.state.departmentText}
                     placeholder="Type Department Keyword" //dummy@abc.com
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -446,6 +457,7 @@ export default class Details extends Component {
                     style={styles.inputs}
                     underlineColorAndroid="transparent"
                     onChangeText={(value) => this.setState({classificationText: value})}
+                    value={this.state.classificationText}
                     placeholder="Type Classification Keyword" //dummy@abc.com
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -463,7 +475,8 @@ export default class Details extends Component {
                   <TextInput
                     style={styles.inputs}
                     underlineColorAndroid="transparent"
-                    onChangeText={(value) => this.setState({eventId: value})}
+                    onChangeText={(value) => this.setState({eventIdText: value})}
+                    value={this.state.eventIdText}
                     placeholder="Type Event Id Keyword" //dummy@abc.com
                     placeholderTextColor="#8b9cb5"
                     autoCapitalize="none"
@@ -502,9 +515,7 @@ export default class Details extends Component {
                     width: 120,
                     height: 35,
                   }}
-                  onPress={() => {
-                    // this.setState({ });
-                  }}
+                  onPress={() => {this.resetFilters()}}
                 />
               </View>
             </View>

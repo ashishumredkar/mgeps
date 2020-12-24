@@ -68,6 +68,7 @@ export default class Details extends Component {
       totalCount: 0,
       userType:'',
       totalPageNo: 0,
+      isVisible: false,
       notificationText: "",
       activityTypeText: "",
       departmentText: "",
@@ -184,7 +185,7 @@ export default class Details extends Component {
   };
 
   resetFilters = () => {
-    this.setState({ notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
+    this.setState({ isVisible: false, notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
   }
 
   loadMoreUsers = () => {
@@ -379,15 +380,18 @@ export default class Details extends Component {
             transparent={true}
             visible={this.state.isVisible}
             onRequestClose={() => {
-              console.log("Modal has been closed.");
+              props.onCloseModal();
             }}
             scrollHorizontal={true}
           >
             <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
               <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
-                <Image 
-                  style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
-                  source={require("../Image/ic_close.png")}/>
+                <TouchableOpacity onPress={() => props.onCloseModal()}>
+                  <Image 
+                    style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
+                    source={require("../Image/ic_close.png")}
+                    />
+                </TouchableOpacity>
 
                 <Text style={[styles.modelTitle]}>Filter</Text>
               </View>
@@ -506,7 +510,7 @@ export default class Details extends Component {
                   }}
                 />
                 <Button
-                  title="Clear"
+                  title="Close"
                   buttonStyle={{
                     marginTop: 5,
                     marginLeft: 5,

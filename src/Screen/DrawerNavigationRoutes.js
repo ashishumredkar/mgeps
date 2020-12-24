@@ -153,7 +153,7 @@ export function LogoTitle(props) {
       >
         <View style={[gStyles.userAvatarStyle]}>
           <Image
-            style={{ width: 35, height: 35 }}
+            style={{ width: 50, height: 50 }}
             source={require("../Image/menu_logo.png")}
           />
         </View>

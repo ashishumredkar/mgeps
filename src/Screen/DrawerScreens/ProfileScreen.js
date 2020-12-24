@@ -86,6 +86,9 @@ const ProfileScreen = (props) => {
           if (response.middleName) {
             delete response.middleName;
           }
+          if (response.email) {
+            delete response.email;
+          }
 
           const finalUserData = Object.keys(response).map((key) => ({
             [key]: response[key],

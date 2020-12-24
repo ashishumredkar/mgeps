@@ -97,7 +97,6 @@ export default class BidEventCalndar extends Component {
             title: "Bid Event Calendar",
             subTitle: item.bidNoticeToBeSubmitted.label,
           });
-
           this.setState({ modalVisible: false });
         }}
         key={item.key}

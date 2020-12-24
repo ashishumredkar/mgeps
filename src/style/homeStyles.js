@@ -62,11 +62,12 @@ export const homeStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   subTitle: {
-    fontSize: 12,
+    fontSize: 10,
     flex: 1,
-    marginLeft: 10,
+    marginLeft: 5,
     color: "#FFFFFF",
     alignSelf: "center",
+    fontWeight: "bold",
   },
   cardFooter: {
     flexDirection: "row",
@@ -78,13 +79,11 @@ export const homeStyles = StyleSheet.create({
     borderBottomRightRadius: 1,
   },
   cardImage: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderRadius: 50 / 2,
     overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "white",
-    padding: 10,
+    margin: 2,
   },
   cardHeader: {
     paddingVertical: 10,
@@ -107,7 +106,7 @@ export const homeStyles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   footerSpace: {
-    paddingVertical: 8,
+    paddingVertical: 5,
     paddingHorizontal: 3,
     borderTopLeftRadius: 1,
     borderTopRightRadius: 1,

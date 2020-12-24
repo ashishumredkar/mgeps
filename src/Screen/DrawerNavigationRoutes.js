@@ -69,12 +69,12 @@ const homeScreenStack = ({ navigation }) => {
           ),
         //   headerRight: (props) => {
         //   // <NotificationView {...props} />
-         
+
         // // <Icon name="circle-notifications" size={30} color="#900" />
-       
+
         //   },
           headerTitle: (props) => <LogoTitle {...props} />,
-         
+
           headerStyle: {
             backgroundColor: "#307ecc", //Set Header color
           },
@@ -232,7 +232,7 @@ export function NotificationView(props) {
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
 
     <RippleButton
-   
+
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
       rippleStyle={{ marginRight: 16 }}
@@ -301,7 +301,7 @@ const profileScreenStack = ({ navigation }) => {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>   
+    </Stack.Navigator>
   );
 };
 
@@ -536,7 +536,7 @@ const DrawerNavigatorRoutes = (props) => {
     );
   }
   const dimensions = useWindowDimensions();
-  
+
   return (
     <Drawer.Navigator
       drawerContentOptions={{
@@ -547,11 +547,11 @@ const DrawerNavigatorRoutes = (props) => {
           color: "#d8d8d8",
         },
       }}
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: true }}
       drawerContent={(props) => (
         <CustomSidebarMenu {...{ employeename: username, ...props,userType: userType }} />
       )}
-      
+
 
       // drawerContent={(props) => {
       //   const filteredProps = {
@@ -578,13 +578,13 @@ const DrawerNavigatorRoutes = (props) => {
       //           // route.name !== 'HomeScreen'
       //           // && route.name !== 'viewOrganizationProfile',
       //       ),
-            
+
       //     },
       //   };
       //   console.log("routeNames",props.routeNames)
-      
+
       //   return (
-         
+
       //     <DrawerContentScrollView {...filteredProps}>
       //       <CustomSidebarMenu {...{ employeename: username, ...props }} />
 
@@ -593,7 +593,7 @@ const DrawerNavigatorRoutes = (props) => {
       //   );
       // }}
       >
-    
+
       <Drawer.Screen
         name="homeScreenStack"
         // options={{ drawerLabel: "Dashboard" }}

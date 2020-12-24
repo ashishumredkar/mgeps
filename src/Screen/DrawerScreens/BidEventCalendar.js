@@ -7,7 +7,7 @@ import {
   FlatList,
   Modal,
   Button,
-  TouchableOpacity,
+  TouchableOpacity,LogBox
 } from "react-native";
 
 import DatePicker from "react-native-datepicker";
@@ -17,9 +17,10 @@ import AsyncStorage from "@react-native-community/async-storage";
 const STORAGE_KEY = "@user_data";
 import { BID_EVENT_CAL_URL } from "../Utils";
 
-export default class BidEventCalndar extends React.Component {
+export default class BidEventCalndar extends React.PureComponent {
   constructor(props) {
     super(props);
+    this.datePicker=React.createRef();
     this.state = {
       isVisible: false,
       checked: true,
@@ -38,7 +39,8 @@ export default class BidEventCalndar extends React.Component {
   }
 
   async componentDidMount() {
-   
+    LogBox.ignoreAllLogs(['Animated: `useNativeDriver`']);
+
 
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
@@ -64,6 +66,8 @@ openPicker =()=>{
       userType: this.state.userTypeId,
       date: date,
     };
+
+    console.log("getBidEvent ",data)
 
     this.setState({ loading: true });
 

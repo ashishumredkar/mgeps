@@ -91,7 +91,7 @@ const CustomSidebarMenu = (props) => {
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/faq2.png")}
               />
-              <Text style={{ color: "black", marginTop: 5 ,marginLeft:5}}>FAQ</Text>
+              <Text style={{ color: "black", marginTop: 5 ,marginLeft:5,fontWeight: "bold"}}>FAQ</Text>
             </View>
           )}
           onPress={() => {
@@ -107,7 +107,7 @@ const CustomSidebarMenu = (props) => {
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/logout.png")}
               />
-              <Text style={{ color: "black", marginTop: 5,marginLeft:5 }}>Logout</Text>
+              <Text style={{ color: "black", marginTop: 5,marginLeft:5,fontWeight: "bold" }}>Logout</Text>
             </View>
           )}
           onPress={() => {

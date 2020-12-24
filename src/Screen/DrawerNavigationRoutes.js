@@ -111,7 +111,19 @@ const homeScreenStack = ({ navigation }) => {
         component={SettingsScreen}
         options={{ headerShown: false }}
       />
-
+ <Stack.Screen
+        name="BidDetails"
+        component={BidDetails}
+        // options={{
+        //   title: "Details", //Set Header Title
+        // }}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BidDetailsPage"
+        component={BidDetailsPage}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

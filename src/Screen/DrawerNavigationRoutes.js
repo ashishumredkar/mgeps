@@ -226,8 +226,10 @@ export function NotificationView(props) {
 
   const navSettings = () => {
     console.log("Home screen....");
-    navigation.navigate("settingScreenStack");
+
+    navigation.navigate("SettingsScreen");
   };
+
   return (
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
 
@@ -265,8 +267,8 @@ export function NotificationView(props) {
           <OptionMenu
             customButton={myIcon}
             destructiveIndex={1}
-            options={["Settings"]}
-            actions={["navSettings"]}
+            options={["Settings",""]}
+            actions={[navSettings,navSettings]}
           />
         </View>
       </View>

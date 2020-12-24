@@ -54,6 +54,14 @@ const imagesArray = [
   require("../../Image/ic_auction.png"),
   require("../../Image/ic_expand_arrow.png"),
   require("../../Image/ic_organization.png"),
+  require("../../Image/ic_user_registration.png"),
+  require("../../Image/ic_auction.png"),
+  require("../../Image/ic_peoples_1.png"),
+  require("../../Image/ic_ruppes.png"),
+  require("../../Image/ic_report.png"),
+  require("../../Image/ic_comment.png"),
+  require("../../Image/ic_report.png"),
+  require("../../Image/ic_auction.png"),
 ];
 
 class HomeScreen extends React.Component {

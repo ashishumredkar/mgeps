@@ -17,7 +17,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 const STORAGE_KEY = "@user_data";
 import { BID_EVENT_CAL_URL } from "../Utils";
 
-export default class BidEventCalndar extends Component {
+export default class BidEventCalndar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,27 +29,34 @@ export default class BidEventCalndar extends Component {
       userId: "",
       userTypeId: "",
       bidEvent: [],
+      picker:false,
+      isDatePickerVisible:false
     };
   }
   componentWillUnmount() {
-    // this.datePickerRef=null;
+     this.datePicker=null;
   }
 
   async componentDidMount() {
-    this.datePickerRef.onPressDate();
-    this.setState({ isVisible: true });
+   
 
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     console.log("userType1 ", mData.id);
     console.log("userType2 ", mData.userType);
+    this.openPicker();
     this.setState({
       authToken: token,
       userId: mData.id,
       userTypeId: mData.userType,
     });
   }
+
+openPicker =()=>{
+  this.datePicker.onPressDate();
+  this.setState({ isVisible: true ,isDatePickerVisible:true});
+}
 
   getBidEvent = async (date) => {
     const data = {
@@ -103,7 +110,7 @@ export default class BidEventCalndar extends Component {
         key={item.key}
         style={[
           styles.RectangleShapeView,
-          { backgroundColor: AppColors.blue400, marginLeft: 10, marginRight: 10, borderRadius: 6 },
+          { backgroundColor: AppColors.blue400, marginLeft: 5, marginRight: 5, borderRadius: 6 },
         ]}
       >
         <Text
@@ -111,8 +118,8 @@ export default class BidEventCalndar extends Component {
             alignContent: "center",
             alignItems: "center",
             alignSelf: "center",
-            padding: 10,
-            fontSize: 16,
+            padding: 5,
+            fontSize: 14,
             fontWeight: "bold",
             color: AppColors.white,
           }}
@@ -142,8 +149,8 @@ export default class BidEventCalndar extends Component {
             alignContent: "center",
             alignItems: "center",
             alignSelf: "center",
-            padding: 10,
-            fontSize: 16,
+            padding: 5,
+            fontSize: 14,
             fontWeight: "bold",
             color: AppColors.white,
           }}
@@ -153,6 +160,36 @@ export default class BidEventCalndar extends Component {
       </TouchableOpacity>
     );
 
+    renderPicker() {
+   
+        return (
+          <DatePicker
+            style={{ width: 200 }}
+            ref={picker => {
+              this.datePicker = picker;
+            }}
+            date={this.state.date}
+            mode="date"
+            placeholder="Select date baba"
+            format="YYYY-MM-DD"
+            minDate="2016-05-01"
+            maxDate="2020-12-12"
+            confirmBtnText="OK"
+            cancelBtnText="Cancel"
+            onDateChange={(mdate) => {
+              this.getBidEvent(mdate);
+              this.setState({ data: mdate });
+            }}
+            onCloseModal ={()=>{
+              this.setState({ modalVisible: false });
+              this.props.navigation.navigate("HomeScreen");
+            }}
+            isVisible={true}
+
+          />
+        );
+      
+    }
   render() {
     if (this.state.loading) return <Loader loading={this.state.loading} />;
     const { modalVisible } = this.state;
@@ -215,9 +252,10 @@ export default class BidEventCalndar extends Component {
             </View>
           </View>
         </Modal>
-
-        <DatePicker
-          ref={(ref) => (this.datePickerRef = ref)}
+        {this.renderPicker()}
+        {/* <DatePicker
+           ref={(picker) => { this.datePickerRef = picker; }}
+          // ref={(ref) => (this.datePickerRef = ref)}
           date={this.state.date}
           mode="date"
           placeholder="select date"
@@ -247,7 +285,7 @@ export default class BidEventCalndar extends Component {
             this.props.navigation.navigate("HomeScreen");
           }}
           visible={false}
-        />
+        /> */}
       </View>
     );
   }

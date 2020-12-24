@@ -38,7 +38,7 @@ const AlertModal = (props) => {
               style={[styles.image, {}]}
             />
 
-            <Text style={styles.paragraph}>Login Type</Text>
+            <Text style={styles.paragraph}>{props.title}</Text>
           </View>
 
           <View style={{ backgroundColor: "white", flex: 1, marginTop: 5, paddingLeft: 20, paddingRight: 20,}}>

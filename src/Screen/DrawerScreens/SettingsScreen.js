@@ -18,6 +18,7 @@ import { CheckBox } from "react-native-elements";
 import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
 import CustomToolbar from "../Components/CustomToolbar";
 import { AppColors } from "../../style/AppColors";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const PROP = [
   {

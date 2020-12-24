@@ -287,6 +287,7 @@ const LoginScreen = ({ navigation }) => {
         <Loader loading={loading} />
 
         <AlertModal
+           title={"Login Type"}
           loading={isModalVisible}
           errorMessage={errorMessage}
           onRety={onRety}

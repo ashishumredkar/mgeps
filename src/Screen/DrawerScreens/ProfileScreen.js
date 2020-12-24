@@ -22,6 +22,8 @@ import { homeStyles } from "../../style/homeStyles";
 import { viewDetailStyles } from "../../style/viewDetailStyles";
 import BottomView from "../BottomView";
 import { USER_PROFILE_URL } from "../Utils";
+import AlertModal from "../Components/AlertModal";
+import Loader from "../Components/Loader";
 
 const ProfileScreen = (props) => {
   const [profileData, setProfileData] = useState();
@@ -29,6 +31,11 @@ const ProfileScreen = (props) => {
   const [fullName, setFullName] = useState("");
   const [shortName, setShortName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(
+    "Failed to load Profile Data"
+  );
 
   useEffect(() => {
     readData();
@@ -40,17 +47,33 @@ const ProfileScreen = (props) => {
       const token = await AsyncStorage.getItem("auth_token");
       const userTypeName = await AsyncStorage.getItem("userType");
       const objUserData = JSON.parse(userData);
-      console.log("userData", userData)
+      console.log("PofileScreen", userData);
 
       setUserName(userTypeName);
-      setFullName(objUserData.fname + " " + objUserData.mname + " " + objUserData.lname);
+      setFullName(
+        objUserData.fname + " " + objUserData.mname + " " + objUserData.lname
+      );
       setShortName(objUserData.fname.charAt(0) + objUserData.lname.charAt(0));
       setEmailAddress(objUserData.email);
 
-      getUserProfileData(objUserData.id, objUserData.userType, token, userTypeName);
+      getUserProfileData(
+        objUserData.id,
+        objUserData.userType,
+        token,
+        userTypeName
+      );
     } catch (e) {
       console.log("catch ", e);
     }
+  };
+
+  const onRety = () => {
+    readData();
+    setModalVisible(false);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
   };
 
   const getUserProfileData = async (id, userTypeId, token, userTypeName) => {
@@ -58,10 +81,11 @@ const ProfileScreen = (props) => {
       userId: id,
       userType: userTypeId,
     };
-
+    setLoading(true);
     console.log("Post data :: ", data);
 
-    fetch(USER_PROFILE_URL, { //Pune office UAT
+    fetch(USER_PROFILE_URL, {
+      //Pune office UAT
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -74,7 +98,7 @@ const ProfileScreen = (props) => {
       .then((response) => {
         //Hide Loader
         // setLoading(false);
-        if(response) {
+        if (response) {
           console.log("User data \n\n\n", response);
 
           if (response.firstName) {
@@ -95,21 +119,30 @@ const ProfileScreen = (props) => {
         }
       })
       .catch((error) => {
-        //Hide Loader
-        // setLoading(false);
-        console.error("qwerty  ", error);
-      });
+        setLoading(false);
+        setModalVisible(true);
+        console.error(error);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
-
       <CustomToolbar
         title={"Profile"}
         userType={username}
         backgroundColor="#3775f0"
       />
-      <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+      <Loader loading={loading} />
+
+      <AlertModal
+        title={"Profile Screen"}
+        loading={isModalVisible}
+        errorMessage={errorMessage}
+        onRety={onRety}
+        onCloseModal={closeModal}
+      />
+      <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
         {profileData ? (
           <Card
             style={{ padding: 10, margin: 10, height: "40%", borderRadius: 40 }}
@@ -123,12 +156,8 @@ const ProfileScreen = (props) => {
 
               {/* CONTACT DETAILS  */}
               <View style={{ paddingTop: 8 }}>
-                <Text style={gStyles.contactStyle}>
-                  {fullName}
-                </Text>
-                <Text>
-                  {emailAddress}
-                </Text>
+                <Text style={gStyles.contactStyle}>{fullName}</Text>
+                <Text>{emailAddress}</Text>
               </View>
             </View>
           </Card>
@@ -149,7 +178,10 @@ const ProfileScreen = (props) => {
               showsHorizontalScrollIndicator={false}
               renderItem={({ item, index }) => {
                 //console.log("item ", item);
-                const keyValue = Object.keys(item).map((key) => [key, item[key]]);
+                const keyValue = Object.keys(item).map((key) => [
+                  key,
+                  item[key],
+                ]);
                 console.log(
                   "Key Value :: ",
                   keyValue + " Type :: " + typeof keyValue[0][1]
@@ -179,7 +211,15 @@ const ProfileScreen = (props) => {
                           { flexDirection: "column" },
                         ]}
                       >
-                        <Text style={viewDetailStyles.name}>{key.replace(/([A-Z])/g, ' $1').trim().replace(/^./, function(str){ return str.toUpperCase(); })}:</Text>
+                        <Text style={viewDetailStyles.name}>
+                          {key
+                            .replace(/([A-Z])/g, " $1")
+                            .trim()
+                            .replace(/^./, function (str) {
+                              return str.toUpperCase();
+                            })}
+                          :
+                        </Text>
                         <Text
                           style={{
                             flex: 1,

@@ -493,7 +493,7 @@ const DrawerNavigatorRoutes = (props) => {
         <Image
           style={{ width: 25, height: 25 }}
           //source={require("../Image/profile.png")}
-          source={require("../Image/profile.png")}
+          source={require("../Image/ic_profile.png")}
         />
         <Text style={gStyles.drawerText}>Profile Overview</Text>
       </View>

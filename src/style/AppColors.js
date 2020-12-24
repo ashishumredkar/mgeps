@@ -32,6 +32,7 @@ export const AppColors = {
   green200: '#A5D6A7',
   green600: '#7CB342',
   grey10: '#e6e6e6',
+  grey40: '#999999',
   teal500: '#009688',
 
   //Dashboard color combination

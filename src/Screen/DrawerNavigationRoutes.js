@@ -254,21 +254,22 @@ export function NotificationView(props) {
       <View>
         <Image
           style={{
-            width: Platform.OS == "ios" ? 30 : 40,
-            height: Platform.OS == "ios" ? 30 : 40,
+            width: Platform.OS == "ios" ? 30 : 30,
+            height: Platform.OS == "ios" ? 30 : 30,
             backgroundColor: "#307ecc",
           }}
-          source={require("../Image/notification.png")}
+          source={require("../Image/ic_stat_notifications.png")}
         />
         <Badge
           status="error"
           value={notificationCount}
           containerStyle={{
             position: "absolute",
-            top: 2,
-            right: -4,
+            top: 0,
+            right: -20,
             fontWeight: "bold",
             fontSize: 14,
+            width: 40,
           }}
         />
       </View>

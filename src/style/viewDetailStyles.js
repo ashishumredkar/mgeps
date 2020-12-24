@@ -78,18 +78,18 @@ export const viewDetailStyles = StyleSheet.create({
     borderBottomEndRadius: 8,
     borderBottomStartRadius: 8,
 
-    padding: 8,
+    padding: 5,
 
     // Set border color.
     borderColor: "blue",
   },
   cardTitle: {
     color: "white",
-    fontSize: 18,
+    fontSize: 14,
     alignSelf: "flex-start",
     alignContent: "center",
     alignItems: "center",
-    fontWeight: "normal",
+    fontWeight: "bold",
     margin: 5,
     height: 30,
   },
@@ -101,7 +101,7 @@ export const viewDetailStyles = StyleSheet.create({
     fontWeight: "bold",
     color: AppColors.AppGrey600,
     marginRight: 8,
-    width: 120,
+    width: "30%",
   },
   position: {
     fontSize: 14,
@@ -170,8 +170,8 @@ export const viewDetailStyles = StyleSheet.create({
   notificationLabel: {
     flexDirection:'row',
     borderRadius: 10,
-    marginRight: 5,
-    marginLeft: 5,
+    marginRight: 2,
+    marginLeft: 2,
     marginBottom: 2,
   },
   notificationValue: {
@@ -182,5 +182,6 @@ export const viewDetailStyles = StyleSheet.create({
     color: "grey",
     fontWeight: "normal",
     paddingLeft: 5,
+    width: "70%",
   }
 });

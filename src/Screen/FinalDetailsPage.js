@@ -227,9 +227,9 @@ export default class FinalDetailsPage extends Component {
             <View style={{ margin: 8 }}>
               <View
                 style={{
-                  height: 32,
+                  height: 28,
                   width: "100%",
-                  backgroundColor: "#3775f0",
+                  backgroundColor: AppColors.colorPrimary,
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                   borderBottomLeftRadius: 2,
@@ -271,8 +271,8 @@ export default class FinalDetailsPage extends Component {
                       );
 
                       if (
-                        typeof keyValue[0][1] === "string" ||
-                        typeof keyValue[0][1] === "number"
+                        (!["moduleName", "notificationId"].includes(keyValue[0][0]))
+                        && (typeof keyValue[0][1] === "string" || typeof keyValue[0][1] === "number")
                       ) {
                         var key = keyValue[0][0];
                         var value = keyValue[0][1];
@@ -297,7 +297,7 @@ export default class FinalDetailsPage extends Component {
                                 height: 1,
                                 width: "100%",
                                 backgroundColor: AppColors.AppGrey001,
-                                marginTop: 8,
+                                marginTop: 4,
                               }}
                             />
                           </View>

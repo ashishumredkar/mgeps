@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, Component, createRef } from "react";
 import {
   View,
   Text,
@@ -6,14 +6,16 @@ import {
   ActivityIndicator,
   Pressable,
   StyleSheet,
-  Button,
   Image,
   StatusBar,
-  SafeAreaView
+  SafeAreaView,
+  Modal,
+  RadioButton,
+  TextInput,
 } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
 
-import { Header, ListItem } from "react-native-elements";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Header, ListItem, Button } from "react-native-elements";
 // import Icon from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -52,7 +54,6 @@ export const Divider = () => {
 };
 
 export default class Details extends Component {
-
   constructor(props) {
     super(props);
 
@@ -65,7 +66,12 @@ export default class Details extends Component {
       pageLink: "",
       authToken: "",
       totalCount: 0,
-      userType:''
+      userType:'',
+      totalPageNo: 0,
+      notificationText: "",
+      activityTypeText: "",
+      departmentText: "",
+      classificationText: "",
     };
   }
 
@@ -75,10 +81,8 @@ export default class Details extends Component {
 
   readData = async () => {
     try {
-
       const token = await AsyncStorage.getItem("auth_token");
       const userType = await AsyncStorage.getItem("userType");
-
 
       if (token) {
         this.setState({
@@ -93,20 +97,31 @@ export default class Details extends Component {
   };
 
   fetchData = async () => {
-    //console.log("componentDidMount ", this.props.route.params.link);
     this.setState({
       pageTitle: this.props.route.params.title,
       pageLink: this.props.route.params.link,
+      isVisible: false,
     });
     this.setState({ isLoading: true });
-    const url = `${this.props.route.params.link}?page=${this.state.page}&pageSize=20`;
-
-    console.log("url ", url);
-
-    const abc = "Bearer " + this.state.authToken;
-    console.log("url ", abc);
+    var url = `${this.props.route.params.link}?page=${this.state.page}&pageSize=20`;
 
     try {
+      if (this.state.notificationText) {
+        url = url + '&notification=' + this.state.notificationText;
+      }
+
+      if (this.state.activityTypeText) {
+        url = url + '&activityType=' + this.state.activityTypeText;
+      }
+
+      if (this.state.departmentText) {
+        url = url + '&departmentName=' + this.state.departmentText;
+      }
+      if (this.state.classificationText) {
+        url = url + '&classificationType=' + this.state.classificationText;
+      }
+
+      console.log("\n\nFinale url :: ", url);
 
       fetch(url, {
         method: "GET",
@@ -115,7 +130,6 @@ export default class Details extends Component {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        //body: formdata,
       })
         .then((response) => response.json())
         .then((responseJson) => {
@@ -130,15 +144,24 @@ export default class Details extends Component {
             this.setState({
               isLoading: false,
               totalCount: responseJson.totalRows,
+              totalPageNo: responseJson.totalPageNo,
             });
           } else {
             this.setState({
               isLoading: false,
               totalCount: responseJson.totalRows,
+              users: [],
             });
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.setState({
+            isLoading: false,
+            totalCount: 0,
+            users: [],
+          });
+      
+        });
     } catch (err) {
       console.log(err);
     }
@@ -150,11 +173,19 @@ export default class Details extends Component {
     });
   };
 
+  showFilters = () => {
+    console.log("Calleddd this.....");
+    this.setState({ classificationText: "", activityTypeText: "", departmentText: "", classificationText: "" });
+    this.setState({ isVisible: true, page: 1});
+  };
+
   loadMoreUsers = () => {
-    this.setState({ page: this.state.page + 1, isLoadingMore: true }, () => {
-      this.fetchData();
-      this.setState({ isLoadingMore: false });
-    });
+    if (this.state.totalPageNo >= this.state.page + 1) {
+      this.setState({ page: this.state.page + 1, isLoadingMore: true }, () => {
+        this.fetchData();
+        this.setState({ isLoadingMore: false });
+      });
+    }
   };
 
   AppHeader = (title) => {
@@ -204,6 +235,7 @@ export default class Details extends Component {
       )
     );
   };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
@@ -315,6 +347,13 @@ export default class Details extends Component {
           </View>
           {!this.state.isLoading && this.state.users && (
             <View style={listStyles.totalRowsView}>
+              <TouchableOpacity onPress={() => {this.showFilters()}}>
+                <Image 
+                  source={require("../Image/ic_filter.png")} 
+                  style={{width: 40, height: 40, backgroundColor: AppColors.colorPrimary, borderRadius: 25, marginRight: 20, marginBottom: 10}}
+                />
+              </TouchableOpacity>
+
               <View style={listStyles.textShadow}>
                 <Text style={listStyles.textStyle}>
                   Total Rows : {this.state.totalCount}
@@ -326,6 +365,154 @@ export default class Details extends Component {
             <BottomView />
           </View>
         </View>
+
+        <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={this.state.isVisible}
+            onRequestClose={() => {
+              console.log("Modal has been closed.");
+            }}
+            scrollHorizontal={true}
+          >
+            <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
+              <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
+                <Image 
+                  style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
+                  source={require("../Image/ic_close.png")}/>
+
+                <Text style={[styles.modelTitle]}>Filter</Text>
+              </View>
+
+              <View style={{flexDirection: "column", flex: 1}}>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(value) => this.setState({notificationText: value})}
+                    placeholder="Type Notification Keyword" //dummy@abc.com
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    // onSubmitEditing={() =>
+                    //   refActivityType.current && refActivityType.current.focus()
+                    // }
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(value) => this.setState({activityTypeText: value})}
+                    placeholder="Type Activity Type Keyword" //dummy@abc.com
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    // onSubmitEditing={() =>
+                    //   refDepartmentName.current && refDepartmentName.current.focus()
+                    // }
+                    // ref={refActivityType}
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(value) => this.setState({departmentText: value})}
+                    placeholder="Type Department Keyword" //dummy@abc.com
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    // onSubmitEditing={() =>
+                    //   passwordInputRef.current && passwordInputRef.current.focus()
+                    // }
+                    // ref={refDepartmentName}
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(value) => this.setState({classificationText: value})}
+                    placeholder="Type Classification Keyword" //dummy@abc.com
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    // onSubmitEditing={() =>
+                    //   passwordInputRef.current && passwordInputRef.current.focus()
+                    // }
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={styles.inputs}
+                    underlineColorAndroid="transparent"
+                    onChangeText={(value) => this.setState({eventId: value})}
+                    placeholder="Type Event Id Keyword" //dummy@abc.com
+                    placeholderTextColor="#8b9cb5"
+                    autoCapitalize="none"
+                    keyboardType="default"
+                    returnKeyType="next"
+                    // onSubmitEditing={() =>
+                    //   passwordInputRef.current && passwordInputRef.current.focus()
+                    // }
+                    underlineColorAndroid="#f000"
+                    blurOnSubmit={false}
+                  />
+                </View>
+              </View>
+
+              <View style={{ flexDirection: "row", margin: 10 }}>
+                <Button
+                  title="Apply Filter"
+                  buttonStyle={{
+                    marginTop: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.green600,
+                    width: 120,
+                    height: 35,
+                  }}
+                  onPress={() => {
+                    this.fetchData()
+                  }}
+                />
+                <Button
+                  title="Clear"
+                  buttonStyle={{
+                    marginTop: 5,
+                    marginLeft: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.red400,
+                    width: 120,
+                    height: 35,
+                  }}
+                  onPress={() => {
+                    // this.setState({ });
+                  }}
+                />
+              </View>
+            </View>
+            <View
+              style={{ height: 1, width: "100%", backgroundColor: "white" }}
+            />
+          </Modal>
+
       </SafeAreaView>
     );
   }
@@ -389,6 +576,54 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     alignContent: "center"
+  },
+  modal: {
+    justifyContent: "flex-start",
+    height: "60%",
+    width: "80%",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#fff",
+    backgroundColor: "white",
+    marginTop: 80,
+    marginLeft: 40,
+  },
+
+  modelTitle: {
+    fontWeight: "bold",
+    color: AppColors.white,
+    fontSize: 18,
+    backgroundColor: AppColors.colorPrimary,
+    padding: 10,
+    marginLeft: -5,
+  },
+  inputs: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: "#FFFFFF",
+    flex: 1,
+  },
+  inputContainer: {
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 30,
+    borderBottomWidth: 1,
+    width: "90%",
+    height: 45,
+    marginTop: 10,
+    marginLeft: 10,
+    flexDirection: "row",
+    alignItems: "center",
+
+    shadowColor: "#808080",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 });
 

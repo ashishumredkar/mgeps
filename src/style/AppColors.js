@@ -27,6 +27,7 @@ export const AppColors = {
   blue400: '#29B6F6',
   red200: '#EF9A9A',
   red300: '#E57373',
+  red400: '#EF5350',
   red800: '#C62828',
   green200: '#A5D6A7',
   green600: '#7CB342',

@@ -117,7 +117,6 @@ class SubMenues extends React.Component {
           <View style={[gStyles.subMenuLinking, {backgroundColor:this.state.iconBackColor}]}>
             <Image
               style={{ width: 35, height: 35, }}
-              // source={require("../Image/menu_logo.png")}
               source={this.state.iconUri}
 
             />

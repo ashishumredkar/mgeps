@@ -105,11 +105,12 @@ const homeScreenStack = ({ navigation }) => {
         component={FinalDetailsPage}
         options={{ headerShown: false }}
       />
-     {/* <Drawer.Screen
-        name="bidEventStack"
+
+      <Stack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
         options={{ headerShown: false }}
-        component={bidEventStack}
-      /> */}
+      />
 
     </Stack.Navigator>
   );
@@ -224,6 +225,7 @@ export function NotificationView(props) {
   };
 
   const navSettings = () => {
+    console.log("Home screen....");
     navigation.navigate("settingScreenStack");
   };
   return (
@@ -264,7 +266,7 @@ export function NotificationView(props) {
             customButton={myIcon}
             destructiveIndex={1}
             options={["Settings"]}
-            actions={[navSettings]}
+            actions={["navSettings"]}
           />
         </View>
       </View>
@@ -299,7 +301,7 @@ const profileScreenStack = ({ navigation }) => {
         component={ProfileScreen}
         options={{ headerShown: false }}
       />
-    </Stack.Navigator>
+    </Stack.Navigator>   
   );
 };
 

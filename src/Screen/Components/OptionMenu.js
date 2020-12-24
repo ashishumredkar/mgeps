@@ -12,7 +12,7 @@ import {
 
 const OptionMenu = (props) =>{
     const inputRef = useRef();
-    const [open,setOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
 
     const handleClick = index => {

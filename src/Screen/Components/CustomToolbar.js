@@ -14,7 +14,12 @@ const CustomToolbar = (props) => {
   const navigation = useNavigation();
 
   const navSettings = () => {
+    console.log("Customer screen....");
     navigation.navigate("SettingsScreen");
+  };
+
+  const navFilters = () => {
+    console.log("Open filters \n\n\n\n\n");
   };
 
   return (
@@ -58,8 +63,8 @@ const CustomToolbar = (props) => {
           <OptionMenu
             customButton={myIcon}
             destructiveIndex={1}
-            options={["Settings"]}
-            actions={[navSettings]}
+            options={["Settings", "Filters"]}
+            actions={[navSettings, navFilters]}
           />
         </View>
       </View>

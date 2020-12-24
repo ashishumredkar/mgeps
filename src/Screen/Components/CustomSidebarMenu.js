@@ -33,12 +33,12 @@ const CustomSidebarMenu = (props) => {
 
     if(props.userType ==='Agency'){
       newState.routes = newState.routes.filter(
-      
+
         (item) => item.name !== 'bidEventStack' ,
       );
-  
+
     }
-    
+
   return (
     <View style={stylesSidebar.sideMenuContainer}>
       <ImageBackground
@@ -53,7 +53,7 @@ const CustomSidebarMenu = (props) => {
               width: 60,
               height: 60,
               borderRadius: 60 / 2,
-              marginTop: -40,
+              marginTop: 0,
               marginBottom: 30,
               backgroundColor: AppColors.AppGrey001,
             }}
@@ -86,18 +86,18 @@ const CustomSidebarMenu = (props) => {
         </View>
         <DrawerItem
           label={({ color }) => (
-            <View style={{ flexDirection: "row", height:40, marginTop:-5  }}>
+            <View style={{ flexDirection: "row",height:40,marginTop:-5  }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/faq2.png")}
               />
-              <Text style={{ color: "black", marginTop: 5, marginLeft:5, fontWeight: "bold"}}>FAQ</Text>
+              <Text style={{ color: "black", marginTop: 5 ,marginLeft:5}}>FAQ</Text>
             </View>
           )}
           onPress={() => {
             props.navigation.toggleDrawer();
-            Linking.openURL(FAQ_URL) 
-           
+            Linking.openURL(FAQ_URL)
+
           }}
         />
         <DrawerItem
@@ -107,7 +107,7 @@ const CustomSidebarMenu = (props) => {
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/logout.png")}
               />
-              <Text style={{ color: "black", marginTop: 5, marginLeft:5, fontWeight: "bold" }}>Logout</Text>
+              <Text style={{ color: "black", marginTop: 5,marginLeft:5 }}>Logout</Text>
             </View>
           )}
           onPress={() => {

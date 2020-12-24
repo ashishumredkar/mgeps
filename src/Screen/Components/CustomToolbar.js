@@ -24,50 +24,50 @@ const CustomToolbar = (props) => {
 
   return (
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
-    <ImageBackground source={require("../../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: 0, resizeMode: "cover", justifyContent: "center" }}>
-      <View style={styles.leftContainer}>
-        <BackButton />
-      </View>
-      <Text style={styles.middleContainer}>
-        {/* {this.props.title} */}
-        <View style={{ flexDirection: "row", marginTop: 5 }}>
-          <View style={{paddingTop: 10}}>
-            <Image
-              style={{ width: 35, height: 35 }}
-              source={require("../../Image/menu_logo.png")}
+      <ImageBackground source={require("../../Image/world_map.png")} style={{ flexDirection: "row", flex: 1, marginLeft: 0, resizeMode: "cover", justifyContent: "center" }}>
+        <View style={styles.leftContainer}>
+          <BackButton />
+        </View>
+        <Text style={styles.middleContainer}>
+          {/* {this.props.title} */}
+          <View style={{ flexDirection: "row", marginTop: 5 }}>
+            <View style={{paddingTop: 10}}>
+              <Image
+                style={{ width: 35, height: 35 }}
+                source={require("../../Image/menu_logo.png")}
+              />
+            </View>
+
+            <View style={{ width: 10 }}></View>
+
+            {/* CONTACT DETAILS  */}
+            <View style={{ paddingTop: 10 }}>
+              <Text
+                numberOfLines={1}
+                style={[gStyles.contactStyle, { color: "white"}]}
+              >
+                {props.title.length < 25
+                  ? `${props.title}`
+                  : `${props.title.substring(0, 25)}...`}
+              </Text>
+              {props.userType != "" ? (
+                <Text style={[{ color: "white", fontSize: 14 }]}>
+                  UserType: {props.userType}
+                </Text>
+              ) : null}
+            </View>
+          </View>
+        </Text>
+        <View style={styles.rightContainer}>
+          <View style={styles.rightIcon}>
+            <OptionMenu
+              customButton={myIcon}
+              destructiveIndex={1}
+              options={["Settings", "Filters"]}
+              actions={[navSettings, navFilters]}
             />
           </View>
-
-          <View style={{ width: 10 }}></View>
-
-          {/* CONTACT DETAILS  */}
-          <View style={{ paddingTop: 10 }}>
-            <Text
-              numberOfLines={1}
-              style={[gStyles.contactStyle, { color: "white"}]}
-            >
-              {props.title.length < 25
-                ? `${props.title}`
-                : `${props.title.substring(0, 25)}...`}
-            </Text>
-            {props.userType != "" ? (
-              <Text style={[{ color: "white", fontSize: 14 }]}>
-                UserType: {props.userType}
-              </Text>
-            ) : null}
-          </View>
         </View>
-      </Text>
-      <View style={styles.rightContainer}>
-        <View style={styles.rightIcon}>
-          <OptionMenu
-            customButton={myIcon}
-            destructiveIndex={1}
-            options={["Settings", "Filters"]}
-            actions={[navSettings, navFilters]}
-          />
-        </View>
-      </View>
       </ImageBackground>
     </View>
   );

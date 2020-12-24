@@ -493,7 +493,7 @@ const DrawerNavigatorRoutes = (props) => {
         <Image
           style={{ width: 25, height: 25 }}
           //source={require("../Image/profile.png")}
-          source={require("../Image/ic_profile.png")}
+          source={require("../Image/profile.png")}
         />
         <Text style={gStyles.drawerText}>Profile Overview</Text>
       </View>
@@ -547,7 +547,7 @@ const DrawerNavigatorRoutes = (props) => {
           color: "#d8d8d8",
         },
       }}
-      screenOptions={{ headerShown: true }}
+      screenOptions={{ headerShown: false }}
       drawerContent={(props) => (
         <CustomSidebarMenu {...{ employeename: username, ...props,userType: userType }} />
       )}

@@ -12,6 +12,7 @@ import {
   Modal,
   RadioButton,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -384,22 +385,24 @@ export default class Details extends Component {
             }}
             scrollHorizontal={true}
           >
-            <KeyboardAvoidingView
-              style={styles.container}
-              behavior="padding"
-              keyboardVerticalOffset={-130}
-            >
-              <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
-                <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
-                  <TouchableOpacity onPress={() => props.onCloseModal()}>
-                    <Image 
-                      style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
-                      source={require("../Image/ic_close.png")}
-                      />
-                  </TouchableOpacity>
+        
+          <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
+            <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
+              <TouchableOpacity onPress={() => props.onCloseModal()}>
+                <Image 
+                  style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
+                  source={require("../Image/ic_close.png")}
+                  />
+              </TouchableOpacity>
 
-                  <Text style={[styles.modelTitle]}>Filter</Text>
-                </View>
+              <Text style={[styles.modelTitle]}>Filter</Text>
+            </View>
+
+              <KeyboardAvoidingView
+                style={styles.container}
+                behavior="padding"
+                keyboardVerticalOffset={-130}
+              >
 
                 <View style={{flexDirection: "column", flex: 1}}>
                   <View style={styles.inputContainer}>
@@ -499,39 +502,38 @@ export default class Details extends Component {
                     />
                   </View>
                 </View>
+              </KeyboardAvoidingView>
 
-                <View style={{ flexDirection: "row", margin: 10 }}>
-                  <Button
-                    title="Apply Filter"
-                    buttonStyle={{
-                      marginTop: 5,
-                      borderRadius: 16,
-                      backgroundColor: AppColors.green600,
-                      width: 120,
-                      height: 35,
-                    }}
-                    onPress={() => {
-                      this.fetchData()
-                    }}
-                  />
-                  <Button
-                    title="Close"
-                    buttonStyle={{
-                      marginTop: 5,
-                      marginLeft: 5,
-                      borderRadius: 16,
-                      backgroundColor: AppColors.red400,
-                      width: 120,
-                      height: 35,
-                    }}
-                    onPress={() => {this.resetFilters()}}
-                  />
-                </View>
+              <View style={{ flexDirection: "row", margin: 10 }}>
+                <Button
+                  title="Apply Filter"
+                  buttonStyle={{
+                    marginTop: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.green600,
+                    width: 120,
+                    height: 35,
+                  }}
+                  onPress={() => {
+                    this.fetchData()
+                  }}
+                />
+                <Button
+                  title="Close"
+                  buttonStyle={{
+                    marginTop: 5,
+                    marginLeft: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.red400,
+                    width: 120,
+                    height: 35,
+                  }}
+                  onPress={() => {this.resetFilters()}}
+                />
               </View>
-              <View
-                style={{ height: 1, width: "100%", backgroundColor: "white" }}
-              />
-            </KeyboardAvoidingView>
+            </View>
+            <View style={{ height: 1, width: "100%", backgroundColor: "white" }}/>
+            
           </Modal>
 
       </SafeAreaView>

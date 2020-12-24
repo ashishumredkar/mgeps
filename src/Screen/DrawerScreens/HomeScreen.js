@@ -28,32 +28,30 @@ import { DASHBOARD_URL } from "../Utils";
 import CustomToolbar from "../Components/CustomToolbar";
 
 const colors = [
-  "#29B6F6",
-  "#f6cd29",
-  "#b19cd9",
-  "#FA8072",
-  "#AED581",
-  "#FFA500",
-  "#EDDA74",
-  "#9E9E9E",
-  "#FFB366",
-  "#80CBC4",
-  "#FFC107",
-  "#29B6F6",
+  AppColors.blue400,
+  AppColors.yellowLight,
+  AppColors.purpleLight,
+  AppColors.redLight,
+  AppColors.green300,
+  AppColors.orangeLight,
+  AppColors.goldLight,
+  AppColors.grey500,
+  AppColors.yellowGoldLight,
+  AppColors.teal200,
+  AppColors.amber500,
+  AppColors.blue400,
 ];
-//['#0088FE', 'skyblue', '#FFBB28', 'purple','red','blue','darkblue','orange'];
 
 const imagesArray = [
-  require("../../Image/registration.png"),
-  require("../../Image/membership.png"),
-  require("../../Image/notice.png"),
-  require("../../Image/trophy.png"),
-  require("../../Image/cart.png"),
-  require("../../Image/kpms.png"),
-  require("../../Image/kpms.png"),
-  require("../../Image/auction.png"),
-  require("../../Image/to-do.png"),
-  require("../../Image/basketball.png"),
+  require("../../Image/ic_user_registration.png"),
+  require("../../Image/ic_auction.png"),
+  require("../../Image/ic_peoples_1.png"),
+  require("../../Image/ic_ruppes.png"),
+  require("../../Image/ic_receipt.png"),
+  require("../../Image/ic_report.png"),
+  require("../../Image/ic_comment.png"),
+  require("../../Image/ic_report.png"),
+  require("../../Image/ic_auction.png"),
   require("../../Image/ic_expand_arrow.png"),
   require("../../Image/ic_organization.png"),
 ];
@@ -278,7 +276,6 @@ class HomeScreen extends React.Component {
                     <Image
                       style={homeStyles.cardImage}
                       source={imagesArray[index]}
-                      //source={{ uri: imagesArray[index] }}
                     />
 
                     <Text style={homeStyles.subTitle}>

@@ -26,42 +26,32 @@ import { Platform } from "react-native";
 const STORAGE_KEY = "@user_data";
 
 const colors = [
-  "#FF4500",
-  "#87CEEB",
-  "#4682B4",
-  "#6A5ACD",
-  "#FF69B4",
-  "#00BFFF",
-  "#00FFFF",
-  "#20B2AA",
-  "#191970",
-  "#008080",
+  AppColors.blue400,
+  AppColors.yellowLight,
+  AppColors.purpleLight,
+  AppColors.redLight,
+  AppColors.green300,
+  AppColors.orangeLight,
+  AppColors.goldLight,
+  AppColors.grey500,
+  AppColors.yellowGoldLight,
+  AppColors.teal200,
+  AppColors.amber500,
+  AppColors.blue400,
 ];
-//['#0088FE', 'skyblue', '#FFBB28', 'purple','red','blue','darkblue','orange'];
 
-// const imagesArray = [
-//   "https://img.icons8.com/color/70/000000/name.png",
-//   "https://img.icons8.com/office/70/000000/home-page.png",
-//   "https://img.icons8.com/color/70/000000/two-hearts.png",
-//   "https://img.icons8.com/color/70/000000/family.png",
-//   "https://img.icons8.com/color/70/000000/groups.png",
-//   "https://img.icons8.com/color/70/000000/classroom.png",
-//   "https://img.icons8.com/dusk/70/000000/checklist.png",
-//   "https://img.icons8.com/dusk/70/000000/globe-earth.png",
-//   "https://img.icons8.com/color/70/000000/to-do.png",
-//   "https://img.icons8.com/color/70/000000/basketball.png",
-// ];
 const imagesArray = [
-  require("../Image/registration.png"),
-  require("../Image/membership.png"),
-  require("../Image/notice.png"),
-  require("../Image/trophy.png"),
-  require("../Image/cart.png"),
-  require("../Image/kpms.png"),
-  require("../Image/kpms.png"),
-  require("../Image/auction.png"),
-  "https://img.icons8.com/color/70/000000/to-do.png",
-  "https://img.icons8.com/color/70/000000/basketball.png",
+  require("../Image/ic_user_registration.png"),
+  require("../Image/ic_auction.png"),
+  require("../Image/ic_peoples_1.png"),
+  require("../Image/ic_ruppes.png"),
+  require("../Image/ic_receipt.png"),
+  require("../Image/ic_report.png"),
+  require("../Image/ic_comment.png"),
+  require("../Image/ic_report.png"),
+  require("../Image/ic_auction.png"),
+  require("../Image/ic_expand_arrow.png"),
+  require("../Image/ic_organization.png"),
 ];
 class SubMenues extends React.Component {
   constructor(props) {

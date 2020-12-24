@@ -10,9 +10,9 @@ import {
   FlatList,
   Pressable,
   Modal,
-  Button,
   SafeAreaView,
 } from "react-native";
+import { Button } from "react-native-elements";
 import RadioButton from "../Components/RadioButton";
 import { CheckBox } from "react-native-elements";
 import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
@@ -108,19 +108,18 @@ export default class SettingsScreen extends Component {
         />
         <View style={styles.container}>
           <Modal
-            style={styles.modal}
             animationType={"fade"}
-            transparent={false}
+            transparent={true}
             visible={this.state.isVisible}
             onRequestClose={() => {
               console.log("Modal has been closed.");
             }}
           >
             {/*All views of Modal*/}
-            <View style={styles.modal}>
-              <Text style={styles.text}>Mute notification for...!</Text>
+            <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
+              <Text style={[styles.text, {fontWeight: "bold", fontSize: 18}]}>Mute notification for...!</Text>
               <Text style={styles.text}>
-                choose any one from following options
+                Choose any one from following options
               </Text>
               <RadioButton PROP={PROP} />
 
@@ -131,25 +130,40 @@ export default class SettingsScreen extends Component {
               />
 
               <View style={{ flexDirection: "row", margin: 10 }}>
-                <Text
-                  style={{ flex: 1, margin: 10 }}
+                <Button
                   title="OK"
+                  buttonStyle={{
+                    marginTop: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.green600,
+                    width:120,
+                    height: 35,
+                  }}
                   onPress={() => {
                     this.setState({ isVisible: !this.state.isVisible });
                   }}
-                >
-                  {" "}
-                  OK
-                </Text>
-                <Text
-                  style={{ flex: 1, margin: 10 }}
-                  title="CANCEL"
+                />
+                <View
+                  style={{
+                    width: 50,
+                    height: 50,
+                    flex: 1,
+                  }}
+                />
+
+                <Button
+                  title="Cancel"
+                  buttonStyle={{
+                    marginTop: 5,
+                    borderRadius: 16,
+                    backgroundColor: AppColors.red800,
+                    width:120,
+                    height: 35,
+                  }}
                   onPress={() => {
                     this.setState({ isVisible: !this.state.isVisible });
                   }}
-                >
-                  CANCEL
-                </Text>
+                />
               </View>
             </View>
             <View
@@ -181,12 +195,12 @@ const styles = StyleSheet.create({
   modal: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
     height: "60%",
     width: "80%",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
+    backgroundColor: "white",
     marginTop: 80,
     marginLeft: 40,
   },
@@ -195,6 +209,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   row: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     borderColor: "#dcdcdc",

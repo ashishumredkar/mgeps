@@ -14,7 +14,7 @@ const CustomToolbar = (props) => {
   const navigation = useNavigation();
 
   const navSettings = () => {
-    navigation.navigate("settingScreenStack");
+    navigation.navigate("SettingsScreen");
   };
 
   return (

@@ -69,7 +69,8 @@ export const gStyles = StyleSheet.create({
   drawerText: {
     height: 25,
     marginTop: 5,
-    marginLeft: 4
+    marginLeft: 10,
+    fontWeight: "bold",
   },
 
   radioText: {

@@ -32,5 +32,17 @@ export const AppColors = {
   green600: '#7CB342',
   grey10: '#e6e6e6',
   teal500: '#009688',
+
+  //Dashboard color combination
+  blue400: '#29B6F6',
+  yellowLight: '#f6cd29',
   purpleLight: '#b19cd9',
+  redLight: '#FA8072',
+  green300: '#AED581',
+  orangeLight: '#FFA500',
+  goldLight: '#EDDA74',
+  grey500: '#9E9E9E',
+  yellowGoldLight: '#FFB366',
+  teal200: '#80CBC4',
+  amber500: '#FFC107',
 };

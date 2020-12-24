@@ -9,7 +9,10 @@ import {
   Image,
   useWindowDimensions,
   Platform,
-  ImageBackground,Button,StyleSheet
+  ImageBackground,
+  Button,
+  StyleSheet,
+  Divider
 } from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
@@ -402,7 +405,7 @@ const bidEventStack = ({ navigation }) => {
         name="BidEventCalndar"
         component={BidEventCalndar}
         options={{
-          title: "BidEventCalndar", //Set Header Title
+          title: "Bid Event Calendar", //Set Header Title
           headerLeft: null,
           gesturesEnabled: false,
         }}
@@ -465,7 +468,7 @@ const DrawerNavigatorRoutes = (props) => {
       <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/bid_event.png")}
+          source={require("../Image/ic_calendar.png")}
         />
         <Text style={gStyles.drawerText}>Bid Event Calendar</Text>
       </View>
@@ -500,7 +503,7 @@ const DrawerNavigatorRoutes = (props) => {
       <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/organisation.png")}
+          source={require("../Image/ic_organization.png")}
         />
         <Text style={gStyles.drawerText}>My Organization Profile</Text>
       </View>
@@ -524,7 +527,7 @@ const DrawerNavigatorRoutes = (props) => {
       <View style={gStyles.drawerMenu}>
         <Image
           style={{ width: 25, height: 25 }}
-          source={require("../Image/profile.png")}
+          source={require("../Image/ic_organization.png")}
         />
         <Text style={gStyles.drawerText}>My Organization Profile</Text>
       </View>
@@ -625,6 +628,16 @@ const DrawerNavigatorRoutes = (props) => {
       />
 
       <Drawer.Screen
+        name="contactUsStack"
+        options={{
+          drawerLabel: (props) => (
+            <ContactUsMenu {...{ employeename: username, ...props }} />
+          ),
+        }}
+        component={contactUsStack}
+      />
+
+      <Drawer.Screen
         name="profile"
         options={{
           drawerLabel: (props) => (
@@ -635,15 +648,6 @@ const DrawerNavigatorRoutes = (props) => {
         component={profileScreenStack}
       />
 
-      <Drawer.Screen
-        name="contactUsStack"
-        options={{
-          drawerLabel: (props) => (
-            <ContactUsMenu {...{ employeename: username, ...props }} />
-          ),
-        }}
-        component={contactUsStack}
-      />
       <Drawer.Screen
         name="settingScreenStack"
         options={{

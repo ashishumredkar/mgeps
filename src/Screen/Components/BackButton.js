@@ -4,8 +4,6 @@ import { View, TouchableOpacity, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native';
 
-// import Arrow from '../../Image/arrow-back-outline.svg'
-
 function BackButton(props)  {
     // constructor(props) {
     //     super(props);     

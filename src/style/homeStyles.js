@@ -84,6 +84,7 @@ export const homeStyles = StyleSheet.create({
     overflow: "hidden",
     borderWidth: 3,
     borderColor: "white",
+    padding: 10,
   },
   cardHeader: {
     paddingVertical: 10,

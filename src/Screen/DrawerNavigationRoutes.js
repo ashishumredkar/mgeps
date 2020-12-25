@@ -640,7 +640,7 @@ options={{
   },
 }}/> */}
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="bidEventStack"
         options={{
           drawerLabel: (props) => (
@@ -649,7 +649,7 @@ options={{
         }}
         component={ bidEventStack}
         
-      />
+      /> */}
 
       <Drawer.Screen
         name="viewOrganizationProfile"

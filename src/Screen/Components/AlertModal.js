@@ -10,7 +10,6 @@ import { AppColors } from "../../style/AppColors";
 const AlertModal = (props) => {
   const { loading, errorMessage,  ...attributes } = props;
     // useEffect(() => {
-      
     // }, []);
 
   return (
@@ -42,7 +41,7 @@ const AlertModal = (props) => {
           </View>
 
           <View style={{ backgroundColor: "white", flex: 1, marginTop: 5, paddingLeft: 20, paddingRight: 20,}}>
-            <Text style={styles.text}>{errorMessage ? errorMessage : "No Records Found"}</Text>
+            <Text style={[styles.text, {fontWeight: "bold"}]}>{errorMessage ? errorMessage : "No Records Found"}</Text>
 
             <Button
               title="RETRY"
@@ -107,6 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontStyle: "normal",
     fontSize: 20,
+    marginBottom: 10,
   },
   image: {
     width: 80,

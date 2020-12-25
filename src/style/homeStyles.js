@@ -62,9 +62,9 @@ export const homeStyles = StyleSheet.create({
     fontWeight: "bold",
   },
   subTitle: {
-    fontSize: 14,
+    fontSize: 13,
     flex: 1,
-    marginLeft: 5,
+    marginLeft: 3,
     color: "#FFFFFF",
     alignSelf: "center",
     fontWeight: "normal",

@@ -620,7 +620,7 @@ const DrawerNavigatorRoutes = (props) => {
         component={homeScreenStack}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="bidEventStack"
         options={{
           drawerLabel: (props) => (
@@ -628,7 +628,7 @@ const DrawerNavigatorRoutes = (props) => {
           ),
         }}
         component={bidEventStack}
-      />
+      /> */}
 
       <Drawer.Screen
         name="viewOrganizationProfile"

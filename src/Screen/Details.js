@@ -12,7 +12,7 @@ import {
   Modal,
   RadioButton,
   TextInput,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -53,6 +53,12 @@ export const Divider = () => {
     />
   );
 };
+const DismissKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
+
 
 export default class Details extends Component {
   constructor(props) {
@@ -355,7 +361,7 @@ export default class Details extends Component {
               </View>
             )}
           </View>
-          {!this.state.isLoading && this.state.users && (
+          {!this.state.isLoading && this.state.users && this.state.users.length>0 && (
             <View style={listStyles.totalRowsView}>
               <TouchableOpacity onPress={() => {this.showFilters()}}>
                 <Image 
@@ -381,14 +387,14 @@ export default class Details extends Component {
             transparent={true}
             visible={this.state.isVisible}
             onRequestClose={() => {
-              props.onCloseModal();
+              this.setState({ isVisible: false})
             }}
             scrollHorizontal={true}
           >
         
           <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
             <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
-              <TouchableOpacity onPress={() => props.onCloseModal()}>
+              <TouchableOpacity onPress={() => this.setState({ isVisible: false})}>
                 <Image 
                   style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
                   source={require("../Image/ic_close.png")}
@@ -397,7 +403,7 @@ export default class Details extends Component {
 
               <Text style={[styles.modelTitle]}>Filter</Text>
             </View>
-
+            <DismissKeyboard>
               <KeyboardAvoidingView
                 style={styles.container}
                 behavior="padding"
@@ -415,10 +421,9 @@ export default class Details extends Component {
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
-                      returnKeyType="next"
-                      // onSubmitEditing={() =>
-                      //   refActivityType.current && refActivityType.current.focus()
-                      // }
+                      returnKeyType = { "next" }
+                      onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                      blurOnSubmit={false}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
@@ -435,10 +440,9 @@ export default class Details extends Component {
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="next"
-                      // onSubmitEditing={() =>
-                      //   refDepartmentName.current && refDepartmentName.current.focus()
-                      // }
-                      // ref={refActivityType}
+                      ref={(input) => { this.secondTextInput = input; }}
+                      onSubmitEditing={() => { this.thirdTextInput.focus(); }}
+
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
@@ -455,10 +459,10 @@ export default class Details extends Component {
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="next"
-                      // onSubmitEditing={() =>
-                      //   passwordInputRef.current && passwordInputRef.current.focus()
-                      // }
-                      // ref={refDepartmentName}
+                      returnKeyType="next"
+                      ref={(input) => { this.thirdTextInput = input; }}
+                      onSubmitEditing={() => { this.fourthTextInput.focus(); }}
+
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
@@ -475,15 +479,16 @@ export default class Details extends Component {
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="next"
-                      // onSubmitEditing={() =>
-                      //   passwordInputRef.current && passwordInputRef.current.focus()
-                      // }
+                      ref={(input) => { this.fourthTextInput = input; }}
+                      onSubmitEditing={() => { this.fifthTextInput.focus(); }}
+
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
                   </View>
-
+                  
                   <View style={styles.inputContainer}>
+                  
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
@@ -493,18 +498,20 @@ export default class Details extends Component {
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
-                      returnKeyType="next"
-                      // onSubmitEditing={() =>
-                      //   passwordInputRef.current && passwordInputRef.current.focus()
-                      // }
+                      returnKeyType="default"
+                   
+                      ref={(input) => { this.fifthTextInput = input; }}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
+                
                   </View>
+              
                 </View>
               </KeyboardAvoidingView>
+              </DismissKeyboard>
 
-              <View style={{ flexDirection: "row", margin: 10 }}>
+              <View style={{ flexDirection: "row", margin: 10,alignSelf:'center' }}>
                 <Button
                   title="Apply Filter"
                   buttonStyle={{
@@ -513,6 +520,7 @@ export default class Details extends Component {
                     backgroundColor: AppColors.green600,
                     width: 120,
                     height: 35,
+                    padding:5
                   }}
                   onPress={() => {
                     this.fetchData()
@@ -527,6 +535,7 @@ export default class Details extends Component {
                     backgroundColor: AppColors.red400,
                     width: 120,
                     height: 35,
+                    padding:5
                   }}
                   onPress={() => {this.resetFilters()}}
                 />

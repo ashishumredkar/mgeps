@@ -84,9 +84,26 @@ const CustomSidebarMenu = (props) => {
             <Divider style={{ backgroundColor: '#777f7c90' }} />
           </View> */}
         </View>
-        <DrawerItem
+        {/* <DrawerItem
           label={({ color }) => (
             <View style={{ flexDirection: "row",height:40,marginTop:-5  }}>
+              <Image
+                style={{ width: 25, height: 25 , backgroundColor: "white" }}
+                source={require("../../Image/ic_calendar.png")}
+              />
+              <Text style={{ color: "black", marginTop: 5 ,marginLeft:5,fontWeight: "bold"}}>Bid Event Calenda</Text>
+            </View>
+          )}
+          onPress={() => {
+            props.navigation.toggleDrawer();
+            props.navigation.navigate("HomeScreen",{"showpicker":true});
+
+
+          }}
+        /> */}
+        <DrawerItem
+          label={({ color }) => (
+            <View style={{ flexDirection: "row",height:35,marginTop:-15  }}>
               <Image
                 style={{ width: 35, height: 35, backgroundColor: "white" }}
                 source={require("../../Image/faq2.png")}
@@ -95,9 +112,8 @@ const CustomSidebarMenu = (props) => {
             </View>
           )}
           onPress={() => {
-            props.navigation.toggleDrawer();
             Linking.openURL(FAQ_URL)
-
+            props.navigation.toggleDrawer();
           }}
         />
         <DrawerItem

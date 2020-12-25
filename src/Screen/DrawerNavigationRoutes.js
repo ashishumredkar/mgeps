@@ -645,6 +645,29 @@ const DrawerNavigatorRoutes = (props) => {
         component={homeScreenStack}
       />
 
+{/* <Drawer.Screen name="bidEventStack" 
+
+component={HomeScreen}
+options={{
+  drawerLabel: (props) => (
+    <BidEventCalendarMenu {...{ employeename: username, ...props }} />
+  ),
+  headerLeft: () => (
+    <NavigationDrawerHeader navigationProps={navigation} />
+  ),
+  headerRight: (props) => <NotificationView {...props} />,
+  
+  headerTitle: (props) => <LogoTitle {...props} />,
+
+  headerStyle: {
+    backgroundColor: "#307ecc", //Set Header color
+  },
+  headerTintColor: "#fff", //Set Header text color
+  headerTitleStyle: {
+    fontWeight: "bold", //Set Header text style
+  },
+}}/> */}
+
       <Drawer.Screen
         name="bidEventStack"
         options={{
@@ -652,7 +675,8 @@ const DrawerNavigatorRoutes = (props) => {
             <BidEventCalendarMenu {...{ employeename: username, ...props }} />
           ),
         }}
-        component={bidEventStack}
+        component={ bidEventStack}
+        
       />
 
       <Drawer.Screen

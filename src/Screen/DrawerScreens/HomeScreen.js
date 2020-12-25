@@ -89,12 +89,39 @@ class HomeScreen extends React.Component {
       bidEvent: [],
       date: new Date(),
       modalVisible: false,
+      Show: false
     };
   }
   async componentDidMount() {
     this.readData();
   }
+  openpicker=()=>{
+    this.datePicker.onPressDate();
+  }
 
+  componentDidUpdate(nextProps) {
+    const { show } = this.props
+    console.log("componentDidMountnextProps ",nextProps)
+  
+    // if (nextProps.route.params!=undefined && nextProps.route.params.showpicker) {
+    
+    //   this.datePicker.onPressDate();
+     
+    // }
+   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   console.log("componentDidMountnextProps ",nextProps.route)
+
+  //   if(nextProps.route.params!=undefined && nextProps.route.params.showpicker ){
+  //     return {
+  //       show: true,
+  //      };
+  //   }
+  //   // return {
+  //   //   show: nextProps.show,
+  //   //  };
+  //  }
   readData = async () => {
     try {
       const userData = await AsyncStorage.getItem(STORAGE_KEY);

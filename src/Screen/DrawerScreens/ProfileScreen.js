@@ -33,7 +33,7 @@ const ProfileScreen = (props) => {
   const [shortName, setShortName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(true);
+  const [isModalVisible, setModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState(
     "Failed to load Profile Data"
   );

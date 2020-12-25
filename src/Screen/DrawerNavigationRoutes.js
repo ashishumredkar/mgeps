@@ -12,7 +12,7 @@ import {
   ImageBackground,
   Button,
   StyleSheet,
-  Divider
+  Picker,
 } from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
@@ -38,15 +38,14 @@ import { gStyles } from "../../src/style/appStyles";
 import ContactUs from "./DrawerScreens/ContactUs";
 
 import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
-import BidDetails from './BidDetails';
-import BidDetailsPage from './BidDetailsPage';
+import BidDetails from "./BidDetails";
+import BidDetailsPage from "./BidDetailsPage";
 import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
 import EventEmitter from "react-native-eventemitter";
 
-import {
-  createDrawerNavigator,
-} from '@react-navigation/drawer';
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import OptionMenu from "./Components/OptionMenu";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const myIcon = <Icon name="more-vert" size={30} color="white" />;
 
 const Stack = createStackNavigator();
@@ -64,15 +63,13 @@ const homeScreenStack = ({ navigation }) => {
           headerLeft: () => (
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
-          headerRight: (props) => (
-            <NotificationView {...props} />
-          ),
-        //   headerRight: (props) => {
-        //   // <NotificationView {...props} />
+          headerRight: (props) => <NotificationView {...props} />,
+          //   headerRight: (props) => {
+          //   // <NotificationView {...props} />
 
-        // // <Icon name="circle-notifications" size={30} color="#900" />
+          // // <Icon name="circle-notifications" size={30} color="#900" />
 
-        //   },
+          //   },
           headerTitle: (props) => <LogoTitle {...props} />,
 
           headerStyle: {
@@ -111,7 +108,7 @@ const homeScreenStack = ({ navigation }) => {
         component={SettingsScreen}
         options={{ headerShown: false }}
       />
- <Stack.Screen
+      <Stack.Screen
         name="BidDetails"
         component={BidDetails}
         // options={{
@@ -187,21 +184,21 @@ export function LogoTitle(props) {
 }
 
 export function NotificationView(props) {
-
   const [username, setUserName] = useState("");
   const navigation = useNavigation();
 
   const [notificationCount, setNotificationCount] = useState(0);
 
   const [authToken, setauthToken] = useState("");
+  const [showPicker,setPicker]=useState(false)
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
     //fetch('') // Pune office UAT
     getNotificationCount();
-    EventEmitter.on("UPDATE_COUNT", (value)=>{
-      getNotificationCount()
-  });
+    EventEmitter.on("UPDATE_COUNT", (value) => {
+      getNotificationCount();
+    });
   }, []);
 
   const getNotificationCount = async () => {
@@ -209,24 +206,22 @@ export function NotificationView(props) {
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     const userType = await AsyncStorage.getItem("userType");
-    console.log("getNotificationCount22 ",mData)
+    console.log("getNotificationCount22 ", mData);
     fetch(NOTIFICATION_COUNT_URL + "/" + mData.id + "/" + mData.userType, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        //body: formdata,
-      }
-    )
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      //body: formdata,
+    })
       .then((response) => response.json())
       .then((json) => {
         if (json) {
-          if(json.notificationCount>999){
+          if (json.notificationCount > 999) {
             setNotificationCount("999+");
-          }else
-          setNotificationCount(json.notificationCount);
+          } else setNotificationCount(json.notificationCount);
         }
         console.log("setNotificationCount", json.notificationCount);
       })
@@ -242,53 +237,82 @@ export function NotificationView(props) {
     navigation.navigate("SettingsScreen");
   };
 
+  const navProfile = () => {
+    console.log("Home screen....");
+
+    navigation.navigate("profile");
+  };
+
   return (
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
+      <RippleButton
+        onPress={() => navigation.navigate("HomeScreen")}
+        rippleColor={"orange"}
+        rippleStyle={{ marginRight: 16 }}
+      >
+        <View>
+          <Image
+            style={{
+              width: Platform.OS == "ios" ? 30 : 30,
+              height: Platform.OS == "ios" ? 30 : 30,
+              backgroundColor: "#307ecc",
+            }}
+            source={require("../Image/ic_stat_notifications.png")}
+          />
+          <Badge
+            status="error"
+            value={notificationCount}
+            containerStyle={{
+              position: "absolute",
+              top: 0,
+              right: -20,
+              fontWeight: "bold",
+              fontSize: 14,
+              width: 40,
+            }}
+          />
+        </View>
+      </RippleButton>
 
-    <RippleButton
-
-      onPress={() => navigation.navigate("HomeScreen")}
-      rippleColor={"orange"}
-      rippleStyle={{ marginRight: 16 }}
-    >
-      <View>
-        <Image
-          style={{
-            width: Platform.OS == "ios" ? 30 : 30,
-            height: Platform.OS == "ios" ? 30 : 30,
-            backgroundColor: "#307ecc",
-          }}
-          source={require("../Image/ic_stat_notifications.png")}
-        />
-        <Badge
-          status="error"
-          value={notificationCount}
-          containerStyle={{
-            position: "absolute",
-            top: 0,
-            right: -20,
-            fontWeight: "bold",
-            fontSize: 14,
-            width: 40,
-          }}
-        />
-      </View>
-    </RippleButton>
-
-    <View style={styles.rightContainer}>
+      <View style={styles.rightContainer}>
         <View style={styles.rightIcon}>
           <OptionMenu
             customButton={myIcon}
             destructiveIndex={1}
-            options={["Settings",""]}
-            actions={[navSettings,navSettings]}
+            options={["Settings","Profile"]}
+            actions={[navSettings,navProfile]}
           />
+          {/* <View>
+            <TouchableOpacity onPress={() => {setPicker(true)}}>
+              <Icon
+                name="more-vert"
+                size={30}
+                color={"white"}
+                ref={this.onRef}
+              />
+             {showPicker? <ShowMenu/>: null}
+            </TouchableOpacity>
+          </View> */}
         </View>
       </View>
-
     </View>
   );
 }
+
+ShowMenu = () => {
+  return (
+    <View style={styles.container}>
+      <Picker
+        // selectedValue={selectedValue}
+        style={{ height: 50, width: 150 }}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+      </Picker>
+    </View>
+  );
+};
 
 const profileScreenStack = ({ navigation }) => {
   return (
@@ -427,7 +451,7 @@ const bidEventStack = ({ navigation }) => {
           gesturesEnabled: false,
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="BidDetails"
         component={BidDetails}
         // options={{
@@ -460,7 +484,7 @@ const DrawerNavigatorRoutes = (props) => {
       const userType = await AsyncStorage.getItem("userType");
       console.log("setAnimatingabc ", userType);
 
-      setuserType(userType)
+      setuserType(userType);
       setUserName(value.username);
       setProfileData(value);
     } catch (e) {
@@ -564,9 +588,10 @@ const DrawerNavigatorRoutes = (props) => {
       }}
       screenOptions={{ headerShown: false }}
       drawerContent={(props) => (
-        <CustomSidebarMenu {...{ employeename: username, ...props,userType: userType }} />
+        <CustomSidebarMenu
+          {...{ employeename: username, ...props, userType: userType }}
+        />
       )}
-
 
       // drawerContent={(props) => {
       //   const filteredProps = {
@@ -607,8 +632,7 @@ const DrawerNavigatorRoutes = (props) => {
       //     </DrawerContentScrollView>
       //   );
       // }}
-      >
-
+    >
       <Drawer.Screen
         name="homeScreenStack"
         // options={{ drawerLabel: "Dashboard" }}
@@ -621,7 +645,7 @@ const DrawerNavigatorRoutes = (props) => {
         component={homeScreenStack}
       />
 
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="bidEventStack"
         options={{
           drawerLabel: (props) => (
@@ -629,7 +653,7 @@ const DrawerNavigatorRoutes = (props) => {
           ),
         }}
         component={bidEventStack}
-      /> */}
+      />
 
       <Drawer.Screen
         name="viewOrganizationProfile"
@@ -695,7 +719,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     justifyContent: "flex-start",
     width: 65,
-    marginLeft: -12
+    marginLeft: -12,
   },
   middleContainer: {
     flex: 2,

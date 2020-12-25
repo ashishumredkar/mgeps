@@ -77,6 +77,15 @@ class SubMenues extends React.Component {
       iconUri:this.props.route.params.iconUrl,
     });
     this.readData();
+
+    useEffect(() => {
+      //fetch('') // Pune office UAT
+
+      EventEmitter.on("UPDATE_COUNT", (value)=>{
+        this.readData();
+    });
+    }, []);
+  
   }
 
   readData = async () => {

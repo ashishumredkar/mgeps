@@ -43,8 +43,8 @@ const AlertModal = (props) => {
 
           <View style={{ backgroundColor: "white", flex: 1, marginTop: 5, paddingLeft: 20, paddingRight: 20,}}>
             <Text style={styles.text}>{errorMessage ? errorMessage : "No Records Found"}</Text>
-
-            <Button
+          
+           <Button
               title="RETRY"
               buttonStyle={{
                 marginTop: 15,
@@ -71,6 +71,8 @@ const AlertModal = (props) => {
               }}
               onPress={() => props.onCloseModal()}
             />
+         
+           
           </View>
         </View>
       </View>
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontStyle: "normal",
     fontSize: 20,
+    padding:10
   },
   image: {
     width: 80,

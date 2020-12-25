@@ -200,7 +200,11 @@ const LoginScreen = ({ navigation }) => {
 
           navigation.replace("DrawerNavigationRoutes");
         } else {
-          setErrorMessage(responseJson.errorMessage);
+          if (responseJson.hasOwnProperty("errorMessage")) {
+            setErrorMessage(responseJson.errorMessage);
+          } else if (responseJson.hasOwnProperty("message")) {
+            setErrorMessage(responseJson.message);
+          }
           setModalVisible(true);
           setLoading(false);
           // setErrortext("Please check your email id or password");

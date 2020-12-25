@@ -227,7 +227,6 @@ const ProfileScreen = (props) => {
                         <Text
                           style={{
                             flex: 1,
-                            width: "100%",
                             fontSize: 14,
                             marginLeft: 1,
                             alignContent: "center",

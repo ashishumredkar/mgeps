@@ -101,7 +101,6 @@ export const viewDetailStyles = StyleSheet.create({
     fontWeight: "bold",
     color: AppColors.AppGrey600,
     marginRight: 8,
-    width: "30%",
   },
   position: {
     fontSize: 14,

@@ -639,7 +639,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#F5FCFF",
     backgroundColor: "#FFFFFF",
     borderRadius: 30,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     width: "90%",
     height: 45,
     marginTop: 10,

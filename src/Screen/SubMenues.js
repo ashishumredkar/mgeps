@@ -108,7 +108,7 @@ class SubMenues extends React.Component {
 
         <CustomToolbar
           navigation={this.props.navigation}
-          title={this.state.title}
+          title={"Sub Menus"}
           userType={this.state.userType}
           backgroundColor="#3775f0"
         />
@@ -157,7 +157,7 @@ class SubMenues extends React.Component {
                   </View>
 
                   <View style={homeStyles.cardFooter}>
-                    <View style={{backgroundColor: AppColors.white, width: 45, height: 45, borderRadius: 50 / 2,}}>
+                    <View style={{backgroundColor: AppColors.white, width: 43, height: 43, borderRadius: 50 / 2,}}>
                       <Image
                         style={[homeStyles.cardImage, {tintColor: colors[index]}]}
                         source={imagesArray[index]}

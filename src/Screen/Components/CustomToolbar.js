@@ -30,10 +30,10 @@ const CustomToolbar = (props) => {
         </View>
         <Text style={styles.middleContainer}>
           {/* {this.props.title} */}
-          <View style={{ flexDirection: "row", marginTop: 5 }}>
-            <View style={{paddingTop: 10}}>
+          <View style={{ flexDirection: "row", marginTop: 2 }}>
+            <View style={{paddingTop: 5}}>
               <Image
-                style={{ width: 35, height: 35 }}
+                style={{ width: 45, height: 45 }}
                 source={require("../../Image/menu_logo.png")}
               />
             </View>
@@ -41,7 +41,7 @@ const CustomToolbar = (props) => {
             <View style={{ width: 10 }}></View>
 
             {/* CONTACT DETAILS  */}
-            <View style={{ paddingTop: 10 }}>
+            <View style={{ paddingTop: 5 }}>
               <Text
                 numberOfLines={1}
                 style={[gStyles.contactStyle, { color: "white"}]}
@@ -51,7 +51,7 @@ const CustomToolbar = (props) => {
                   : `${props.title.substring(0, 25)}...`}
               </Text>
               {props.userType != "" ? (
-                <Text style={[{ color: "white", fontSize: 14 }]}>
+                <Text style={[{ color: "white", fontSize: 14, marginBottom: 3 }]}>
                   UserType: {props.userType}
                 </Text>
               ) : null}

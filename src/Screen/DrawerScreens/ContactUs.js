@@ -31,8 +31,8 @@ export default class ContactUs extends Component {
       Address: "",
       EmailId: "",
       PhoneNo: "",
-      isLoading: false,
-      isModalVisible: true,
+      isLoading: true,
+      isModalVisible: false,
       errorMessage: "Failed to load Contact",
     };
   }
@@ -71,8 +71,8 @@ export default class ContactUs extends Component {
       .then((res) => {
         //Hide Loader
         //setLoading(false);
-        console.log("getContactUsData",res)
-        if (res) {
+        console.log("getContactUsData", res);
+        if (!res.code || res.code == 200) {
           this.setState({
             muserType,
             Address: res.Address,
@@ -82,12 +82,14 @@ export default class ContactUs extends Component {
             isLoading: false,
             isModalVisible: false 
           });
+        } else {
+          this.setState({ isLoading: false, isModalVisible: true, errorMessage: res.message });
         }
       })
       .catch((error) => {
         //Hide Loader
         //setLoading(false);
-        this.setState({ isLoading: false, isModalVisible: true });
+        this.setState({ isLoading: false, isModalVisible: true, errorMessage: error.errorMessage });
         console.error("qwerty  ", error);
       });
   };
@@ -120,7 +122,6 @@ export default class ContactUs extends Component {
 
   onRety = () => {
     this.setState({ isModalVisible: false, isLoading: true });
-
     this.getDetails();
   };
 
@@ -141,6 +142,18 @@ export default class ContactUs extends Component {
             style={styles.activityIndicator}
           />
         </View>
+      );
+    }
+
+    if (isModalVisible) {
+      return (
+        <AlertModal
+              title={"Contact Us"}
+              loading={isModalVisible}
+              errorMessage={errorMessage}
+              onRety={this.onRety}
+              onCloseModal={this.closeModal}
+            />
       );
     }
     return (

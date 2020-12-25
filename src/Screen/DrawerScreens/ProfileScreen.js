@@ -10,6 +10,7 @@ import {
   Pressable,
   StyleSheet,
   FlatList,
+  Image,
 } from "react-native";
 import { gStyles } from "../../../src/style/appStyles";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -152,7 +153,7 @@ const ProfileScreen = (props) => {
           >
             <View style={{ flexDirection: "row" }}>
               <View style={[gStyles.userProfileNameStyle]}>
-                <Text style={gStyles.contactStyle}>{shortName}</Text>
+                <Image source={require("../../Image/ic_profile.png")} style={{width: 50, height: 50, backgroundColor: AppColors.grey500, borderRadius: 50/2}}/>
               </View>
 
               <View style={{ width: 10 }}></View>
@@ -160,7 +161,7 @@ const ProfileScreen = (props) => {
               {/* CONTACT DETAILS  */}
               <View style={{ paddingTop: 8 }}>
                 <Text style={gStyles.contactStyle}>{fullName}</Text>
-                <Text>{emailAddress}</Text>
+                <Text style={{color: AppColors.grey40}}>{emailAddress}</Text>
               </View>
             </View>
           </Card>
@@ -171,7 +172,7 @@ const ProfileScreen = (props) => {
               padding: 10,
               margin: 10,
               height: "40%",
-              borderRadius: 80,
+              borderRadius: 50/2,
               marginBottom: 8,
             }}
           >
@@ -201,7 +202,7 @@ const ProfileScreen = (props) => {
                       style={{
                         padding: 3,
                         margin: 2,
-                        borderRadius: 10,
+                        borderRadius: 20,
                         flex: 1,
                         marginBottom: 8,
                         flexDirection: "column",
@@ -238,26 +239,6 @@ const ProfileScreen = (props) => {
                           {value}
                         </Text>
                       </View>
-                      {index % 2 != 0 ? (
-                        <View
-                          style={{
-                            height: 1,
-                            width: "100%",
-                            backgroundColor: "grey",
-                            marginTop: 8,
-                          }}
-                        />
-                      ) : null}
-                      {index % 2 === 0 ? (
-                        <View
-                          style={{
-                            height: 1,
-                            width: "100%",
-                            backgroundColor: "grey",
-                            marginTop: 8,
-                          }}
-                        />
-                      ) : null}
                     </View>
                   );
                 }

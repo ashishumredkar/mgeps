@@ -76,7 +76,7 @@ class HomeScreen extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.datePicker=React.createRef();
+    this.datePicker = React.createRef();
 
     this.state = {
       menuList: [],

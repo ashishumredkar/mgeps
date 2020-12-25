@@ -19,6 +19,7 @@ const CustomToolbar = (props) => {
   };
 
   const navFilters = () => {
+    // navigation.showFilters();
     console.log("Open filters \n\n\n\n\n");
   };
 

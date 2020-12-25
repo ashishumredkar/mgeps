@@ -13,6 +13,7 @@ import {
   Button,
   StyleSheet,
   Picker,
+  Divider
 } from "react-native";
 import { Badge } from "react-native-elements";
 // Import Navigators from React Navigation
@@ -64,12 +65,6 @@ const homeScreenStack = ({ navigation }) => {
             <NavigationDrawerHeader navigationProps={navigation} />
           ),
           headerRight: (props) => <NotificationView {...props} />,
-          //   headerRight: (props) => {
-          //   // <NotificationView {...props} />
-
-          // // <Icon name="circle-notifications" size={30} color="#900" />
-
-          //   },
           headerTitle: (props) => <LogoTitle {...props} />,
 
           headerStyle: {
@@ -184,6 +179,7 @@ export function LogoTitle(props) {
 }
 
 export function NotificationView(props) {
+
   const [username, setUserName] = useState("");
   const navigation = useNavigation();
 
@@ -239,80 +235,56 @@ export function NotificationView(props) {
 
   const navProfile = () => {
     console.log("Home screen....");
-
     navigation.navigate("profile");
   };
 
   return (
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
-      <RippleButton
-        onPress={() => navigation.navigate("HomeScreen")}
-        rippleColor={"orange"}
-        rippleStyle={{ marginRight: 16 }}
-      >
-        <View>
-          <Image
-            style={{
-              width: Platform.OS == "ios" ? 30 : 30,
-              height: Platform.OS == "ios" ? 30 : 30,
-              backgroundColor: "#307ecc",
-            }}
-            source={require("../Image/ic_stat_notifications.png")}
-          />
-          <Badge
-            status="error"
-            value={notificationCount}
-            containerStyle={{
-              position: "absolute",
-              top: 0,
-              right: -20,
-              fontWeight: "bold",
-              fontSize: 14,
-              width: 40,
-            }}
-          />
-        </View>
-      </RippleButton>
 
-      <View style={styles.rightContainer}>
+    <RippleButton
+
+      onPress={() => navigation.navigate("HomeScreen")}
+      rippleColor={"orange"}
+      rippleStyle={{ marginRight: 16 }}
+    >
+      <View>
+        <Image
+          style={{
+            width: Platform.OS == "ios" ? 30 : 30,
+            height: Platform.OS == "ios" ? 30 : 30,
+            backgroundColor: "#307ecc",
+          }}
+          source={require("../Image/ic_stat_notifications.png")}
+        />
+        <Badge
+          status="error"
+          value={notificationCount}
+          containerStyle={{
+            position: "absolute",
+            top: 0,
+            right: -20,
+            fontWeight: "bold",
+            fontSize: 14,
+            width: 40,
+          }}
+        />
+      </View>
+    </RippleButton>
+
+    <View style={styles.rightContainer}>
         <View style={styles.rightIcon}>
           <OptionMenu
             customButton={myIcon}
             destructiveIndex={1}
-            options={["Settings","Profile"]}
-            actions={[navSettings,navProfile]}
+            options={["Settings"]}
+            actions={[navSettings]}
           />
-          {/* <View>
-            <TouchableOpacity onPress={() => {setPicker(true)}}>
-              <Icon
-                name="more-vert"
-                size={30}
-                color={"white"}
-                ref={this.onRef}
-              />
-             {showPicker? <ShowMenu/>: null}
-            </TouchableOpacity>
-          </View> */}
         </View>
       </View>
+
     </View>
   );
 }
-
-ShowMenu = () => {
-  return (
-    <View style={styles.container}>
-      <Picker
-        // selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
-    </View>
-  );
-};
 
 const profileScreenStack = ({ navigation }) => {
   return (
@@ -451,7 +423,7 @@ const bidEventStack = ({ navigation }) => {
           gesturesEnabled: false,
         }}
       />
-      <Stack.Screen
+       <Stack.Screen
         name="BidDetails"
         component={BidDetails}
         // options={{
@@ -588,10 +560,9 @@ const DrawerNavigatorRoutes = (props) => {
       }}
       screenOptions={{ headerShown: false }}
       drawerContent={(props) => (
-        <CustomSidebarMenu
-          {...{ employeename: username, ...props, userType: userType }}
-        />
+        <CustomSidebarMenu {...{ employeename: username, ...props,userType: userType }} />
       )}
+
 
       // drawerContent={(props) => {
       //   const filteredProps = {
@@ -632,7 +603,8 @@ const DrawerNavigatorRoutes = (props) => {
       //     </DrawerContentScrollView>
       //   );
       // }}
-    >
+      >
+
       <Drawer.Screen
         name="homeScreenStack"
         // options={{ drawerLabel: "Dashboard" }}
@@ -719,7 +691,7 @@ const styles = StyleSheet.create({
   leftContainer: {
     justifyContent: "flex-start",
     width: 65,
-    marginLeft: -12,
+    marginLeft: -12
   },
   middleContainer: {
     flex: 2,

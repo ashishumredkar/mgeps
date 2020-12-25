@@ -33,14 +33,17 @@ export default class BidEventCalndar extends React.PureComponent {
       picker:false,
       isDatePickerVisible:false
     };
+
+    console.log("Calling \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
   }
   componentWillUnmount() {
-     this.datePicker=null;
+     this.datePicker = null;
+     console.log("Calling \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
   }
 
   async componentDidMount() {
+    console.log("Calling 13234234234234324234 \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
     LogBox.ignoreAllLogs(['Animated: `useNativeDriver`']);
-
 
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
@@ -125,6 +128,7 @@ openPicker =()=>{
             fontSize: 14,
             fontWeight: "bold",
             color: AppColors.white,
+            marginTop: 5,
           }}
         >
           {item.bidNoticeToBeSubmitted.label} (
@@ -156,6 +160,7 @@ openPicker =()=>{
             fontSize: 14,
             fontWeight: "bold",
             color: AppColors.white,
+            marginTop: 5,
           }}
         >
           {item.bidNoticeToBeOpen.label} ({item.bidNoticeToBeOpen.count})
@@ -164,6 +169,9 @@ openPicker =()=>{
     );
 
     renderPicker() {
+      var today = new Date();
+      var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
    
         return (
           <DatePicker
@@ -175,8 +183,8 @@ openPicker =()=>{
             mode="date"
             placeholder="Select date baba"
             format="YYYY-MM-DD"
-            minDate="2016-05-01"
-            maxDate="2020-12-12"
+            minDate={firstDayOfMonth}
+            maxDate={lastDayOfMonth}
             confirmBtnText="OK"
             cancelBtnText="Cancel"
             onDateChange={(mdate) => {

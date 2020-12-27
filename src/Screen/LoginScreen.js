@@ -157,7 +157,7 @@ const LoginScreen = ({ navigation }) => {
         setForgotPassword(json.forgetPassword);
         var points = [json.LoginTypes];
         var mData = []; // Good
-        mData = mData.concat({ label: "Select Login Type", value: "Select Login Type" });
+       // mData = mData.concat({ label: "Select Login Type", value: "Select Login Type" });
         setLoginType("Select Login Type");
 
         if (points[0].Agency) {
@@ -325,10 +325,7 @@ const LoginScreen = ({ navigation }) => {
           onCloseModal={closeModal}
         />
 
-<SafeAreaView>
-        <Button title="Select a language" onPress={() => pickerRef.current.show()} />
-        <Text>Selected Item Text: {value}</Text>
-      </SafeAreaView>
+
       <ReactNativePickerModule
         pickerRef={pickerRef}
         value={value}
@@ -429,8 +426,8 @@ const LoginScreen = ({ navigation }) => {
           />
           <Image
             style={styles.inputIcon}
-            source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }}
-          />
+            source={require("../Image/email_ico.png")}
+            />
         </View>
 
         <View style={styles.inputContainer}>
@@ -452,7 +449,8 @@ const LoginScreen = ({ navigation }) => {
           />
           <Image
             style={styles.inputIcon}
-            source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
+            source={require("../Image/key_ico.png")}
+
           />
         </View>
         <TouchableOpacity

@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-login-and-signup/
 
 // Import React and Component
-import React, { useState, useEffect, createRef, isValidElement } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -18,7 +18,7 @@ import {
   ImageBackground,
   Linking,
   Button,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback,SafeAreaView
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -30,6 +30,8 @@ import GeneralStatusBarColor from "./Components/GeneralStatusBarColor";
 import { AppColors } from "../style/AppColors";
 // import DropDownPicker from "react-native-dropdown-picker";
 import DropDownPicker from "react-native-dropdown-picker";
+import ReactNativePickerModule from "react-native-picker-module"
+
 
 import Toast from "react-native-simple-toast";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -57,6 +59,40 @@ const LoginScreen = ({ navigation }) => {
   );
 
   const passwordInputRef = createRef();
+
+  const pickerRef = useRef()
+  const [value, setValue] = useState()
+  const dataset_1 = [1, 2, "Java", "Kotlin", "C++", "C#", "PHP"]
+  const dataset_2 = [
+    {
+      value: 101,
+      label: "Javascript",
+    },
+    {
+      value: "golang_101",
+      label: "Go",
+    },
+    {
+      value: "kotlin_dsl",
+      label: "Kotlin",
+    },
+    {
+      value: "java_101",
+      label: "Java",
+    },
+    {
+      value: "cplusplus",
+      label: "C++",
+    },
+    {
+      value: "csharp_201",
+      label: "C#",
+    },
+    {
+      value: "php_201",
+      label: "PHP",
+    },
+  ]
 
   useEffect(() => {
     getFcm();
@@ -121,7 +157,7 @@ const LoginScreen = ({ navigation }) => {
         setForgotPassword(json.forgetPassword);
         var points = [json.LoginTypes];
         var mData = []; // Good
-        mData = mData.concat({ label: "Select Login Type", value: "Select Login Type" });
+       // mData = mData.concat({ label: "Select Login Type", value: "Select Login Type" });
         setLoginType("Select Login Type");
 
         if (points[0].Agency) {
@@ -289,11 +325,64 @@ const LoginScreen = ({ navigation }) => {
           onCloseModal={closeModal}
         />
 
+
+      <ReactNativePickerModule
+        pickerRef={pickerRef}
+        value={value}
+        title={"Select Login Type"}
+        items={loginCollection}
+        titleStyle={{ color: "black" }}
+        itemStyle={{ color: "black" }}
+        selectedColor="#FC0"
+        confirmButtonEnabledTextStyle={{ color: "black" }}
+        confirmButtonDisabledTextStyle={{ color: "grey" }}
+        cancelButtonTextStyle={{ color: "black" }}
+        confirmButtonStyle={{
+          backgroundColor: "white",
+        }}
+        cancelButtonStyle={{
+          backgroundColor: "white",
+        }}
+        contentContainerStyle={{
+          backgroundColor: "white",
+        }}
+        onCancel={() => {
+          console.log("Cancelled")
+        }}
+        onValueChange={value => {
+          console.log("value: ", value)
+          setLoginType(value)
+        }}
+      />
         <View style={{ width: null, height: "50%" }} />
 
         <View>
-          <View style={{backgroundColor: AppColors.white, borderRadius: 50/2, paddingLeft: 10, height: 40, fontWeight: "bold", flexDirection: "row"}}>
-            <Picker
+        <TouchableOpacity style={styles.inputContainer} onPress={() => pickerRef.current.show()} >
+          <Text
+            style={[styles.inputs,{alignSelf:'center',alignContent:'center',alignItems:'center',marginTop:22}]}
+            underlineColorAndroid="transparent"
+            onChangeText={(UserEmail) => setUserEmail(UserEmail)}
+            placeholder="USERNAME" //dummy@abc.com
+            placeholderTextColor="#8b9cb5"
+            autoCapitalize="none"
+            value={loginType}
+            keyboardType="default"
+            returnKeyType="next"
+            onSubmitEditing={() =>
+              passwordInputRef.current && passwordInputRef.current.focus()
+            }
+            underlineColorAndroid="#f000"
+            blurOnSubmit={false}
+            editable={false}
+          >{loginType}</Text>
+          <Image
+            style={styles.inputIcon}
+            source={require("../Image/ic_expand_arrow.png")}
+
+          />
+        </TouchableOpacity>
+            {/*<View style={{backgroundColor: AppColors.white, borderRadius: 50/2, paddingLeft: 10, height: 40, fontWeight: "bold", flexDirection: "row"}}>
+           <Picker
               selectedValue={loginType}
               onValueChange={(itemValue, itemIndex) => {
                 setLoginType(itemValue);
@@ -314,8 +403,8 @@ const LoginScreen = ({ navigation }) => {
               <Image
                 style={{marginTop: 2}}
                 source={require("../Image/ic_expand_arrow.png")}
-              />
-          </View>
+              /> 
+          </View>*/}
           <View style={{ width: 300, height: 0 }} />
         </View>
         <View style={styles.inputContainer} >
@@ -337,8 +426,8 @@ const LoginScreen = ({ navigation }) => {
           />
           <Image
             style={styles.inputIcon}
-            source={{ uri: "https://img.icons8.com/nolan/40/000000/email.png" }}
-          />
+            source={require("../Image/email_ico.png")}
+            />
         </View>
 
         <View style={styles.inputContainer}>
@@ -360,7 +449,8 @@ const LoginScreen = ({ navigation }) => {
           />
           <Image
             style={styles.inputIcon}
-            source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
+            source={require("../Image/key_ico.png")}
+
           />
         </View>
         <TouchableOpacity

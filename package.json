@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-community/picker": "^1.8.1",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-firebase/app": "^10.1.0",
     "@react-navigation/bottom-tabs": "^5.11.1",
@@ -29,7 +30,9 @@
     "react-native-eventemitter": "0.0.1",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-maps": "0.27.1",
+    "react-native-modal": "^11.6.1",
     "react-native-paper": "^4.4.1",
+    "react-native-picker-module": "^2.0.31",
     "react-native-push-notification": "^6.1.3",
     "react-native-reanimated": "^1.13.1",
     "react-native-rename": "^2.5.0",

@@ -38,7 +38,7 @@ import { RippleButton } from "./Components/RippleButton";
 import { gStyles } from "../../src/style/appStyles";
 import ContactUs from "./DrawerScreens/ContactUs";
 
-import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
+import BidEventCalndar from "./DrawerScreens/BidEventCalndar";
 import BidDetails from "./BidDetails";
 import BidDetailsPage from "./BidDetailsPage";
 import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
@@ -418,9 +418,20 @@ const bidEventStack = ({ navigation }) => {
         name="BidEventCalndar"
         component={BidEventCalndar}
         options={{
-          title: "Bid Event Calendar", //Set Header Title
-          headerLeft: null,
-          gesturesEnabled: false,
+          title: "BidEventCalndar", //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerHeader navigationProps={navigation} />
+          ),
+          // headerRight: (props) => <NotificationView {...props} />,
+          // headerTitle: (props) => <LogoTitle {...props} />,
+
+          headerStyle: {
+            backgroundColor: "#307ecc", //Set Header color
+          },
+          headerTintColor: "#fff", //Set Header text color
+          headerTitleStyle: {
+            fontWeight: "bold", //Set Header text style
+          },
         }}
       />
        <Stack.Screen
@@ -617,30 +628,9 @@ const DrawerNavigatorRoutes = (props) => {
         component={homeScreenStack}
       />
 
-{/* <Drawer.Screen name="bidEventStack" 
 
-component={HomeScreen}
-options={{
-  drawerLabel: (props) => (
-    <BidEventCalendarMenu {...{ employeename: username, ...props }} />
-  ),
-  headerLeft: () => (
-    <NavigationDrawerHeader navigationProps={navigation} />
-  ),
-  headerRight: (props) => <NotificationView {...props} />,
-  
-  headerTitle: (props) => <LogoTitle {...props} />,
 
-  headerStyle: {
-    backgroundColor: "#307ecc", //Set Header color
-  },
-  headerTintColor: "#fff", //Set Header text color
-  headerTitleStyle: {
-    fontWeight: "bold", //Set Header text style
-  },
-}}/> */}
-
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="bidEventStack"
         options={{
           drawerLabel: (props) => (
@@ -649,7 +639,7 @@ options={{
         }}
         component={ bidEventStack}
         
-      /> */}
+      />
 
       <Drawer.Screen
         name="viewOrganizationProfile"

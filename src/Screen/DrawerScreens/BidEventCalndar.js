@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+
 import {
   StyleSheet,
   Text,
@@ -7,78 +9,78 @@ import {
   FlatList,
   Modal,
   Button,
-  TouchableOpacity,LogBox
+  TouchableOpacity,SafeAreaView
 } from "react-native";
-
+import ReactNativePickerModule from "react-native-picker-module"
 import DatePicker from "react-native-datepicker";
+import { BID_EVENT_CAL_URL } from "../Utils";
 import { AppColors } from "../../style/AppColors";
-import Loader from "../Components/Loader";
 import AsyncStorage from "@react-native-community/async-storage";
 const STORAGE_KEY = "@user_data";
-import { BID_EVENT_CAL_URL } from "../Utils";
 
-export default class BidEventCalndar extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.datePicker=React.createRef();
-    this.state = {
-      isVisible: false,
-      checked: true,
-      date: new Date(),
-      modalVisible: false,
-      authToken: "",
-      userId: "",
-      userTypeId: "",
-      bidEvent: [],
-      picker:false,
-      isDatePickerVisible:false
-    };
+const BidEventCalndar = () => {
+  const pickerRef = useRef()
+  const dateRef = useRef()
+  const [value, setValue] = useState()
+  const dataset_1 = [1, 2, "Java", "Kotlin", "C++", "C#", "PHP"]
 
-    console.log("Calling \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
-  }
-  componentWillUnmount() {
-     this.datePicker = null;
-     console.log("Calling \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
-  }
+  const [modalVisible, setmodalVisible] = useState(false);
+  const [authToken, setauthToken] = useState("");
+  const [date, setdate] = useState(new Date());
+  var today = new Date();
+  var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  const [bidEvent, setbidEvent] = useState([]);
+  const [userId, setuserId] = useState();
 
-  async componentDidMount() {
-    console.log("Calling 13234234234234324234 \n\\n\n\\n\n\n\\n\n\\nn\\n\n");
-    LogBox.ignoreAllLogs(['Animated: `useNativeDriver`']);
+  const [loginType, setLoginType] = useState();
+  const [userTypeId, setuserTypeId] = useState();
+  const [picker, setpicker] = useState(false);
+  const [isDatePickerVisible, setisDatePickerVisible] = useState(false);
+  const [loading, setloading] = useState(false);
 
+  const useNav=useNavigation()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      readData();
+      dateRef.current.onPressDate()
+    }, [userTypeId,userId])
+  );
+
+  useEffect(() => {
+  
+    readData();
+  }, []);
+
+  const readData = async () => {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
     console.log("userType1 ", mData.id);
     console.log("userType2 ", mData.userType);
-    this.openPicker();
-    this.setState({
-      authToken: token,
-      userId: mData.id,
-      userTypeId: mData.userType,
-    });
+    // pickerRef.onPressDate();
+    setauthToken(token)
+    setuserId(mData.id);
+    setuserTypeId(mData.userType)
+    
   }
-
-openPicker =()=>{
-  this.datePicker.onPressDate();
-  this.setState({ isVisible: true ,isDatePickerVisible:true});
-}
-
-  getBidEvent = async (date) => {
+  const getBidEvent = async (date) => {
     const data = {
-      userId: this.state.userId,
-      userType: this.state.userTypeId,
+      userId: userId,
+      userType: userTypeId,
       date: date,
     };
 
     console.log("getBidEvent ",data)
 
-    this.setState({ loading: true });
+    setloading(true)
 
     fetch(BID_EVENT_CAL_URL, {
       //Pune office UAT
       method: "POST",
       headers: {
-        Authorization: "Bearer " + this.state.authToken,
+        Authorization: "Bearer " + authToken,
         Accept: "application/json",
         "Content-Type": "application/json",
       },
@@ -90,29 +92,29 @@ openPicker =()=>{
         //setLoading(false);
         console.log("BID_EVENT_CAL_URL", res);
         if (res) {
-          this.setState({ bidEvent: res, modalVisible: true });
+          setbidEvent(res)
+          setmodalVisible(true)
         }
-        this.setState({ loading: false });
+        setloading(false)
       })
       .catch((error) => {
         //Hide Loader
         //setLoading(false);
         console.error("qwerty  ", error);
-        this.setState({ loading: false });
+        setloading(false)
       });
   };
 
-  renderItem = ({ item, index }) =>
+  const renderItem = ({ item, index }) =>
     index === 0 ? (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate("BidDetails", {
+          useNav.navigate("BidDetails", {
             link: item.bidNoticeToBeSubmitted.link,
             title: "Bid Event Calendar",
             subTitle: item.bidNoticeToBeSubmitted.label,
           });
-          this.setState({ modalVisible: false });
-        }}
+          setmodalVisible(false)        }}
         key={item.key}
         style={[
           styles.RectangleShapeView,
@@ -138,12 +140,13 @@ openPicker =()=>{
     ) : (
       <TouchableOpacity
         onPress={() => {
-          this.props.navigation.navigate("BidDetails", {
+          useNav.navigate("BidDetails", {
             link: item.bidNoticeToBeOpen.link,
             title: "Bid Event Calendar",
             subTitle: item.bidNoticeToBeOpen.label,
           });
-          this.setState({ modalVisible: false });
+          setmodalVisible(false)
+        
         }}
         key={item.key}
         style={[
@@ -167,48 +170,10 @@ openPicker =()=>{
         </Text>
       </TouchableOpacity>
     );
-
-    renderPicker() {
-      var today = new Date();
-      var firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-      var lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-   
-        return (
-          <DatePicker
-            style={{ width: 200 }}
-            ref={picker => {
-              this.datePicker = picker;
-            }}
-            date={this.state.date}
-            mode="date"
-            placeholder="Select date baba"
-            format="YYYY-MM-DD"
-            minDate={firstDayOfMonth}
-            maxDate={lastDayOfMonth}
-            confirmBtnText="OK"
-            cancelBtnText="Cancel"
-            onDateChange={(mdate) => {
-              this.getBidEvent(mdate);
-              this.setState({ data: mdate });
-            }}
-            onCloseModal ={()=>{
-              this.setState({ modalVisible: false });
-              this.props.navigation.navigate("HomeScreen");
-            }}
-            isVisible={true}
-
-          />
-        );
-      
-    }
-  render() {
-    if (this.state.loading) return <Loader loading={this.state.loading} />;
-    const { modalVisible } = this.state;
-
-    return (
-      <View style={styles.container}>
-
-        <Modal
+  return (
+    <>
+      <SafeAreaView>
+      <Modal
           transparent={true}
           animationType={"fade"}
           visible={modalVisible}
@@ -219,8 +184,9 @@ openPicker =()=>{
             backgroundColor: "#00000040",
           }}
           onRequestClose={() => {
-            this.props.navigation.replace("HomeScreen");
-            this.setState({ modalVisible: false });
+            useNav.replace("HomeScreen");
+           
+            setmodalVisible(false)
           }}
         >
           <View style={[styles.modalBackground, {width: 450}]}>
@@ -245,15 +211,15 @@ openPicker =()=>{
 
               <View style={{ backgroundColor: "white", flex: 1, marginTop: 8 }}>
                 <FlatList
-                  data={this.state.bidEvent}
-                  renderItem={this.renderItem}
-                  keyExtractor={(item, index) => index.toString}
+                  data={bidEvent}
+                  renderItem={renderItem}
+                  keyExtractor={(item, index) => ""+index}
                 />
                 <View>
                 <TouchableOpacity
                   onPress={() => {
-                    this.setState({ modalVisible: false });
-                    this.props.navigation.replace("HomeScreen");
+                    setmodalVisible(false)
+                    useNav.replace("HomeScreen");
                   }}
                   style={{ backgroundColor: AppColors.red300, marginLeft: 10, marginRight: 10, borderRadius: 6, padding: 10, marginBottom: 10 }}>
                     <Text style={{fontSize: 14, fontWeight: "bold", textAlign: "center", color: AppColors.white}}>CLOSE</Text>
@@ -263,44 +229,41 @@ openPicker =()=>{
             </View>
           </View>
         </Modal>
-        {this.renderPicker()}
-        {/* <DatePicker
-           ref={(picker) => { this.datePickerRef = picker; }}
-          // ref={(ref) => (this.datePickerRef = ref)}
-          date={this.state.date}
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          // minDate="2016-05-01"
-          // maxDate="2016-06-01"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          customStyles={{
-            dateIcon: {
-              position: "absolute",
-              left: 0,
-              top: 4,
-              marginLeft: 0,
-            },
-            dateInput: {
-              marginLeft: 36,
-            },
-            // ... You can check the source to find the other keys.
-          }}
-          onDateChange={(mdate) => {
-            this.getBidEvent(mdate);
-            this.setState({ data: mdate });
-          }}
-          onCloseModal ={()=>{
-            this.setState({ modalVisible: false });
-            this.props.navigation.navigate("HomeScreen");
-          }}
-          visible={false}
-        /> */}
-      </View>
-    );
-  }
+      </SafeAreaView>
+     
+      <DatePicker
+            style={{ width: 0,height:0 }}
+          
+            ref={dateRef}
+            // ref={picker => {
+            //   dateRef = picker;
+            // }}
+            date={date}
+            mode="date"
+            placeholder="Select date baba"
+            format="YYYY-MM-DD"
+            minDate={firstDayOfMonth}
+            maxDate={lastDayOfMonth}
+            confirmBtnText="OK"
+            cancelBtnText="Cancel"
+            onDateChange={(mdate) => {
+
+              getBidEvent(mdate);
+              setdate(mdate)
+              // this.setState({ data: mdate });
+            }}
+            onCloseModal ={()=>{
+              setmodalVisible(false)
+              useNav.navigate("HomeScreen");
+            }}
+            isVisible={true}
+
+          />
+    </>
+  )
 }
+
+export default BidEventCalndar
 
 const styles = StyleSheet.create({
   container: {

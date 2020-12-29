@@ -31,13 +31,13 @@ const CustomSidebarMenu = (props) => {
   const { state, ...rest } = props;
     const newState = { ...state };
 
-    if(props.userType ==='Agency'){
-      newState.routes = newState.routes.filter(
+    // if(props.userType ==='Agency'){
+    //   newState.routes = newState.routes.filter(
 
-        (item) => item.name !== 'bidEventStack' ,
-      );
+    //     (item) => item.name !== 'bidEventStack' ,
+    //   );
 
-    }
+    // }
 
   return (
     <View style={stylesSidebar.sideMenuContainer}>

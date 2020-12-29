@@ -73,12 +73,13 @@ export default class BidDetails extends Component {
     };
   }
 
-  async componentDidMount(props) {
+  async componentDidMount() {
     await this.readData();
     BackHandler.addEventListener(
       'hardwareBackPress',
       this.handleBackButtonPressAndroid
     );
+  
   }
 
   handleBackButtonPressAndroid = () => {
@@ -95,6 +96,8 @@ export default class BidDetails extends Component {
     try {
 
       const token = await AsyncStorage.getItem("auth_token");
+
+      // alert(token)
 
 
       if (token) {

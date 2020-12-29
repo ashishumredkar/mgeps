@@ -8,6 +8,7 @@ import { gStyles } from "../../style/appStyles";
 import OptionMenu from "../Components/OptionMenu";
 const myIcon = <Icon name="more-vert" size={30} color="white" />;
 import { useNavigation } from "@react-navigation/native";
+import EventEmitter from "react-native-eventemitter";
 
 //  class CustomToolbar extends React.Component {
 const CustomToolbar = (props) => {
@@ -20,6 +21,7 @@ const CustomToolbar = (props) => {
 
   const navFilters = () => {
     // navigation.showFilters();
+    EventEmitter.emit("OPEN_FILTER", "true");
     console.log("Open filters \n\n\n\n\n");
   };
 
@@ -64,7 +66,7 @@ const CustomToolbar = (props) => {
             <OptionMenu
               customButton={myIcon}
               destructiveIndex={1}
-              options={["Settings", "Filters"]}
+              options={props.showFilter ? ["Settings", "Filters"] : ["Settings"]}
               actions={[navSettings, navFilters]}
             />
           </View>

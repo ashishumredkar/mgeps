@@ -11,7 +11,7 @@ import {
   Button,
   TouchableOpacity,SafeAreaView
 } from "react-native";
-import ReactNativePickerModule from "react-native-picker-module"
+
 import DatePicker from "react-native-datepicker";
 import { BID_EVENT_CAL_URL } from "../Utils";
 import { AppColors } from "../../style/AppColors";
@@ -57,8 +57,7 @@ const BidEventCalndar = () => {
     const userData = await AsyncStorage.getItem(STORAGE_KEY);
     const mData = JSON.parse(userData);
     const token = await AsyncStorage.getItem("auth_token");
-    console.log("userType1 ", mData.id);
-    console.log("userType2 ", mData.userType);
+   
     // pickerRef.onPressDate();
     setauthToken(token)
     setuserId(mData.id);

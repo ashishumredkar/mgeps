@@ -137,7 +137,7 @@ export default class FinalDetailsPage extends Component {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("sendAckForRead ", responseJson);
-        EventEmitter.emit("UPDATE_COUNT", "true");
+        EventEmitter.emit("UPDATE_COUNT", true);
       })
       .catch((error) => {
         //Hide Loader

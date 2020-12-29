@@ -12,7 +12,9 @@ import {
   Modal,
   RadioButton,
   TextInput,
-  KeyboardAvoidingView,TouchableWithoutFeedback,Keyboard
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
 import AsyncStorage from "@react-native-community/async-storage";
@@ -31,6 +33,7 @@ import { listStyles } from "../style/listStyles";
 import { AppColors } from "../style/AppColors";
 import { Platform } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import EventEmitter from "react-native-eventemitter";
 
 export const Loader = () => (
   <View style={{ minHeight: 230, padding: 20 }}>
@@ -48,7 +51,7 @@ export const Divider = () => {
       style={{
         height: 1,
         width: "100%",
-        backgroundColor: AppColors.grey10
+        backgroundColor: AppColors.grey10,
       }}
     />
   );
@@ -58,7 +61,6 @@ const DismissKeyboard = ({ children }) => (
     {children}
   </TouchableWithoutFeedback>
 );
-
 
 export default class Details extends Component {
   constructor(props) {
@@ -73,7 +75,7 @@ export default class Details extends Component {
       pageLink: "",
       authToken: "",
       totalCount: 0,
-      userType:'',
+      userType: "",
       totalPageNo: 0,
       isVisible: false,
       notificationText: "",
@@ -86,6 +88,12 @@ export default class Details extends Component {
 
   async componentDidMount() {
     await this.readData();
+
+    EventEmitter.on("OPEN_FILTER", (value) => {
+      
+        this.showFilters()
+      
+    });
   }
 
   readData = async () => {
@@ -96,7 +104,7 @@ export default class Details extends Component {
       if (token) {
         this.setState({
           authToken: token,
-          userType:userType
+          userType: userType,
         });
         this.fetchData();
       }
@@ -116,21 +124,21 @@ export default class Details extends Component {
 
     try {
       if (this.state.notificationText) {
-        url = url + '&notification=' + this.state.notificationText;
+        url = url + "&notification=" + this.state.notificationText;
       }
 
       if (this.state.activityTypeText) {
-        url = url + '&activityType=' + this.state.activityTypeText;
+        url = url + "&activityType=" + this.state.activityTypeText;
       }
 
       if (this.state.departmentText) {
-        url = url + '&departmentName=' + this.state.departmentText;
+        url = url + "&departmentName=" + this.state.departmentText;
       }
       if (this.state.classificationText) {
-        url = url + '&classificationType=' + this.state.classificationText;
+        url = url + "&classificationType=" + this.state.classificationText;
       }
       if (this.state.eventIdText) {
-        url = url + '&eventId=' + this.state.eventIdText;
+        url = url + "&eventId=" + this.state.eventIdText;
       }
 
       console.log("\n\nFinale url :: ", url);
@@ -172,7 +180,6 @@ export default class Details extends Component {
             totalCount: 0,
             users: [],
           });
-      
         });
     } catch (err) {
       console.log(err);
@@ -187,13 +194,26 @@ export default class Details extends Component {
 
   showFilters = () => {
     console.log("Calleddd this.....");
-    this.setState({ notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
-    this.setState({ isVisible: true, page: 1});
+    this.setState({
+      notificationText: "",
+      activityTypeText: "",
+      departmentText: "",
+      classificationText: "",
+      eventIdText: "",
+    });
+    this.setState({ isVisible: true, page: 1 });
   };
 
   resetFilters = () => {
-    this.setState({ isVisible: false, notificationText: "", activityTypeText: "", departmentText: "", classificationText: "", eventIdText: "" });
-  }
+    this.setState({
+      isVisible: false,
+      notificationText: "",
+      activityTypeText: "",
+      departmentText: "",
+      classificationText: "",
+      eventIdText: "",
+    });
+  };
 
   loadMoreUsers = () => {
     if (this.state.totalPageNo >= this.state.page + 1) {
@@ -228,9 +248,14 @@ export default class Details extends Component {
             />
             <Text style={styles.welcome}> No Records Found </Text>
 
-            <View style={[styles.center, {flexDirection: "row", flex: 1, marginBottom: 10}]}>
+            <View
+              style={[
+                styles.center,
+                { flexDirection: "row", flex: 1, marginBottom: 10 },
+              ]}
+            >
               <Image
-                style={{width: 30, height: 30}}
+                style={{ width: 30, height: 30 }}
                 source={require("../Image/ic_refresh.png")}
               />
               <Text>Tap to retry</Text>
@@ -239,13 +264,25 @@ export default class Details extends Component {
 
           <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
             <Image
-              style={[styles.center, {width: 50, height: 50, backgroundColor: AppColors.colorPrimary, borderRadius: 25, marginBottom: 20}]}
+              style={[
+                styles.center,
+                {
+                  width: 50,
+                  height: 50,
+                  backgroundColor: AppColors.colorPrimary,
+                  borderRadius: 25,
+                  marginBottom: 20,
+                },
+              ]}
               source={require("../Image/ic_left.png")}
             />
           </TouchableOpacity>
 
-          <View style={[styles.center, {width: "40%"}]}>
-            <Button title="Go TO Dashboard" onPress={() => this.props.navigation.navigate("HomeScreen")} />
+          <View style={[styles.center, { width: "40%" }]}>
+            <Button
+              title="Go TO Dashboard"
+              onPress={() => this.props.navigation.navigate("HomeScreen")}
+            />
           </View>
         </View>
       )
@@ -254,16 +291,18 @@ export default class Details extends Component {
 
   render() {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary}}>
-
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}
+      >
         <CustomToolbar
+          showFilter={true}
           navigation={this.props.navigation}
           title={this.state.pageTitle}
           userType={this.state.userType}
           backgroundColor="#3775f0"
         />
         {/* {this.state.isLoading ?<Loader loading={this.state.isLoading} /> : null } */}
-        <View style={{flex: 1, backgroundColor: "#FFFFFF"}}>
+        <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
           <View style={{ paddingTop: 8, paddingLeft: 8 }}>
             <Text
               numberOfLines={1}
@@ -300,13 +339,12 @@ export default class Details extends Component {
                   <Pressable
                     style={{ flex: 1, marginBottom: 10 }}
                     onPress={() => {
-                      const abc=this.state.users;
-                      abc[index].isAcknowledge=1;
+                      const abc = this.state.users;
+                      abc[index].isAcknowledge = 1;
 
-                      this.setState({users:abc})
+                      this.setState({ users: abc });
 
-
-                    //  this.state.users[index].isAcknowledge=1;
+                      //  this.state.users[index].isAcknowledge=1;
 
                       this.props.navigation.navigate("FinalDetailsPage", {
                         data: item,
@@ -317,18 +355,31 @@ export default class Details extends Component {
                     <View style={listStyles.viewColumn}>
                       <View style={listStyles.viewRow}>
                         <Text
-                          style={[listStyles.title, {fontWeight: item.isAcknowledge === 0 ? "bold" : "normal"}]}>
+                          style={[
+                            listStyles.title,
+                            {
+                              fontWeight:
+                                item.isAcknowledge === 0 ? "bold" : "normal",
+                            },
+                          ]}
+                        >
                           {index + 1 + ". " + item.activityType}
                         </Text>
                         <View style={listStyles.notificationIconView}>
                           {item.isAcknowledge === 1 ? (
                             <Image
-                              style={[listStyles.notificationIcon, {tintColor: AppColors.green200}]}
+                              style={[
+                                listStyles.notificationIcon,
+                                { tintColor: AppColors.green200 },
+                              ]}
                               source={require("../Image/ic_published.png")}
                             />
                           ) : (
                             <Image
-                              style={[listStyles.notificationIcon, {tintColor: AppColors.red200}]}
+                              style={[
+                                listStyles.notificationIcon,
+                                { tintColor: AppColors.red200 },
+                              ]}
                               source={require("../Image/ic_unpublished.png")}
                             />
                           )}
@@ -361,44 +412,73 @@ export default class Details extends Component {
               </View>
             )}
           </View>
-          {!this.state.isLoading && this.state.users && this.state.users.length>0 && (
-            <View style={listStyles.totalRowsView}>
-              <TouchableOpacity onPress={() => {this.showFilters()}}>
-                <Image 
-                  source={require("../Image/ic_filter.png")} 
-                  style={{width: 40, height: 40, backgroundColor: AppColors.colorPrimary, borderRadius: 25, marginRight: 20, marginBottom: 10}}
-                />
-              </TouchableOpacity>
+          {!this.state.isLoading &&
+            this.state.users &&
+            this.state.users.length > 0 && (
+              <View style={listStyles.totalRowsView}>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.showFilters();
+                  }}
+                >
+                  <Image
+                    source={require("../Image/ic_filter.png")}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      backgroundColor: AppColors.colorPrimary,
+                      borderRadius: 25,
+                      marginRight: 20,
+                      marginBottom: 10,
+                    }}
+                  />
+                </TouchableOpacity>
 
-              <View style={listStyles.textShadow}>
-                <Text style={listStyles.textStyle}>
-                  Total Rows : {this.state.totalCount}
-                </Text>
+                <View style={listStyles.textShadow}>
+                  <Text style={listStyles.textStyle}>
+                    Total Rows : {this.state.totalCount}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
+            )}
           <View style={{ flex: 0.1 }}>
             <BottomView />
           </View>
         </View>
 
         <Modal
-            animationType={"fade"}
-            transparent={true}
-            visible={this.state.isVisible}
-            onRequestClose={() => {
-              this.setState({ isVisible: false})
-            }}
-            scrollHorizontal={true}
+          animationType={"fade"}
+          transparent={true}
+          visible={this.state.isVisible}
+          onRequestClose={() => {
+            this.setState({ isVisible: false });
+          }}
+          scrollHorizontal={true}
+        >
+          <View
+            style={[
+              styles.modal,
+              { borderColor: AppColors.colorPrimary, borderWidth: 3 },
+            ]}
           >
-        
-          <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
-            <View style={{flexDirection: "row", backgroundColor: AppColors.colorPrimary}}>
-              <TouchableOpacity onPress={() => this.setState({ isVisible: false})}>
-                <Image 
-                  style={{width: 30, height: 30, marginTop: 7, color: AppColors.white, tintColor: AppColors.white}} 
+            <View
+              style={{
+                flexDirection: "row",
+                backgroundColor: AppColors.colorPrimary,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => this.setState({ isVisible: false })}
+              >
+                <Image
+                  style={{
+                    width: 30,
+                    height: 30,
+                    marginTop: 7,
+                    tintColor: AppColors.white,
+                  }}
                   source={require("../Image/ic_close.png")}
-                  />
+                />
               </TouchableOpacity>
 
               <Text style={[styles.modelTitle]}>Filter</Text>
@@ -409,20 +489,23 @@ export default class Details extends Component {
                 behavior="padding"
                 keyboardVerticalOffset={-130}
               >
-
-                <View style={{flexDirection: "column", flex: 1}}>
+                <View style={{ flexDirection: "column", flex: 1 }}>
                   <View style={styles.inputContainer}>
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
-                      onChangeText={(value) => this.setState({notificationText: value})}
+                      onChangeText={(value) =>
+                        this.setState({ notificationText: value })
+                      }
                       value={this.state.notificationText}
                       placeholder="Type Notification Keyword" //dummy@abc.com
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
-                      returnKeyType = { "next" }
-                      onSubmitEditing={() => { this.secondTextInput.focus(); }}
+                      returnKeyType={"next"}
+                      onSubmitEditing={() => {
+                        this.secondTextInput.focus();
+                      }}
                       blurOnSubmit={false}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
@@ -433,16 +516,21 @@ export default class Details extends Component {
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
-                      onChangeText={(value) => this.setState({activityTypeText: value})}
+                      onChangeText={(value) =>
+                        this.setState({ activityTypeText: value })
+                      }
                       value={this.state.activityTypeText}
                       placeholder="Type Activity Type Keyword" //dummy@abc.com
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="next"
-                      ref={(input) => { this.secondTextInput = input; }}
-                      onSubmitEditing={() => { this.thirdTextInput.focus(); }}
-
+                      ref={(input) => {
+                        this.secondTextInput = input;
+                      }}
+                      onSubmitEditing={() => {
+                        this.thirdTextInput.focus();
+                      }}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
@@ -452,7 +540,9 @@ export default class Details extends Component {
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
-                      onChangeText={(value) => this.setState({departmentText: value})}
+                      onChangeText={(value) =>
+                        this.setState({ departmentText: value })
+                      }
                       value={this.state.departmentText}
                       placeholder="Type Department Keyword" //dummy@abc.com
                       placeholderTextColor="#8b9cb5"
@@ -460,9 +550,12 @@ export default class Details extends Component {
                       keyboardType="default"
                       returnKeyType="next"
                       returnKeyType="next"
-                      ref={(input) => { this.thirdTextInput = input; }}
-                      onSubmitEditing={() => { this.fourthTextInput.focus(); }}
-
+                      ref={(input) => {
+                        this.thirdTextInput = input;
+                      }}
+                      onSubmitEditing={() => {
+                        this.fourthTextInput.focus();
+                      }}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
@@ -472,79 +565,88 @@ export default class Details extends Component {
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
-                      onChangeText={(value) => this.setState({classificationText: value})}
+                      onChangeText={(value) =>
+                        this.setState({ classificationText: value })
+                      }
                       value={this.state.classificationText}
                       placeholder="Type Classification Keyword" //dummy@abc.com
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="next"
-                      ref={(input) => { this.fourthTextInput = input; }}
-                      onSubmitEditing={() => { this.fifthTextInput.focus(); }}
-
+                      ref={(input) => {
+                        this.fourthTextInput = input;
+                      }}
+                      onSubmitEditing={() => {
+                        this.fifthTextInput.focus();
+                      }}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
                   </View>
-                  
+
                   <View style={styles.inputContainer}>
-                  
                     <TextInput
                       style={styles.inputs}
                       underlineColorAndroid="transparent"
-                      onChangeText={(value) => this.setState({eventIdText: value})}
+                      onChangeText={(value) =>
+                        this.setState({ eventIdText: value })
+                      }
                       value={this.state.eventIdText}
                       placeholder="Type Event Id Keyword" //dummy@abc.com
                       placeholderTextColor="#8b9cb5"
                       autoCapitalize="none"
                       keyboardType="default"
                       returnKeyType="default"
-                   
-                      ref={(input) => { this.fifthTextInput = input; }}
+                      ref={(input) => {
+                        this.fifthTextInput = input;
+                      }}
                       underlineColorAndroid="#f000"
                       blurOnSubmit={false}
                     />
-                
                   </View>
-              
                 </View>
               </KeyboardAvoidingView>
-              </DismissKeyboard>
+            </DismissKeyboard>
 
-              <View style={{ flexDirection: "row", margin: 10,alignSelf:'center' }}>
-                <Button
-                  title="Apply Filter"
-                  buttonStyle={{
-                    marginTop: 5,
-                    borderRadius: 16,
-                    backgroundColor: AppColors.green600,
-                    width: 120,
-                    height: 35,
-                    padding:5
-                  }}
-                  onPress={() => {
-                    this.fetchData()
-                  }}
-                />
-                <Button
-                  title="Close"
-                  buttonStyle={{
-                    marginTop: 5,
-                    marginLeft: 5,
-                    borderRadius: 16,
-                    backgroundColor: AppColors.red400,
-                    width: 120,
-                    height: 35,
-                    padding:5
-                  }}
-                  onPress={() => {this.resetFilters()}}
-                />
-              </View>
+            <View
+              style={{ flexDirection: "row", margin: 10, alignSelf: "center" }}
+            >
+              <Button
+                title="Apply Filter"
+                buttonStyle={{
+                  marginTop: 5,
+                  borderRadius: 16,
+                  backgroundColor: AppColors.green600,
+                  width: 120,
+                  height: 35,
+                  padding: 5,
+                }}
+                onPress={() => {
+                  this.fetchData();
+                }}
+              />
+              <Button
+                title="Close"
+                buttonStyle={{
+                  marginTop: 5,
+                  marginLeft: 5,
+                  borderRadius: 16,
+                  backgroundColor: AppColors.red400,
+                  width: 120,
+                  height: 35,
+                  padding: 5,
+                }}
+                onPress={() => {
+                  this.resetFilters();
+                }}
+              />
             </View>
-            <View style={{ height: 1, width: "100%", backgroundColor: "white" }}/>
-            
-          </Modal>
-
+          </View>
+          <View
+            style={{ height: 1, width: "100%", backgroundColor: "white" }}
+          />
+        </Modal>
       </SafeAreaView>
     );
   }
@@ -553,7 +655,7 @@ export default class Details extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   container2: {
     flex: 1,
@@ -607,7 +709,7 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center",
     alignItems: "center",
-    alignContent: "center"
+    alignContent: "center",
   },
   modal: {
     justifyContent: "flex-start",

@@ -40,7 +40,7 @@ export const listStyles = StyleSheet.create({
     },
     totalRowsView: {
         flex: 1,
-        marginBottom: 100,
+        marginBottom: 80,
         width: "100%",
         height: 30,
         justifyContent: "center",

@@ -3,17 +3,20 @@
 
 // Import React and Component
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Modal, Image, Text, Platform } from "react-native";
+import { StyleSheet, View, Modal, Image, Text, Platform, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { AppColors } from "../../style/AppColors";
 import { TERMS_CONDITION_URL } from "../Utils";
 
 const Tnc = (props) => {
   const { loading, userType, authToken, ...attributes } = props;
-  const [tncText, setTncText]=useState('')
+  const [tncText, setTncText] = useState('')
+  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    fetchTermAndCondition()
+    if (loading) {
+      fetchTermAndCondition();
+    }
   }, [tncText]);
 
   const fetchTermAndCondition = async () => {
@@ -43,7 +46,7 @@ const Tnc = (props) => {
     <Modal
       transparent={true}
       animationType={"none"}
-      visible={loading}
+      visible={isVisible && loading}
       onRequestClose={() => {
         props.onCloseModal();
       }}
@@ -57,55 +60,57 @@ const Tnc = (props) => {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ height: 30, color: AppColors.teal500, fontSize: 20, fontWeight: "bold" }}> Terms of Service</Text>
+            <Text style={{ height: 30, color: AppColors.teal500, fontSize: 20, fontWeight: "bold" }}> Term of Services</Text>
             <Text style={{ height: 30, color: AppColors.teal500, fontSize: 12, marginLeft: 10 }}>Last updated January 2020</Text>
           </View>
         </View>
         <Text style={{ height: 1, backgroundColor:'red', width:'100%' }}/>
-        <Text style={{width:'100%', flex:1, marginTop:10, padding:12}}>
-          {tncText}
-        </Text>
+        <ScrollView>
+          <Text style={{flex:1, marginTop:10, padding:12}}>
+            {tncText}
+          </Text>
+        </ScrollView>
         <View style={styles.bottomView}>
-        <Text style={{ height: 1,backgroundColor:'#67EEF0',width:'100%' }}/>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            title="Accept"
-            buttonStyle={{
-              marginTop: 5,
-              borderRadius: 16,
-              backgroundColor: AppColors.green600,
-              width:120,
-              height: 35,
-            }}
-            onPress={() => props.onResponse(true)}
-          />
+          <Text style={{ height: 1,backgroundColor:'#67EEF0', width:'100%' }}/>
           <View
             style={{
-              width: 50,
-              height: 50,
               flex: 1,
+              flexDirection: "row",
+              justifyContent: "flex-end",
             }}
-          />
+          >
+            <Button
+              title="Accept"
+              buttonStyle={{
+                marginTop: 5,
+                borderRadius: 16,
+                backgroundColor: AppColors.green600,
+                width:120,
+                height: 35,
+              }}
+              onPress={() => {setIsVisible(false); props.onResponse(true)}}
+            />
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                flex: 1,
+              }}
+            />
 
-          <Button
-            title="Decline"
-            buttonStyle={{
-              marginTop: 5,
-              borderRadius: 16,
-              backgroundColor: AppColors.red800,
-              width:120,
-              height: 35,
-            }}
-            onPress={() => props.onResponse(false)}
-          />
+            <Button
+              title="Decline"
+              buttonStyle={{
+                marginTop: 5,
+                borderRadius: 16,
+                backgroundColor: AppColors.red800,
+                width:120,
+                height: 35,
+              }}
+              onPress={() => {setIsVisible(false); props.onResponse(false)}}
+            />
 
-        </View>
+          </View>
         </View>
       </View>
     </Modal>

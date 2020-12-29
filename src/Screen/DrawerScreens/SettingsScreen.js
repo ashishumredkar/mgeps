@@ -19,6 +19,7 @@ import GeneralStatusBarColor from "../Components/GeneralStatusBarColor";
 import CustomToolbar from "../Components/CustomToolbar";
 import { AppColors } from "../../style/AppColors";
 import AsyncStorage from "@react-native-community/async-storage";
+import { URL } from "../Utils";
 
 const PROP = [
   {
@@ -69,9 +70,10 @@ export default class SettingsScreen extends Component {
         onPress={() => {
           if (item.type === "profile") {
             this.props.navigation.navigate("profile");
+          } else if (item.type == "notification" && item.name == "Un-Mute Notification") {
+            this.state.calls[1].name = "Mute Notification";
+            this.setState({calls: this.state.calls});
           } else {
-            //this.props.navigation.navigate("settingScreenStack")
-
             this.setState({ isVisible: true });
           }
         }}
@@ -82,12 +84,6 @@ export default class SettingsScreen extends Component {
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>{item.name}</Text>
             </View>
-            {/* <View style={styles.end}>
-              <Image style={[styles.icon, {marginLeft:15, marginRight:5, width:14, height:14}]}
-               source={require('../../Image/arrow_icon.png')}
-               />
-              <Text style={styles.time}>{item.date} {item.time}</Text>
-            </View> */}
           </View>
           <Image
             style={[styles.icon, { marginRight: 50 }]}
@@ -103,7 +99,7 @@ export default class SettingsScreen extends Component {
       <SafeAreaView style={{ flex: 1,backgroundColor: AppColors.colorPrimary}}>
         <CustomToolbar
           title={"Settings"}
-          userType={""}
+          userType={this.state.userNameType}
           backgroundColor="#3775f0"
         />
         <View style={styles.container}>
@@ -116,20 +112,27 @@ export default class SettingsScreen extends Component {
             }}
           >
             {/*All views of Modal*/}
-            <View style={[styles.modal, {borderColor: AppColors.colorPrimary, borderWidth: 3}]}>
-              <Text style={[styles.text, {fontWeight: "bold", fontSize: 18}]}>Mute notification for...!</Text>
-              <Text style={styles.text}>
-                Choose any one from following options
-              </Text>
-              <RadioButton PROP={PROP} />
+            <View style={[styles.modal, {borderColor: AppColors.grey20, borderWidth: 2}]}>
+              <View style={{marginLeft: 15}}>
+                <Text style={[styles.text, {fontWeight: "bold", fontSize: 18}]}>Mute notification for...!</Text>
+                <Text style={styles.text}>
+                  Choose any one from following options
+                </Text>
+              </View>
+              <View style={{backgroundColor: AppColors.grey10, height: 1, marginTop: 10}}></View>
 
-              <CheckBox
-                title="Show Notifications"
-                checked={this.state.checked}
-                onPress={() => this.setState({ checked: !this.state.checked })}
-              />
+              <View style={{justifyContent: "center", alignItems: "center", marginTop: 5}}>
+                <RadioButton PROP={PROP} />
 
-              <View style={{ flexDirection: "row", margin: 10 }}>
+                {/* <CheckBox
+                  title="Show Notifications"
+                  checked={this.state.checked}
+                  onPress={() => this.setState({ checked: !this.state.checked })}
+                /> */}
+              </View>
+              <View style={{backgroundColor: AppColors.grey10, height: 2, marginTop: 10}}></View>
+
+              <View style={{ flexDirection: "row", margin: 10, }}>
                 <Button
                   title="OK"
                   buttonStyle={{
@@ -140,7 +143,8 @@ export default class SettingsScreen extends Component {
                     height: 35,
                   }}
                   onPress={() => {
-                    this.setState({ isVisible: !this.state.isVisible });
+                    this.state.calls[1].name = "Un-Mute Notification";
+                    this.setState({ calls: this.state.calls, isVisible: !this.state.isVisible });
                   }}
                 />
                 <View
@@ -166,10 +170,10 @@ export default class SettingsScreen extends Component {
                 />
               </View>
             </View>
-            <View
-              style={{ height: 1, width: "100%", backgroundColor: "white" }}
-            />
           </Modal>
+          <View style={{backgroundColor: AppColors.grey10, height: 45, width:"100%"}}>
+            <Text style={{textAlign: "auto", marginTop: 15, marginLeft: 10, color: AppColors.grey40}}>GENERAL SETTING</Text>
+          </View>
           <FlatList
             extraData={this.state}
             data={this.state.calls}
@@ -193,15 +197,12 @@ const styles = StyleSheet.create({
   },
 
   modal: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "60%",
+    height: "50%",
     width: "80%",
-    borderRadius: 10,
     borderWidth: 1,
     borderColor: "#fff",
     backgroundColor: "white",
-    marginTop: 80,
+    marginTop: "45%",
     marginLeft: 40,
   },
   text: {

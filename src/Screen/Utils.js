@@ -1,5 +1,5 @@
- const URL = "https://mgeps-uat-pune.etenders.in"; // Pune UAT
-// const URL = "https://mgeps-uat.philgeps.gov.ph"; // Live UAT
+//  const URL = "https://mgeps-uat-pune.etenders.in"; // Pune UAT
+const URL = "https://mgeps-uat.philgeps.gov.ph"; // Live UAT
 const GLOBAL_LINK = URL + "/api/BuyerUsers";
 export const LOGIN_TYPE_URL = GLOBAL_LINK + "/loginType";
 export const LOGIN_URL = GLOBAL_LINK + "/getToken";

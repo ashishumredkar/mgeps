@@ -22,7 +22,7 @@ export default class BottomView extends Component {
             Powered By:
           </Text>
 
-          <TouchableOpacity onPress={()=> {Linking.openURL('http://www.nextenders.com/')}}>
+          <TouchableOpacity onPress={()=> {Linking.openURL('http://www.nextenders.com/contact-us/')}}>
             <Image
               source={require("../Image/nextenders_logo.png")}
               style={{

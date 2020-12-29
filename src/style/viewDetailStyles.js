@@ -95,7 +95,7 @@ export const viewDetailStyles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 14,
+    fontSize: 12,
     alignSelf: "flex-start",
     color: "black",
     fontWeight: "bold",
@@ -171,7 +171,7 @@ export const viewDetailStyles = StyleSheet.create({
     borderRadius: 10,
     marginRight: 2,
     marginLeft: 2,
-    marginBottom: 2,
+    marginBottom: 0,
   },
   notificationValue: {
     // flex: 1,

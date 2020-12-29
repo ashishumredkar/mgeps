@@ -157,9 +157,45 @@ export const gStyles = StyleSheet.create({
     marginHorizontal: 16,
   },
   contactStyle: {
-    fontSize: 20,
+    fontSize: 17,
     color: AppColors.colorPrimary,
     fontWeight: 'bold'
+  },
+  cardTitle: {
+    color: "white",
+    fontSize: 14,
+    alignSelf: "flex-start",
+    alignContent: "center",
+    alignItems: "center",
+    fontWeight: "bold",
+    margin: 5,
+    height: 30,
+  },
+  card: {
+    shadowColor: "#00000021",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+
+    // marginVertical: 5,
+    backgroundColor: "white",
+    // marginHorizontal: 5,
+    flexDirection: "column",
+    marginBottom: 16,
+
+    borderWidth: 1,
+    borderRadius: 0,
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
+
+    padding: 5,
+
+    // Set border color.
+    borderColor: "blue",
   },
   nameLabel: {
     color: AppColors.AppBlack02,

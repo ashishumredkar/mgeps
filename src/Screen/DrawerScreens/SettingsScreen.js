@@ -43,14 +43,13 @@ export default class SettingsScreen extends Component {
           id: 1,
           name: "Profile",
           type: "profile",
-          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
+          image: require("../../Image/ic_profile.png"),
         },
         {
           id: 2,
           name: "Mute Notification",
           type: "notification",
-          image:
-            "https://cdn.iconscout.com/icon/free/png-64/notifications-1780874-1514189.png",
+          image: require("../../Image/ic_stat_notifications.png"),
         },
       ],
       isVisible: false,
@@ -78,7 +77,7 @@ export default class SettingsScreen extends Component {
         }}
       >
         <View style={styles.row}>
-          <Image source={{ uri: item.image }} style={styles.pic} />
+          <Image source={item.image} style={[styles.pic, {tintColor: AppColors.AppBlack, width: 30, height: 30}]} />
           <View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>{item.name}</Text>

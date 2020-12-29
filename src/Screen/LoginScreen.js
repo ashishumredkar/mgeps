@@ -62,37 +62,6 @@ const LoginScreen = ({ navigation }) => {
 
   const pickerRef = useRef()
   const [value, setValue] = useState()
-  const dataset_1 = [1, 2, "Java", "Kotlin", "C++", "C#", "PHP"]
-  const dataset_2 = [
-    {
-      value: 101,
-      label: "Javascript",
-    },
-    {
-      value: "golang_101",
-      label: "Go",
-    },
-    {
-      value: "kotlin_dsl",
-      label: "Kotlin",
-    },
-    {
-      value: "java_101",
-      label: "Java",
-    },
-    {
-      value: "cplusplus",
-      label: "C++",
-    },
-    {
-      value: "csharp_201",
-      label: "C#",
-    },
-    {
-      value: "php_201",
-      label: "PHP",
-    },
-  ]
 
   useEffect(() => {
     getFcm();

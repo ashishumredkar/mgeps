@@ -249,7 +249,6 @@ export default class FinalDetailsPage extends Component {
                 <View
                   style={{
                     width: "100%",
-                    height: "93%",
                     flexDirection: "column",
                     alignItems: "flex-start",
                     alignContent: "flex-start",
@@ -279,7 +278,7 @@ export default class FinalDetailsPage extends Component {
                         return (
                           <View>
                             <View style={viewDetailStyles.notificationLabel}>
-                              <Text style={viewDetailStyles.name}>
+                              <Text style={[viewDetailStyles.name, {width: "30%"}]}>
                                 {key
                                   .replace(/([A-Z])/g, " $1")
                                   .trim()

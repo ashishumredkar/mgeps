@@ -133,7 +133,7 @@ const ProfileScreen = (props) => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.colorPrimary }}>
       <CustomToolbar
-        title={"Profile"}
+        title={"Profile Overview"}
         userType={username}
         backgroundColor="#3775f0"
       />

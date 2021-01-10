@@ -68,6 +68,9 @@ class SubMenues extends React.Component {
     };
   }
   async componentDidMount() {
+    //This code will notify the screen that focus is back.
+    this.focusListener = this.props.navigation.addListener('focus', () => this.readData());
+
     console.log("componentDidMount ", this.props.route.params.data);
 
     this.setState({
@@ -79,13 +82,15 @@ class SubMenues extends React.Component {
     this.readData();
 
     useEffect(() => {
-      //fetch('') // Pune office UAT
-
       EventEmitter.on("UPDATE_COUNT", (value)=>{
         this.readData();
     });
     }, []);
   
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    console.log("\n\n\n componentDidMountnextProps \n\n\n");
   }
 
   readData = async () => {
@@ -94,9 +99,13 @@ class SubMenues extends React.Component {
       const token = await AsyncStorage.getItem("auth_token");
       const userType = await AsyncStorage.getItem("userType");
 
+      for (let menuListItem of this.state.menuList) {
+        menuListItem.unRead = await AsyncStorage.getItem(menuListItem.name.replace(" ", ""));
+        // console.log("\n\n\n\n\n Un Read :: " + menuListItem.name.replace(" ", "") + " : " + menuListItem.unRead + "\n\n\n\n\n");
+      }
+
       const mData = JSON.parse(userData);
       console.log("userData", mData);
-      console.log("commando", mData);
 
       if (userData) {
         this.setState({
@@ -127,7 +136,6 @@ class SubMenues extends React.Component {
             <Image
               style={{ width: 35, height: 35, }}
               source={this.state.iconUri}
-
             />
           </View>
 
@@ -157,7 +165,9 @@ class SubMenues extends React.Component {
                   onPress={() => {
                     this.props.navigation.navigate("Details", {
                       link: item.link,
-                      title: this.state.title + "/" + item.name,
+                      title: this.state.title + " / " + item.name,
+                      mainMenu: this.state.title,
+                      subMenu: item.name,
                     });
                   }}
                 >

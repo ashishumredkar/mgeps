@@ -1,9 +1,10 @@
-//  const URL = "https://mgeps-uat-pune.etenders.in"; // Pune UAT
-const URL = "https://mgeps-uat.philgeps.gov.ph"; // Live UAT
+ const URL = "https://mgeps-uat-pune.etenders.in"; // Pune UAT
+// const URL = "https://mgeps-uat.philgeps.gov.ph"; // Live UAT
 const GLOBAL_LINK = URL + "/api/BuyerUsers";
 export const LOGIN_TYPE_URL = GLOBAL_LINK + "/loginType";
 export const LOGIN_URL = GLOBAL_LINK + "/getToken";
 export const DASHBOARD_URL = GLOBAL_LINK + "/dashboard";
+export const REFRESH_TOKEN_URL = GLOBAL_LINK + "/refershToken";
 export const NOTIFICATION_COUNT_URL = URL + "/api/Calendars/getCountMobileNotification";
 export const READ_NOTIFICATION_URL = GLOBAL_LINK + "/readNotifcationApi";
 export const CONTACT_US = GLOBAL_LINK + "/contactUs";

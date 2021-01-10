@@ -44,6 +44,8 @@ export default class FinalDetailsPage extends Component {
       modalVisible: false,
       userSelected: [],
       pageTitle: "",
+      mainMenu: "",
+      subMenu: "",
       loading: false,
       isLoading: false,
       userType: "Merchant",
@@ -69,6 +71,8 @@ export default class FinalDetailsPage extends Component {
       urlParameter: mData.urlParameter,
       apiUrl: mData.detailsUrl,
       title: this.props.route.params.pageTitle,
+      mainMenu: this.props.route.params.mainMenu,
+      subMenu: this.props.route.params.subMenu,
       isLoading: false,
     });
 
@@ -95,8 +99,10 @@ export default class FinalDetailsPage extends Component {
       .then((responseJson) => {
         this.setState({ loading: false });
         //Hide Loader
-
-        if (responseJson) {
+        if (responseJson.code == 500) {
+          this.setState({ loading: false, isLoading: false });
+          this.setState({ userSelected: [] });
+        } else {
           this.setState({ userSelected: responseJson });
           this.sendAckForRead(
             this.state.authToken,
@@ -118,14 +124,18 @@ export default class FinalDetailsPage extends Component {
   };
 
   sendAckForRead = async (token, notificationId, moduleName) => {
+    let mainMenuUnReadValue = await AsyncStorage.getItem(this.state.mainMenu.toString().replace(" ", ""));
+    let subMenuUnReadValue = await AsyncStorage.getItem(this.state.subMenu.toString().replace(" ", ""));
+
+    // console.log("\n\n\n\nMain Menu :: " + this.state.mainMenu, mainMenuUnReadValue);
+    // console.log("\n\n\n\nSub-Main Menu :: " + this.state.subMenu, subMenuUnReadValue);
+
     const data = {
       moduleName: moduleName,
       notificationId: notificationId,
     };
 
-    var url = READ_NOTIFICATION_URL; // Pune UAT
-    // var url = "https://mgeps-uat.philgeps.gov.ph/api/BuyerUsers/readNotifcationApi"; // LIVE UAt
-    fetch(url, {
+    fetch(READ_NOTIFICATION_URL, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
@@ -136,8 +146,13 @@ export default class FinalDetailsPage extends Component {
     })
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("sendAckForRead ", responseJson);
-        EventEmitter.emit("UPDATE_COUNT", true);
+        console.log("\n\n\n\n\nsendAckForRead ", responseJson);
+
+        if (responseJson.success.toString() == "true") {
+          AsyncStorage.setItem(this.state.mainMenu.toString().replace(" ", ""), (mainMenuUnReadValue - 1).toString());
+          AsyncStorage.setItem(this.state.subMenu.toString().replace(" ", ""), (subMenuUnReadValue - 1).toString());
+          EventEmitter.emit("UPDATE_COUNT", true);
+        }
       })
       .catch((error) => {
         //Hide Loader
@@ -198,7 +213,7 @@ export default class FinalDetailsPage extends Component {
       >
         <CustomToolbar
           navigation={this.props.navigation}
-          title={this.state.pageTitle}
+          title={this.state.mainMenu}
           userType={userType}
           backgroundColor="#3775f0"
         />

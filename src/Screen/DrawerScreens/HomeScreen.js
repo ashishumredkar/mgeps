@@ -25,7 +25,7 @@ import { homeStyles } from "../../style/homeStyles";
 import BottomView from "../BottomView";
 import { Dialog, ConfirmDialog } from "react-native-simple-dialogs";
 import Tnc from "../Components/Tnc";
-import { DASHBOARD_URL,BID_EVENT_CAL_URL } from "../Utils";
+import { DASHBOARD_URL, BID_EVENT_CAL_URL, REFRESH_TOKEN_URL } from "../Utils";
 
 import CustomToolbar from "../Components/CustomToolbar";
 import DatePicker from "react-native-datepicker";
@@ -89,11 +89,14 @@ class HomeScreen extends React.Component {
       bidEvent: [],
       date: new Date(),
       modalVisible: false,
-      Show: false
+      Show: false,
+      refreshed: false,
     };
   }
   async componentDidMount() {
-    this.readData();
+    this.focusListener = this.props.navigation.addListener('focus', () => this.readData(true));
+
+    this.readData(false);
   }
   openpicker = () => {
     this.datePicker.onPressDate();
@@ -101,7 +104,7 @@ class HomeScreen extends React.Component {
 
   componentDidUpdate(nextProps) {
     const { show } = this.props
-    console.log("componentDidMountnextProps ",nextProps)
+    console.log("componentDidMountnextProps ", nextProps)
   
     // if (nextProps.route.params!=undefined && nextProps.route.params.showpicker) {
     
@@ -122,7 +125,7 @@ class HomeScreen extends React.Component {
   //   //   show: nextProps.show,
   //   //  };
   //  }
-  readData = async () => {
+  readData = async (loadApiData) => {
     try {
       const userData = await AsyncStorage.getItem(STORAGE_KEY);
       const mData = JSON.parse(userData);
@@ -131,16 +134,20 @@ class HomeScreen extends React.Component {
       const userTypeName = await AsyncStorage.getItem("userType");
       const tncFlag = await AsyncStorage.getItem("tnc");
 
-      console.log("tncFlag", mData)
-      console.log("tncFlag", tncFlag)
-
       if (!tncFlag) {
         this.setState({ isConditionAccepted: true });
       }
 
-      // this.setState({ isConditionAccepted: true });
+      if (loadApiData == true) {
+        for (let menuListItem of this.state.menuList) {
+          menuListItem.unRead = await AsyncStorage.getItem(menuListItem.name.replace(" ", ""));
+          // console.log("\n\n\n\n\n Un Read :: " + menuListItem.name.replace(" ", "") + " : " + menuListItem.unRead + "\n\n\n\n\n");
+        }
 
-      if (userData) {
+        this.setState({ menuList: this.state.menuList });
+      }
+
+      if (userData && loadApiData == false) {
         this.setState({
           userId: mData.id,
           userType: mData.userType,
@@ -177,9 +184,31 @@ class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then((responseJson) => {
         //Hide Loader
-        this.setState({ loading: false });
-        console.log("authToken5 ", responseJson);
-        this.setState({ menuList: responseJson.dashboardMenuList });
+        console.log("\n\n\n\authToken5 ", responseJson, "\n\n\n\n\n");
+        if (responseJson.code == 401) {
+          if (responseJson.message == "Token Expired" && this.refreshed == false) {
+            this.refreshToken();
+          } else if (responseJson.message == "You are not authorized to access that location.") {
+            this.removeItemValue("auth_token");
+            this.removeItemValue("user_id");
+            this.removeItemValue("userType");
+
+            this.props.navigation.navigate("Auth");
+          }
+        } else {
+          this.setState({ loading: false });
+          this.setState({ menuList: responseJson.dashboardMenuList });
+
+          responseJson.dashboardMenuList.map((menuItem) => {
+            this.setItemInLocalStorage(menuItem.name.toString().replace(" ", ""), menuItem.unRead.toString());
+
+            if (menuItem.sub.length > 0) {
+              menuItem.sub.map((sumMenuItem) => {
+                this.setItemInLocalStorage(sumMenuItem.name.toString().replace(" ", ""), sumMenuItem.unRead.toString());
+              });
+            }
+          });
+        }
       })
       .catch((error) => {
         //Hide Loader
@@ -188,6 +217,55 @@ class HomeScreen extends React.Component {
       })
       .finally(() => this.setState({ loading: false }));
   };
+
+  setItemInLocalStorage(key, value) {
+      AsyncStorage.setItem(key.toString(), value);
+      // console.log("\n\n\nValue added :" + key + ":" + value, " \n\n\n\n");
+  };
+
+  refreshToken = async () => {
+    console.log("\n\n\n Refresh Token calling........ \n\n\n ", REFRESH_TOKEN_URL);
+    const userData = await AsyncStorage.getItem(STORAGE_KEY);
+    const mData = JSON.parse(userData);
+
+    const data = {
+      id: mData.id,
+      userType: mData.userType,
+    };
+    this.setState({ loading: true });
+
+    fetch(REFRESH_TOKEN_URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        //Hide Loader
+        AsyncStorage.setItem("auth_token", responseJson.data.token);
+        this.setState({ loading: false, refreshed: true });
+        this.getMenuItems();
+      })
+      .catch((error) => {
+        //Hide Loader
+        this.setState({ loading: false, refreshed: true });
+        console.error("qwerty  ", error);
+      })
+      .finally(() => this.setState({ loading: false, refreshed: true }));
+  };
+
+  removeItemValue = async (key) => {
+    try {
+        await AsyncStorage.removeItem(key);
+        return true;
+    }
+    catch(exception) {
+        return false;
+    }
+}
 
   EmptyListMessage = ({ item }) => {
     const isLoading = this.state.isLoading;
@@ -494,6 +572,8 @@ renderItem = ({ item, index }) =>
                       this.props.navigation.navigate("Details", {
                         link: item.link,
                         title: item.name,
+                        mainMenu: item.name,
+                        subMenu: item.name, // this required for those main menu for which sub menu is not applicable
                       });
                     }
                   }}

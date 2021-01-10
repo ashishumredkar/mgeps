@@ -72,6 +72,8 @@ export default class Details extends Component {
       isLoadingMore: false,
       page: 1,
       pageTitle: "",
+      mainMenu: "",
+      subMenu: "",
       pageLink: "",
       authToken: "",
       totalCount: 0,
@@ -114,6 +116,8 @@ export default class Details extends Component {
   fetchData = async () => {
     this.setState({
       pageTitle: this.props.route.params.title,
+      mainMenu: this.props.route.params.mainMenu,
+      subMenu: this.props.route.params.subMenu,
       pageLink: this.props.route.params.link,
       isVisible: false,
     });
@@ -292,7 +296,7 @@ export default class Details extends Component {
         <CustomToolbar
           showFilter={true}
           navigation={this.props.navigation}
-          title={this.state.pageTitle}
+          title={this.state.subMenu}
           userType={this.state.userType}
           backgroundColor="#3775f0"
         />
@@ -334,16 +338,16 @@ export default class Details extends Component {
                   <Pressable
                     style={{ flex: 1, marginBottom: 10 }}
                     onPress={() => {
-                      const abc = this.state.users;
-                      abc[index].isAcknowledge = 1;
-
-                      this.setState({ users: abc });
-
-                      //  this.state.users[index].isAcknowledge=1;
+                      //Update the list data to set as visited
+                      const localListData = this.state.users;
+                      localListData[index].isAcknowledge = 1;
+                      this.setState({ users: localListData });
 
                       this.props.navigation.navigate("FinalDetailsPage", {
                         data: item,
                         pageTitle: this.state.pageTitle,
+                        mainMenu: this.state.mainMenu,
+                        subMenu: this.state.subMenu,
                       });
                     }}
                   >

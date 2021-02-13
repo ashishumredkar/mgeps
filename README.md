@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get your app
 
 # checkout to branch ashish
 # cd  mgepsapp
-# run npm i 
+# run (command) -> npm i 
 #  connect ur devices or run emulator
 # run adb devices  // to check connected devices
 # run npx react-native run-android  //it will run app on mobile

@@ -38,7 +38,7 @@ import { RippleButton } from "./Components/RippleButton";
 import { gStyles } from "../../src/style/appStyles";
 import ContactUs from "./DrawerScreens/ContactUs";
 
-import BidEventCalndar from "./DrawerScreens/BidEventCalndar";
+import BidEventCalndar from "./DrawerScreens/BidEventCalendar";
 import BidDetails from "./BidDetails";
 import BidDetailsPage from "./BidDetailsPage";
 import { NOTIFICATION_COUNT_URL } from "../Screen/Utils";
@@ -190,7 +190,6 @@ export function NotificationView(props) {
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    //fetch('') // Pune office UAT
     getNotificationCount();
     EventEmitter.on("UPDATE_COUNT", (value) => {
       getNotificationCount();
@@ -242,7 +241,6 @@ export function NotificationView(props) {
     <View style={[styles.navBar, { backgroundColor: props.backgroundColor }]}>
 
     <RippleButton
-
       onPress={() => navigation.navigate("HomeScreen")}
       rippleColor={"orange"}
       rippleStyle={{ marginRight: 16 }}
@@ -418,20 +416,9 @@ const bidEventStack = ({ navigation }) => {
         name="BidEventCalndar"
         component={BidEventCalndar}
         options={{
-          title: "BidEventCalndar", //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerHeader navigationProps={navigation} />
-          ),
-          // headerRight: (props) => <NotificationView {...props} />,
-          // headerTitle: (props) => <LogoTitle {...props} />,
-
-          headerStyle: {
-            backgroundColor: "#307ecc", //Set Header color
-          },
-          headerTintColor: "#fff", //Set Header text color
-          headerTitleStyle: {
-            fontWeight: "bold", //Set Header text style
-          },
+          title: "Bid Event Calendar", //Set Header Title
+          headerLeft: null,
+          gesturesEnabled: false,
         }}
       />
        <Stack.Screen
@@ -628,7 +615,28 @@ const DrawerNavigatorRoutes = (props) => {
         component={homeScreenStack}
       />
 
+{/* <Drawer.Screen name="bidEventStack" 
 
+component={HomeScreen}
+options={{
+  drawerLabel: (props) => (
+    <BidEventCalendarMenu {...{ employeename: username, ...props }} />
+  ),
+  headerLeft: () => (
+    <NavigationDrawerHeader navigationProps={navigation} />
+  ),
+  headerRight: (props) => <NotificationView {...props} />,
+  
+  headerTitle: (props) => <LogoTitle {...props} />,
+
+  headerStyle: {
+    backgroundColor: "#307ecc", //Set Header color
+  },
+  headerTintColor: "#fff", //Set Header text color
+  headerTitleStyle: {
+    fontWeight: "bold", //Set Header text style
+  },
+}}/> */}
 
       <Drawer.Screen
         name="bidEventStack"

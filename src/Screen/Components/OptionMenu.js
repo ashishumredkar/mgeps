@@ -10,10 +10,9 @@ import {
   Text
 } from "react-native";
 
-const OptionMenu = (props) =>{
+const OptionMenu = (props) => {
     const inputRef = useRef();
     const [open, setOpen] = useState(false);
-
 
     const handleClick = index => {
         let options = props.options;

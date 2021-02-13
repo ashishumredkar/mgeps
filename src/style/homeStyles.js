@@ -86,6 +86,7 @@ export const homeStyles = StyleSheet.create({
     overflow: "hidden",
     margin: 2,
   },
+  
   cardHeader: {
     paddingVertical: 8,
     paddingHorizontal: 8,
